@@ -796,28 +796,271 @@ Based on everything in spec/, create spec/tasks.md: an ordered, small-grained ta
 
 _**Agent (auto-smart)**_
 
+<think><details><summary>Thought Process</summary>
+I will generate spec/tasks.md by mapping the spec/ directory into a small-grained, ordered task list covering all layers from entities through tests.
+
+I will first read the spec files carefully to ensure accuracy. Then I will present a structured plan for the task list. The java-springboot rule requires one layer per prompt.
+
+Vite-react also requires building one component at a time. The task list will therefore be strictly small-grained and testable.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+I'll read the spec files and turn them into a small-grained, ordered `spec/tasks.md` plan.
+
+_**Agent (auto-smart)**_
+
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
 
 </details></tool-use>
 
 _**Agent (auto-smart)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/ui-flow.md</summary>
 
 </details></tool-use>
 
 _**Agent (auto-smart)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/architecture.md</summary>
 
 </details></tool-use>
 
 _**Agent (auto-smart)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/api-contract.md</summary>
 
 </details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/.cursor/rules/java-springboot.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **72** results in **1** directory</summary>
+
+Directory: **`/home/deepanshu/Desktop/C2/sturdy-fernacular`** (72 files)
+
+| File |
+|------|
+| `.specstory/history/2026-09-25_12-50-18Z-workspace-documentation-skill.md` |
+| `.specstory/statistics.json` |
+| `spec/api-contract.md` |
+| `spec/architecture.md` |
+| `spec/ui-flow.md` |
+| `spec/data-model.md` |
+| `spec/requirements.md` |
+| `spec/state-machine.md` |
+| `.git/logs/refs/heads/master` |
+| `.git/refs/heads/master` |
+| `.git/logs/HEAD` |
+| `.git/objects/20/a5bec1693e55fcd46f4ed193534e4e8a4f419b` |
+| `.git/COMMIT_EDITMSG` |
+| `.git/objects/ed/456bcd55758a0218101d298ca5dae084c63846` |
+| `.cursor/skills/documentation/SKILL.md` |
+| `.cursor/skills/documentation/templates.md` |
+| `.specstory/history/2026-09-25_12-50-18Z-create-skill-called-documentation.md` |
+| `.git/ORIG_HEAD` |
+| `.cursor/commands/log-mistake.md` |
+| `.cursor/commands/generate-tests.md` |
+| `.cursor/commands/review-spec.md` |
+| `.cursor/rules/vite-react.md` |
+| `.cursor/rules/api-standards.md` |
+| `.cursor/rules/java-springboot.md` |
+| `.git/refs/remotes/origin/master` |
+| `.git/logs/refs/remotes/origin/master` |
+| `.git/config` |
+| `.git/objects/69/bf712ff44ffa576efe0dec2f2e3d0637403172` |
+| `.git/objects/c2/065bc26202b2d072aca3efc3d1c2efad3afcbf` |
+| `.git/objects/95/3908e7300307564e995f6189d5fc88a6d926bc` |
+| `.git/objects/2c/eb1215ae3565cb80f1fc0c310bd72138ac5428` |
+| `.git/objects/5d/ff7710419019630e56ffc858c9110998cd9f17` |
+| `.git/objects/ad/7845be3062ed90f3a53dd7dc4a279d74a239ef` |
+| `.git/objects/a5/1ec4f5886d3bb106b26724ee4507addbbe3fa8` |
+| `.git/objects/c4/19a148fefcaf847c9405ac72cdf719bb15a08c` |
+| `.git/HEAD` |
+| `.git/hooks/pre-rebase.sample` |
+| `.git/hooks/prepare-commit-msg.sample` |
+| `.git/hooks/update.sample` |
+| `.git/hooks/pre-applypatch.sample` |
+| `.git/hooks/post-update.sample` |
+| `.git/hooks/fsmonitor-watchman.sample` |
+| `.git/hooks/pre-merge-commit.sample` |
+| `.git/hooks/commit-msg.sample` |
+| `.git/hooks/push-to-checkout.sample` |
+| `.git/hooks/pre-receive.sample` |
+| `.git/hooks/pre-push.sample` |
+| `.git/hooks/pre-commit.sample` |
+| `.git/hooks/applypatch-msg.sample` |
+| `.git/hooks/sendemail-validate.sample` |
+| `.git/info/exclude` |
+| `.git/description` |
+| `.specstory/.project.json` |
+| `.specstory/cli/config.toml` |
+| `.specstory/.gitignore` |
+| `.cursorindexingignore` |
+| `backend/.idea/gradle.xml` |
+| `backend/.idea/workspace.xml` |
+| `backend/.gradle/buildOutputCleanup/cache.properties` |
+| `backend/.idea/.gitignore` |
+| `backend/src/main/java/com/epic/sturdyfernacular/SturdyFernacularApplication.java` |
+| `backend/build.gradle` |
+| `backend/src/test/java/com/epic/sturdyfernacular/SturdyFernacularApplicationTests.java` |
+| `backend/.idea/misc.xml` |
+| `backend/sturdy-fernacular.iml` |
+| `backend/gradlew.bat` |
+| `.gitattributes` |
+| `backend/.gitignore` |
+| `backend/gradlew` |
+| `backend/settings.gradle` |
+| `backend/wrapper/gradle-wrapper.properties` |
+| `backend/src/main/resources/application.yaml` |
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+A Gradle backend skeleton already exists.
+
+The backend structure needs inspection to name real packages. A CreatePlan will define the tasks.md contents. The requested order may conflict with actual implementation dependencies.
+
+Exception handling will be placed after controllers as requested, though it may need an earlier identity interceptor task. Bootstrap infrastructure is missing from the user's list, so a T0 bootstrap task should be added.
+
+The tasks.md will open with a Prerequisites and scaffolding section, followed by the numbered tasks in the requested order. Five frontend components will be created to match ui-flow.md: AppShell, TicketList, CreateTicket, TicketDetail, and NotFound. The AppShell may be treated as a layout rather than a standalone screen.
+
+Each task will include its own verification criteria. A final tests section will cover the full suite, including state machine matrices, webmvc, testcontainers, and React Testing Library. The identity interceptor will be a standalone small task placed after DTOs and validation.
+
+Pageable max size belongs in DTOs, validation, or controllers. The backend package and application.yaml are being inspected to name real packages.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/build.gradle</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/resources/application.yaml</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **`/home/deepanshu/Desktop/C2/sturdy-fernacular`** (0 files)
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/.cursor/commands/generate-tests.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/data-model.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Validation needs a starter build.
+
+The plan is to write spec/tasks.md directly, not implement the application. It will contain an ordered task list with IDs T0 through Txx. Task T0 covers scaffolding: Docker Compose for Postgres, application configuration, validation dependencies, CORS, and secrets management.
+
+T1 defines enums for ticket status and priority plus a prototype users allowlist. T2 creates the Ticket entity. T3 adds the Comment entity and its relationship. T4 builds the TicketRepository with basic CRUD. T5 adds search queries using ILIKE, status filtering, and pagination. T6 creates the CommentRepository. T7 implements the TicketStateMachine with unit tests. Each task gets a verify line. Heavy test suites move to a final Tests section.
+
+Slice tests for the state machine will live alongside T7 rather than in the final Tests section. The remaining service-layer tasks are T8–T13: auto-assigning tickets on creation, returning 404 for missing tickets, listing and searching, patching read-only fields while keeping assignees non-null, transitioning status through the state machine, and adding comments with distinct logic for cancelled versus closed tickets.
+
+T14–T16 cover request DTOs, response DTOs with page wrappers, and username resolution. T17–T20 define the TicketController endpoints: POST, GET list, GET by ID, PATCH fields, PATCH status, and POST comments. T21–T22 handle global exception advice and the username interceptor.
+
+Frontend tasks T23–T31 cover types, API client, resource functions, the user switcher, TicketList, CreateTicket, TicketDetail, NotFound, and routing. The final test tasks T32–T36 cover state machine coverage, WebMvc tests, Testcontainers search, service unit tests, and React Testing Library per screen.
+
+The backend will use Gradle. Frontend styling is deferred to the initial scaffold. A Vite scaffold task precedes frontend types. Ready to create the plan.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="get_mcp_tools"><details>
+<summary>Tool use: **get_mcp_tools**</summary>
+Tool "CreatePlan" is already available directly and is not part of dynamic namespace "cursor". Invoke "CreatePlan" directly instead of using dynamic tool discovery or invocation.
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Creating the ordered task list now.
+
+Drafting the full tasks.md structure for approval before implementation.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="create_plan"><details>
+<summary>Tool use: **create_plan**</summary>
+
+Parameters:
+
+```json
+{
+  "name": "Spec tasks list",
+  "overview": "Add [spec/tasks.md](spec/tasks.md): a numbered, dependency-aware checklist matching the spec layers. No application code in this change—only the task list, aligned with existing Gradle backend and empty frontend.",
+  "plan": "# Write spec/tasks.md\n\nCreate a single file, [spec/tasks.md](spec/tasks.md), as the implementation backlog. Do not scaffold features in this step.\n\n**Constraints to encode in the file**\n- Follow the requested order: entities → repositories → state machine → service → DTOs/validation → controllers → exception handling → frontend types/client → frontend screens → tests.\n- Each task: **ID**, **depends on**, **do**, **done when** (a test or check that does not require later layers).\n- Cite spec sources (`data-model`, `state-machine`, `api-contract`, `ui-flow`, `architecture`).\n- Backend lives under [backend/](backend/) (`com.epic.sturdyfernacular`, **Gradle already present** — do not add Maven). Frontend does not exist yet; include one Vite scaffold task before types.\n- Java layering from `.cursor/rules/java-springboot.md`: one layer per implementation pass; no `@Data` on entities; state machine has zero Spring.\n- Missing deps to call out in early tasks: `spring-boot-starter-validation`, Testcontainers (tests section), Docker Compose Postgres (needed before repository persistence tests).\n\n**T0 (unblocking, before entities)** — not a domain layer, but without it later tasks cannot run:\n- Postgres `docker-compose`, `application.yaml` datasource via env/gitignored local props, CORS origin, `ddl-auto` or Flyway (pick one; prototype: `update` or a single schema SQL — document the choice in the task).\n- Add `spring-boot-starter-validation`.\n\nThen numbered tasks roughly as follows (final IDs/wording go in `tasks.md`):\n\n**Entities** — enums `TicketStatus`/`Priority`; `PrototypeUsers` allowlist (`alice`/`bob`/`carol`); `Ticket` and `Comment` JPA entities per [spec/data-model.md](spec/data-model.md) (no User table; `createdBy`/`updatedBy`/`author` as VARCHAR; `@CreationTimestamp`/`@UpdateTimestamp`). Done when context loads entities / schema validates.\n\n**Repositories** — `TicketRepository` + `CommentRepository`; separate task for `ILIKE` title/description + optional status + `Pageable` sort `updatedAt DESC, id DESC`. Done with a repository test using Testcontainers **or** defer SQL proof to the Tests section and smoke with `existsById` only on the first repo task (state this so implementers do not fake H2).\n\n**State machine** — `TicketStateMachine` (no Spring): `(current, target) → allow|reject` matching [spec/state-machine.md](spec/state-machine.md). **Done when:** 25 named unit tests (full 5×5, no loop-only coverage) per `/generate-tests`.\n\n**Service** — split so each is testable with mocked repos + real state machine:\n- create (`OPEN`, auto-assign to `X-Username` if assignee null/omitted, stamp `createdBy`/`updatedBy`)\n- get by id / 404\n- list/search (blank keyword = no text filter)\n- PATCH fields (terminal → read-only; assignee null → 400; no status change)\n- PATCH status (only via state machine)\n- add comment (`CANCELLED` forbidden, `CLOSED` allowed; bump ticket `updatedAt`/`updatedBy`)\n\n**DTOs/validation** — request/response records per [spec/api-contract.md](spec/api-contract.md); Bean Validation lengths; reject `status` on field PATCH; page `size` 1–100 default 10; mapper entity→DTO (entities never leave controllers).\n\n**Controllers** — `/api/v1` only; one service call each; `@Valid`; 201 + `Location` on create; endpoints split: list+get+create, PATCH fields, PATCH status, POST comments.\n\n**Exception handling** (after controllers, as requested) — `@RestControllerAdvice` error body (`timestamp`,`status`,`error`,`message`,`path`,`fieldErrors`); exceptions for 404 / `INVALID_STATE_TRANSITION` / `TICKET_READ_ONLY` / `COMMENTS_NOT_ALLOWED`; **`X-Username` interceptor/filter** (400 + `fieldErrors` on `X-Username`) — listed here even though it must be wired before requests succeed.\n\n**Frontend** — Vite+React+TS scaffold (CSS Modules **or** Tailwind, one choice); `src/types/` mirroring contract; `src/api/client.ts` (`VITE_API_BASE_URL`, `ApiError`, inject `X-Username`); `tickets.ts` functions; then **one page/component per [spec/ui-flow.md](spec/ui-flow.md) screen**: App shell (user switcher + `localStorage`), Ticket list `/`, Create `/tickets/new`, Detail `/tickets/{id}` (edit + legal next statuses + comments), Not-found. Routing last if not bundled with shell.\n\n**Tests section** — remaining suites: `@WebMvcTest` each controller (header required, status codes + error shape); Testcontainers ILIKE/list; RTL loading/empty/error for each screen; map each file to acceptance checkboxes in [spec/requirements.md](spec/requirements.md). Do not duplicate the 5×5 if already done with the state machine task.\n\n**Out of scope in tasks.md:** auth/JWT, User CRUD, DELETE, H2, extra transitions, attachments.\n\nAfter the file exists, implementation proceeds one task ID at a time, not the whole stack in one PR/prompt.\n",
+  "todos": [
+    {
+      "content": "Write spec/tasks.md with ordered T0–TN tasks, depends-on, done-when, spec citations",
+      "id": "write-tasks-md",
+      "status": "pending"
+    }
+  ]
+}
+```
+Additional data:
+
+```json
+{
+  "hasOpenedEditor": true,
+  "planId": "spec_tasks_list_d7008a38",
+  "planUri": "file:///home/deepanshu/.cursor/plans/spec_tasks_list_d7008a38.plan.md",
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "none",
+    "status": "Requested"
+  }
+}
+```
+Result:
+
+```json
+{
+  "rejected": {}
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+---
+
+_**User**_
+
+Implement the plan as specified, it is attached for your reference. Do NOT edit the plan file itself.
+
+To-do's from the plan have already been created. Do not create them again. Mark them as in_progress as you work, starting with the first one. Don't stop until you have completed all the to-dos.
