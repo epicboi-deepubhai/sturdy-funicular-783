@@ -1,0 +1,40 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 64px 24px;
+  gap: 12px;
+}
+
+.artwork {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, var(--accent-glow), transparent 60%),
+    radial-gradient(circle at 65% 70%, rgba(34, 211, 238, 0.18), transparent 55%),
+    var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--glow-accent);
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.body {
+  font-size: 14px;
+  color: var(--text-2);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}

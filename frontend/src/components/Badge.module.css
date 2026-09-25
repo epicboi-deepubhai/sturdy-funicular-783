@@ -1,0 +1,67 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.statusOpen {
+  color: var(--status-open);
+  background: color-mix(in srgb, var(--status-open) 10%, transparent);
+  border-color: color-mix(in srgb, var(--status-open) 25%, transparent);
+}
+
+.statusInProgress {
+  color: var(--accent-bright);
+  background: var(--accent-dim);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.statusResolved {
+  color: var(--status-resolved);
+  background: color-mix(in srgb, var(--status-resolved) 10%, transparent);
+  border-color: color-mix(in srgb, var(--status-resolved) 25%, transparent);
+}
+
+.statusClosed {
+  color: var(--status-closed);
+  background: color-mix(in srgb, var(--status-closed) 10%, transparent);
+  border-color: color-mix(in srgb, var(--status-closed) 20%, transparent);
+}
+
+.statusCancelled {
+  color: var(--status-cancelled);
+  background: color-mix(in srgb, var(--status-cancelled) 10%, transparent);
+  border-color: color-mix(in srgb, var(--status-cancelled) 25%, transparent);
+}
+
+.priorityLow {
+  color: var(--priority-low);
+}
+
+.priorityMedium {
+  color: var(--priority-medium);
+}
+
+.priorityHigh {
+  color: var(--priority-high);
+}
+
+.priorityUrgent {
+  color: var(--priority-urgent);
+}

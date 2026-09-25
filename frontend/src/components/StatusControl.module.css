@@ -1,0 +1,58 @@
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 8px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: var(--r-sm);
+  background: var(--accent-dim);
+  color: var(--accent-bright);
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.button:hover:not(:disabled) {
+  box-shadow: var(--glow-accent);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.danger {
+  border-color: color-mix(in srgb, var(--status-cancelled) 35%, transparent);
+  background: color-mix(in srgb, var(--status-cancelled) 10%, transparent);
+  color: var(--status-cancelled);
+}
+
+.danger:hover:not(:disabled) {
+  box-shadow: 0 0 16px color-mix(in srgb, var(--status-cancelled) 25%, transparent);
+}
+
+.readOnly {
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--status-cancelled);
+}

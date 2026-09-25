@@ -1,0 +1,18 @@
+.homeLink {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: var(--r-sm);
+  background: var(--accent);
+  color: var(--text-1);
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.homeLink:hover {
+  background: var(--accent-bright);
+  box-shadow: var(--glow-accent);
+  text-decoration: none;
+}
