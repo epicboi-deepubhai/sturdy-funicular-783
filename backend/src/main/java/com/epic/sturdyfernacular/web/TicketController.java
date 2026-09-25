@@ -65,7 +65,7 @@ public class TicketController {
         }
         Pageable pageable = PageRequest.of(page, size,
                 Sort.by(Sort.Direction.DESC, "updated_at").and(Sort.by(Sort.Direction.DESC, "id")));
-        Page<Ticket> result = service.list(status, keyword, pageable);
+        Page<Ticket> result = service.list(actingUser(), status, keyword, pageable);
         List<TicketListItem> content = result.getContent().stream()
                 .map(TicketMapper::toListItem).toList();
         return new PageResponse<>(content, result.getTotalElements(),
@@ -74,7 +74,7 @@ public class TicketController {
 
     @GetMapping("/{id}")
     public TicketDetail getById(@PathVariable Long id) {
-        Ticket t = service.getById(id);
+        Ticket t = service.getById(id, actingUser());
         return TicketMapper.toDetail(t, service.getComments(id));
     }
 

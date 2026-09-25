@@ -28,6 +28,11 @@ Allowed values (case-sensitive): `alice`, `bob`, `carol`.
 
 The header is the acting user. It is not read from the body. Comment `author`, ticket `createdBy` / `updatedBy` are copied from it on write.
 
+Ticket access is scoped to the acting user. A ticket is accessible only when
+`X-Username` equals its `createdBy` or current `assignee`. This applies to list,
+detail, field update, status change, and comment operations. Inaccessible ticket
+ids return the same 404 response as missing ids.
+
 **CORS / OPTIONS:** `OPTIONS` requests to `/api/v1/**` are not required to send `X-Username`. A missing header on `OPTIONS` must not produce 400. Browser CORS: allow origin `http://localhost:5173`; methods GET, POST, PATCH, OPTIONS; headers `Content-Type`, `X-Username`.
 
 ## Error response
@@ -55,7 +60,7 @@ Validation (400) also includes:
 | HTTP | When | Typical `error` |
 |---|---|---|
 | 400 | Validation, unknown enum, bad page/size, bad header, malformed JSON, non-numeric `{id}` | `VALIDATION_ERROR` |
-| 404 | Ticket id does not exist (well-formed id, no row) | `NOT_FOUND` |
+| 404 | Ticket id does not exist or is not accessible to `X-Username` | `NOT_FOUND` |
 | 409 | Illegal status transition; field update on terminal ticket; comment on `CANCELLED` | `INVALID_STATE_TRANSITION`, `TICKET_READ_ONLY`, `COMMENTS_NOT_ALLOWED` |
 | 500 | Unexpected only | `INTERNAL_ERROR` |
 
@@ -143,6 +148,10 @@ Response: `TicketDetail` with `status` `OPEN`, `createdBy`/`updatedBy` = `X-User
 
 List / search / filter. Success: **200**.
 
+Only tickets whose `createdBy` or `assignee` equals `X-Username` are included.
+Filtering, pagination, and `totalElements` / `totalPages` are calculated over
+that access-scoped result set.
+
 Query:
 
 | Param | Default | Rules |
@@ -171,7 +180,8 @@ Response (Spring page fields required by project rules):
 
 ### GET /tickets/{id}
 
-Success: **200** `TicketDetail` with `comments` oldest-first. **404** if missing.
+Success: **200** `TicketDetail` with `comments` oldest-first. **404** if missing
+or inaccessible to `X-Username`.
 
 ### PATCH /tickets/{id}
 
@@ -199,7 +209,7 @@ Unknown JSON fields ignored or 400 (either is fine; prefer ignoring extras). `st
 
 | Condition | Status | `error` |
 |---|---|---|
-| Ticket missing | 404 | `NOT_FOUND` |
+| Ticket missing or inaccessible | 404 | `NOT_FOUND` |
 | Status is `CLOSED` or `CANCELLED` | 409 | `TICKET_READ_ONLY` |
 | Empty body (no updatable fields) | 400 | `VALIDATION_ERROR` |
 
@@ -219,7 +229,7 @@ Request:
 
 | Condition | Status | `error` |
 |---|---|---|
-| Ticket missing | 404 | `NOT_FOUND` |
+| Ticket missing or inaccessible | 404 | `NOT_FOUND` |
 | Transition not allowed (including same status) | 409 | `INVALID_STATE_TRANSITION` |
 
 ### POST /tickets/{id}/comments
@@ -238,7 +248,7 @@ Do not accept `author`. Server sets `author` from `X-Username`.
 
 | Condition | Status | `error` |
 |---|---|---|
-| Ticket missing | 404 | `NOT_FOUND` |
+| Ticket missing or inaccessible | 404 | `NOT_FOUND` |
 | Status is `CANCELLED` | 409 | `COMMENTS_NOT_ALLOWED` |
 | Blank body | 400 | `VALIDATION_ERROR` |
 

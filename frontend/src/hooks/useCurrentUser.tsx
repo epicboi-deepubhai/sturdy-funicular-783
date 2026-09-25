@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import type { ReactNode } from 'react'
 import { registerUsernameGetter } from '../api/client'
 
@@ -21,14 +21,16 @@ interface CurrentUserContextValue {
 const CurrentUserContext = createContext<CurrentUserContextValue | null>(null)
 
 export function CurrentUserProvider({ children }: { children: ReactNode }) {
-  const [username, setUsernameState] = useState<Username>(loadStoredUser)
-
-  useEffect(() => {
-    registerUsernameGetter(() => username)
-  }, [username])
+  const [username, setUsernameState] = useState<Username>(() => {
+    const initial = loadStoredUser()
+    registerUsernameGetter(() => initial)
+    return initial
+  })
 
   const setUsername = (user: Username) => {
     localStorage.setItem(STORAGE_KEY, user)
+    // Update the request identity before consumers rerender and refetch.
+    registerUsernameGetter(() => user)
     setUsernameState(user)
   }
 

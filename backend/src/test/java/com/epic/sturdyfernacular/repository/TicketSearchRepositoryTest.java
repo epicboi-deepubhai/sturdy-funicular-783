@@ -32,14 +32,19 @@ class TicketSearchRepositoryTest {
             .and(Sort.by(Sort.Direction.DESC, "id"));
 
     private Ticket ticket(String title, String description, TicketStatus status) {
+        return ticket(title, description, status, "alice", "alice");
+    }
+
+    private Ticket ticket(String title, String description, TicketStatus status,
+                          String createdBy, String assignee) {
         Ticket t = new Ticket();
         t.setTitle(title);
         t.setDescription(description);
         t.setStatus(status);
         t.setPriority(Priority.MEDIUM);
-        t.setAssignee("alice");
-        t.setCreatedBy("alice");
-        t.setUpdatedBy("alice");
+        t.setAssignee(assignee);
+        t.setCreatedBy(createdBy);
+        t.setUpdatedBy(createdBy);
         return ticketRepository.save(t);
     }
 
@@ -53,38 +58,38 @@ class TicketSearchRepositoryTest {
 
     @Test
     void matchesKeywordOnTitle() {
-        Page<Ticket> r = ticketRepository.search(null, "billing", PageRequest.of(0, 10, SORT));
+        Page<Ticket> r = ticketRepository.search("alice", null, "billing", PageRequest.of(0, 10, SORT));
         assertThat(r.getContent()).extracting(Ticket::getTitle).containsExactly("Billing question");
     }
 
     @Test
     void matchesKeywordOnDescription() {
-        Page<Ticket> r = ticketRepository.search(null, "invoice", PageRequest.of(0, 10, SORT));
+        Page<Ticket> r = ticketRepository.search("alice", null, "invoice", PageRequest.of(0, 10, SORT));
         assertThat(r.getContent()).extracting(Ticket::getTitle).containsExactly("Billing question");
     }
 
     @Test
     void keywordIsCaseInsensitive() {
-        Page<Ticket> r = ticketRepository.search(null, "LOGIN", PageRequest.of(0, 10, SORT));
+        Page<Ticket> r = ticketRepository.search("alice", null, "LOGIN", PageRequest.of(0, 10, SORT));
         assertThat(r.getContent()).hasSize(2);
     }
 
     @Test
     void combinesStatusAndKeyword() {
-        Page<Ticket> r = ticketRepository.search("IN_PROGRESS", "login",
+        Page<Ticket> r = ticketRepository.search("alice", "IN_PROGRESS", "login",
                 PageRequest.of(0, 10, SORT));
         assertThat(r.getContent()).extracting(Ticket::getTitle).containsExactly("Password reset");
     }
 
     @Test
     void nullKeywordReturnsAllForStatus() {
-        Page<Ticket> r = ticketRepository.search("OPEN", null, PageRequest.of(0, 10, SORT));
+        Page<Ticket> r = ticketRepository.search("alice", "OPEN", null, PageRequest.of(0, 10, SORT));
         assertThat(r.getContent()).hasSize(2);
     }
 
     @Test
     void sortsByUpdatedAtDescThenIdDesc() {
-        Page<Ticket> r = ticketRepository.search(null, null, PageRequest.of(0, 10, SORT));
+        Page<Ticket> r = ticketRepository.search("alice", null, null, PageRequest.of(0, 10, SORT));
         assertThat(r.getContent()).hasSize(3);
         // Most recently updated first; ties broken by higher id first.
         for (int i = 0; i < r.getContent().size() - 1; i++) {
@@ -96,5 +101,38 @@ class TicketSearchRepositoryTest {
                 assertThat(a.getId()).isGreaterThan(b.getId());
             }
         }
+    }
+
+    @Test
+    void scopesResultsAndCountsToCreatorOrAssignee() {
+        ticket("Shared ticket", "Visible to creator and assignee",
+                TicketStatus.OPEN, "bob", "carol");
+
+        Page<Ticket> bob = ticketRepository.search(
+                "bob", null, null, PageRequest.of(0, 10, SORT));
+        Page<Ticket> carol = ticketRepository.search(
+                "carol", null, null, PageRequest.of(0, 10, SORT));
+        Page<Ticket> alice = ticketRepository.search(
+                "alice", null, null, PageRequest.of(0, 10, SORT));
+
+        assertThat(bob.getContent()).extracting(Ticket::getTitle)
+                .containsExactly("Shared ticket");
+        assertThat(carol.getContent()).extracting(Ticket::getTitle)
+                .containsExactly("Shared ticket");
+        assertThat(bob.getTotalElements()).isEqualTo(1);
+        assertThat(carol.getTotalElements()).isEqualTo(1);
+        assertThat(alice.getContent()).extracting(Ticket::getTitle)
+                .doesNotContain("Shared ticket");
+        assertThat(alice.getTotalElements()).isEqualTo(3);
+    }
+
+    @Test
+    void accessibleLookupAllowsCreatorAndAssigneeButNotOtherUsers() {
+        Ticket shared = ticket("Restricted", "Access test",
+                TicketStatus.OPEN, "bob", "carol");
+
+        assertThat(ticketRepository.findAccessibleById(shared.getId(), "bob")).isPresent();
+        assertThat(ticketRepository.findAccessibleById(shared.getId(), "carol")).isPresent();
+        assertThat(ticketRepository.findAccessibleById(shared.getId(), "alice")).isEmpty();
     }
 }

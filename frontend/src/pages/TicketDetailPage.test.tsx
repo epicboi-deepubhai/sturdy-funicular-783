@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event'
 import { Route, Routes } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ApiError } from '../api/client'
+import { Banner } from '../components/Banner'
+import { UserSwitcher } from '../components/UserSwitcher'
 import type { TicketDetail } from '../types/ticket'
 import TicketDetailPage from './TicketDetailPage'
 import { renderWithProviders } from '../test/render'
@@ -48,6 +50,7 @@ function renderDetail(id = '42') {
 }
 
 beforeEach(() => {
+  localStorage.clear()
   getTicketMock.mockReset()
   changeStatusMock.mockReset()
   updateTicketMock.mockReset()
@@ -250,5 +253,56 @@ describe('TicketDetailPage', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Ticket is closed and read-only',
     )
+  })
+
+  it('refetches detail and stays on the page when the new user has access', async () => {
+    const user = userEvent.setup()
+    getTicketMock
+      .mockResolvedValueOnce(ticket({ createdBy: 'alice', assignee: 'bob' }))
+      .mockResolvedValueOnce(
+        ticket({ createdBy: 'alice', assignee: 'bob', updatedBy: 'bob' }),
+      )
+
+    renderWithProviders(
+      <>
+        <UserSwitcher />
+        <Routes>
+          <Route path="/tickets/:id" element={<TicketDetailPage />} />
+        </Routes>
+      </>,
+      { initialEntries: ['/tickets/42'] },
+    )
+
+    expect(await screen.findByText('Cannot login')).toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: 'bob' }))
+
+    await waitFor(() => expect(getTicketMock).toHaveBeenCalledTimes(2))
+    expect(await screen.findByText('updated by bob')).toBeInTheDocument()
+  })
+
+  it('redirects with a banner when a user switch loses ticket access', async () => {
+    const user = userEvent.setup()
+    getTicketMock
+      .mockResolvedValueOnce(ticket({ createdBy: 'alice', assignee: 'bob' }))
+      .mockRejectedValueOnce(new ApiError(404, 'NOT_FOUND', 'Ticket 42 not found'))
+
+    renderWithProviders(
+      <>
+        <UserSwitcher />
+        <Banner />
+        <Routes>
+          <Route path="/tickets/:id" element={<TicketDetailPage />} />
+          <Route path="/" element={<div>Ticket list</div>} />
+        </Routes>
+      </>,
+      { initialEntries: ['/tickets/42'] },
+    )
+
+    expect(await screen.findByText('Cannot login')).toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: 'carol' }))
+
+    expect(await screen.findByText('Ticket list')).toBeInTheDocument()
+    expect(screen.getByRole('alert')).toHaveTextContent('Ticket not found')
+    expect(getTicketMock).toHaveBeenCalledTimes(2)
   })
 })

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     /**
@@ -18,20 +20,31 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
      */
     @Query(value = """
             SELECT * FROM ticket t
-            WHERE (:status IS NULL OR t.status = :status)
+            WHERE (t.created_by = :username OR t.assignee = :username)
+              AND (:status IS NULL OR t.status = :status)
               AND (:keyword IS NULL
                    OR t.title ILIKE '%' || :keyword || '%' ESCAPE '\\'
                    OR t.description ILIKE '%' || :keyword || '%' ESCAPE '\\')
             """,
             countQuery = """
             SELECT count(*) FROM ticket t
-            WHERE (:status IS NULL OR t.status = :status)
+            WHERE (t.created_by = :username OR t.assignee = :username)
+              AND (:status IS NULL OR t.status = :status)
               AND (:keyword IS NULL
                    OR t.title ILIKE '%' || :keyword || '%' ESCAPE '\\'
                    OR t.description ILIKE '%' || :keyword || '%' ESCAPE '\\')
             """,
             nativeQuery = true)
-    Page<Ticket> search(@Param("status") String status,
+    Page<Ticket> search(@Param("username") String username,
+                        @Param("status") String status,
                         @Param("keyword") String keyword,
                         Pageable pageable);
+
+    @Query("""
+            SELECT t FROM Ticket t
+            WHERE t.id = :id
+              AND (t.createdBy = :username OR t.assignee = :username)
+            """)
+    Optional<Ticket> findAccessibleById(@Param("id") Long id,
+                                        @Param("username") String username);
 }

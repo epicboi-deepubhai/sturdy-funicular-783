@@ -35,7 +35,7 @@ If any of the above turns out to be needed, it must be added to this document an
 
 ## 3. Actors
 
-- **Agent** — one of `alice`, `bob`, `carol`. Creates tickets, updates them, is assignable, adds comments. No distinct roles; every listed agent can do everything. The acting agent for a request is the username on that request, not a server-side session.
+- **Agent** — one of `alice`, `bob`, `carol`. Creates tickets, updates them, is assignable, adds comments. There are no roles, but ticket access is limited to its creator and current assignee (FR16). The acting agent for a request is the username on that request, not a server-side session.
 
 ## 4. Functional Requirements
 
@@ -149,6 +149,13 @@ If `spec/state-machine.md` and this section ever disagree, **this section is the
 - Path `{id}` that is not a number: 400 `VALIDATION_ERROR` (not 500).
 - `size` outside 1–100, or `page` less than 0: 400 `VALIDATION_ERROR`.
 
+### FR16 — Ticket access isolation
+- An agent may access a ticket only when their username equals the ticket's `createdBy` or current `assignee`.
+- List, search, filtering, and pagination operate only over tickets visible to the acting `X-Username`; page totals must also be scoped.
+- Detail, field update, status change, and comment endpoints enforce the same rule server-side.
+- A ticket that exists but is not visible to the acting user returns the same 404 `NOT_FOUND` response as a missing ticket, so its existence is not disclosed.
+- Changing users in the UI refetches list/detail data. If the newly selected user cannot access the currently open ticket, the UI redirects to the list and shows `Ticket not found`.
+
 ## 5. Data Model (summary — full detail in `spec/data-model.md`)
 
 **Ticket**: id, title, description, status, priority, assignee (username, never null after persist), createdBy (username), updatedBy (username), createdAt, updatedAt, comments (one-to-many).
@@ -191,6 +198,8 @@ No `User` entity. User-attributed columns store the raw username string.
 - [ ] Local Compose Postgres + configured datasource; backend starts (FR13)
 - [ ] CORS allows the Vite origin and `X-Username`; OPTIONS does not require the header (FR14)
 - [ ] Malformed JSON and non-numeric ids return 400, not 500 (FR15)
+- [ ] Lists, detail, and writes are limited to the ticket creator or current assignee; inaccessible tickets return 404 (FR16)
+- [ ] Switching users refetches visible tickets and redirects an inaccessible detail view with a not-found banner (FR16)
 - [ ] JPA and search tests use Testcontainers Postgres, not H2 (NFR)
 
 ## 8. Decisions (closed)

@@ -9,13 +9,14 @@ Stack: Vite + React + TypeScript in `frontend/`. CSS Modules. Typed client in `s
 
 - App header: title + **user switcher** (`alice` | `bob` | `carol`).
 - Selected user is sent as `X-Username` on every request (API client interceptor). Persist the selection in `localStorage` so refresh keeps it; default `alice` if unset.
-- Changing user does not log in; it only changes the header. In-flight screens refetch if needed (list/detail) so `updatedBy` / comment author reflect the new actor on the next write.
+- Changing user does not log in; it changes the acting identity and immediately refetches list/detail data. If the new user cannot access an open ticket detail, replace-navigate to `/` and show the global banner `Ticket not found`.
 - Global fallback banner for network / 5xx: distinct copy from validation errors (FR11).
 - No login page. No user admin.
 
 ## Screen: Ticket list (`/`)
 
-**Shows (FR2 minimum):** id, title, status, priority, assignee, updatedAt.
+**Shows (FR2 minimum):** id, title, status, priority, assignee, updatedAt. Results
+include only tickets created by or currently assigned to the selected user.
 
 **Controls**
 - Keyword search (debounced or explicit Submit; empty = no keyword param).
@@ -47,7 +48,10 @@ Cancel → `/`.
 
 **Shows:** all detail fields including `createdBy`, `updatedBy`, timestamps, comments oldest-first.
 
-**404:** dedicated not-found message, link back to list.
+**404:** a directly opened missing or inaccessible ticket shows the dedicated
+not-found message with a link back to the list. If a user switch makes a
+previously loaded ticket inaccessible, redirect to the list and show
+`Ticket not found` in the global banner.
 
 ### Field edit
 

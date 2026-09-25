@@ -89,39 +89,43 @@ class TicketServiceTest {
 
     // T8 get
     @Test
-    void getById_returnsTicket() {
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(ticket(TicketStatus.OPEN)));
-        assertThat(service.getById(1L).getId()).isEqualTo(1L);
+    void getById_returnsTicketForCreatorOrAssignee() {
+        when(ticketRepository.findAccessibleById(1L, "alice"))
+                .thenReturn(Optional.of(ticket(TicketStatus.OPEN)));
+        assertThat(service.getById(1L, "alice").getId()).isEqualTo(1L);
     }
 
     @Test
-    void getById_throwsWhenMissing() {
-        when(ticketRepository.findById(9L)).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> service.getById(9L)).isInstanceOf(TicketNotFoundException.class);
+    void getById_throwsWhenMissingOrUnauthorized() {
+        when(ticketRepository.findAccessibleById(9L, "carol")).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> service.getById(9L, "carol"))
+                .isInstanceOf(TicketNotFoundException.class);
     }
 
     // T9 list
     @Test
     void list_blankKeywordPassesNullToRepo() {
         Pageable p = PageRequest.of(0, 10);
-        when(ticketRepository.search(any(), any(), any())).thenReturn(new PageImpl<>(List.of()));
-        service.list(null, "   ", p);
-        verify(ticketRepository).search(null, null, p);
+        when(ticketRepository.search(any(), any(), any(), any()))
+                .thenReturn(new PageImpl<>(List.of()));
+        service.list("alice", null, "   ", p);
+        verify(ticketRepository).search("alice", null, null, p);
     }
 
     @Test
     void list_forwardsStatusAndPageable() {
         Pageable p = PageRequest.of(1, 50);
-        when(ticketRepository.search(any(), any(), any())).thenReturn(new PageImpl<>(List.of()));
-        service.list(TicketStatus.OPEN, "login", p);
-        verify(ticketRepository).search("OPEN", "login", p);
+        when(ticketRepository.search(any(), any(), any(), any()))
+                .thenReturn(new PageImpl<>(List.of()));
+        service.list("bob", TicketStatus.OPEN, "login", p);
+        verify(ticketRepository).search("bob", "OPEN", "login", p);
     }
 
     // T10 update
     @Test
     void updateFields_partialPatch() {
         Ticket t = ticket(TicketStatus.OPEN);
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(t));
+        when(ticketRepository.findAccessibleById(1L, "bob")).thenReturn(Optional.of(t));
         when(ticketRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         UpdateTicketRequest req = new UpdateTicketRequest("New title", null, null, null, null);
         Ticket out = service.updateFields(1L, "bob", req);
@@ -132,7 +136,8 @@ class TicketServiceTest {
 
     @Test
     void updateFields_terminalTicketIsReadOnly() {
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(ticket(TicketStatus.CLOSED)));
+        when(ticketRepository.findAccessibleById(1L, "alice"))
+                .thenReturn(Optional.of(ticket(TicketStatus.CLOSED)));
         UpdateTicketRequest req = new UpdateTicketRequest("X", null, null, null, null);
         assertThatThrownBy(() -> service.updateFields(1L, "alice", req))
                 .isInstanceOf(TicketReadOnlyException.class);
@@ -140,7 +145,8 @@ class TicketServiceTest {
 
     @Test
     void updateFields_assigneeCannotBeCleared() {
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(ticket(TicketStatus.OPEN)));
+        when(ticketRepository.findAccessibleById(1L, "alice"))
+                .thenReturn(Optional.of(ticket(TicketStatus.OPEN)));
         UpdateTicketRequest req = new UpdateTicketRequest(null, null, null, "  ", null);
         assertThatThrownBy(() -> service.updateFields(1L, "alice", req))
                 .isInstanceOf(InvalidAssigneeException.class);
@@ -149,7 +155,7 @@ class TicketServiceTest {
     @Test
     void updateFields_doesNotChangeStatus() {
         Ticket t = ticket(TicketStatus.OPEN);
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(t));
+        when(ticketRepository.findAccessibleById(1L, "alice")).thenReturn(Optional.of(t));
         when(ticketRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         UpdateTicketRequest req = new UpdateTicketRequest(null, null, Priority.URGENT, null, "CLOSED");
         Ticket out = service.updateFields(1L, "alice", req);
@@ -161,7 +167,7 @@ class TicketServiceTest {
     @Test
     void changeStatus_allowedTransitionPersists() {
         Ticket t = ticket(TicketStatus.OPEN);
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(t));
+        when(ticketRepository.findAccessibleById(1L, "bob")).thenReturn(Optional.of(t));
         when(ticketRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         Ticket out = service.changeStatus(1L, "bob", TicketStatus.IN_PROGRESS);
         assertThat(out.getStatus()).isEqualTo(TicketStatus.IN_PROGRESS);
@@ -170,7 +176,8 @@ class TicketServiceTest {
 
     @Test
     void changeStatus_terminalRejects() {
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(ticket(TicketStatus.CLOSED)));
+        when(ticketRepository.findAccessibleById(1L, "alice"))
+                .thenReturn(Optional.of(ticket(TicketStatus.CLOSED)));
         assertThatThrownBy(() -> service.changeStatus(1L, "alice", TicketStatus.OPEN))
                 .isInstanceOf(InvalidStateTransitionException.class);
         verify(ticketRepository, never()).save(any());
@@ -178,7 +185,8 @@ class TicketServiceTest {
 
     @Test
     void changeStatus_sameStatusRejects() {
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(ticket(TicketStatus.OPEN)));
+        when(ticketRepository.findAccessibleById(1L, "alice"))
+                .thenReturn(Optional.of(ticket(TicketStatus.OPEN)));
         assertThatThrownBy(() -> service.changeStatus(1L, "alice", TicketStatus.OPEN))
                 .isInstanceOf(InvalidStateTransitionException.class);
     }
@@ -187,7 +195,7 @@ class TicketServiceTest {
     @Test
     void addComment_onClosedSucceeds() {
         Ticket t = ticket(TicketStatus.CLOSED);
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(t));
+        when(ticketRepository.findAccessibleById(1L, "carol")).thenReturn(Optional.of(t));
         when(commentRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         when(ticketRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         Comment c = service.addComment(1L, "carol", "note");
@@ -196,8 +204,26 @@ class TicketServiceTest {
 
     @Test
     void addComment_onCancelledFails() {
-        when(ticketRepository.findById(1L)).thenReturn(Optional.of(ticket(TicketStatus.CANCELLED)));
+        when(ticketRepository.findAccessibleById(1L, "alice"))
+                .thenReturn(Optional.of(ticket(TicketStatus.CANCELLED)));
         assertThatThrownBy(() -> service.addComment(1L, "alice", "x"))
                 .isInstanceOf(CommentsNotAllowedException.class);
+    }
+
+    @Test
+    void unauthorizedUserGetsNotFoundForEveryWriteOperation() {
+        when(ticketRepository.findAccessibleById(1L, "carol")).thenReturn(Optional.empty());
+        UpdateTicketRequest update =
+                new UpdateTicketRequest("New title", null, null, null, null);
+
+        assertThatThrownBy(() -> service.updateFields(1L, "carol", update))
+                .isInstanceOf(TicketNotFoundException.class);
+        assertThatThrownBy(() ->
+                service.changeStatus(1L, "carol", TicketStatus.IN_PROGRESS))
+                .isInstanceOf(TicketNotFoundException.class);
+        assertThatThrownBy(() -> service.addComment(1L, "carol", "note"))
+                .isInstanceOf(TicketNotFoundException.class);
+        verify(ticketRepository, never()).save(any());
+        verify(commentRepository, never()).save(any());
     }
 }

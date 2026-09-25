@@ -54,8 +54,8 @@ public class TicketService {
     }
 
     @Transactional(readOnly = true)
-    public Ticket getById(Long id) {
-        return ticketRepository.findById(id)
+    public Ticket getById(Long id, String actingUsername) {
+        return ticketRepository.findAccessibleById(id, actingUsername)
                 .orElseThrow(() -> new TicketNotFoundException(id));
     }
 
@@ -65,10 +65,11 @@ public class TicketService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Ticket> list(TicketStatus status, String keyword, Pageable pageable) {
+    public Page<Ticket> list(String actingUsername, TicketStatus status,
+                             String keyword, Pageable pageable) {
         String statusText = status == null ? null : status.name();
         String kw = normalizeKeyword(keyword);
-        return ticketRepository.search(statusText, kw, pageable);
+        return ticketRepository.search(actingUsername, statusText, kw, pageable);
     }
 
     private String normalizeKeyword(String keyword) {
@@ -83,7 +84,7 @@ public class TicketService {
 
     @Transactional
     public Ticket updateFields(Long id, String actingUsername, UpdateTicketRequest request) {
-        Ticket t = getById(id);
+        Ticket t = getById(id, actingUsername);
         if (isTerminal(t.getStatus())) {
             throw new TicketReadOnlyException(id);
         }
@@ -108,7 +109,7 @@ public class TicketService {
 
     @Transactional
     public Ticket changeStatus(Long id, String actingUsername, TicketStatus target) {
-        Ticket t = getById(id);
+        Ticket t = getById(id, actingUsername);
         if (!stateMachine.isAllowed(t.getStatus(), target)) {
             throw new InvalidStateTransitionException(t.getStatus(), target);
         }
@@ -119,7 +120,7 @@ public class TicketService {
 
     @Transactional
     public Comment addComment(Long ticketId, String actingUsername, String body) {
-        Ticket t = getById(ticketId);
+        Ticket t = getById(ticketId, actingUsername);
         if (t.getStatus() == TicketStatus.CANCELLED) {
             throw new CommentsNotAllowedException(ticketId);
         }

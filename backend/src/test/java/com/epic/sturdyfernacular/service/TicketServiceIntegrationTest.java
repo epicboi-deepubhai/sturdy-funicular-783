@@ -47,16 +47,19 @@ class TicketServiceIntegrationTest {
         service.create("alice", new CreateTicketRequest("Login broken", "SSO loops", Priority.HIGH, null));
         service.create("alice", new CreateTicketRequest("Billing", "Invoice wrong", Priority.LOW, null));
 
-        Page<Ticket> byTitle = service.list(null, "login", PageRequest.of(0, 10, SORT));
+        Page<Ticket> byTitle =
+                service.list("alice", null, "login", PageRequest.of(0, 10, SORT));
         assertThat(byTitle.getContent()).extracting(Ticket::getTitle).contains("Login broken");
 
-        Page<Ticket> byDesc = service.list(null, "INVOICE", PageRequest.of(0, 10, SORT));
+        Page<Ticket> byDesc =
+                service.list("alice", null, "INVOICE", PageRequest.of(0, 10, SORT));
         assertThat(byDesc.getContent()).extracting(Ticket::getTitle).contains("Billing");
     }
 
     @Test
     void commentOnClosedAllowed_onCancelledRejected() {
-        Ticket t = service.create("alice", new CreateTicketRequest("T", "D", Priority.MEDIUM, null));
+        Ticket t = service.create(
+                "alice", new CreateTicketRequest("T", "D", Priority.MEDIUM, "bob"));
         service.changeStatus(t.getId(), "alice", TicketStatus.IN_PROGRESS);
         service.changeStatus(t.getId(), "alice", TicketStatus.RESOLVED);
         service.changeStatus(t.getId(), "alice", TicketStatus.CLOSED);
@@ -64,7 +67,8 @@ class TicketServiceIntegrationTest {
         service.addComment(t.getId(), "bob", "post-close note");
         assertThat(commentRepository.findByTicketIdOrderByCreatedAtAscIdAsc(t.getId())).hasSize(1);
 
-        Ticket t2 = service.create("alice", new CreateTicketRequest("T2", "D2", Priority.LOW, null));
+        Ticket t2 = service.create(
+                "alice", new CreateTicketRequest("T2", "D2", Priority.LOW, "bob"));
         service.changeStatus(t2.getId(), "alice", TicketStatus.CANCELLED);
         assertThatThrownBy(() -> service.addComment(t2.getId(), "bob", "nope"))
                 .isInstanceOf(CommentsNotAllowedException.class);

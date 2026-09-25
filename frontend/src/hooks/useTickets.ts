@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { listTickets } from '../api/tickets'
 import type { ListTicketsParams } from '../api/tickets'
 import type { PageResponse, TicketListItem } from '../types/ticket'
+import { useCurrentUser } from './useCurrentUser'
 import { useErrorHandler } from './useErrorHandler'
 
 interface UseTicketsResult {
@@ -17,6 +18,7 @@ export function useTickets(params: ListTicketsParams): UseTicketsResult {
   const [error, setError] = useState<string | null>(null)
   const [attempt, setAttempt] = useState(0)
   const handleError = useErrorHandler()
+  const { username } = useCurrentUser()
 
   const { status, keyword, page, size } = params
 
@@ -39,7 +41,7 @@ export function useTickets(params: ListTicketsParams): UseTicketsResult {
     return () => {
       cancelled = true
     }
-  }, [status, keyword, page, size, attempt, handleError])
+  }, [status, keyword, page, size, attempt, handleError, username])
 
   return { data, loading, error, retry: () => setAttempt((n) => n + 1) }
 }

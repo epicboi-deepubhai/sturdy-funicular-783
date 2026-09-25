@@ -22,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
@@ -83,7 +84,7 @@ class TicketControllerTest {
     // T14 list
     @Test
     void list_returnsPageShape() throws Exception {
-        when(service.list(any(), any(), any()))
+        when(service.list(anyString(), any(), any(), any()))
                 .thenReturn(new PageImpl<>(List.of(ticket()), PageRequest.of(0, 10), 1));
         mvc.perform(get("/api/v1/tickets").header("X-Username", "alice"))
                 .andExpect(status().isOk())
@@ -91,6 +92,7 @@ class TicketControllerTest {
                 .andExpect(jsonPath("$.totalElements").value(1))
                 .andExpect(jsonPath("$.totalPages").value(1))
                 .andExpect(jsonPath("$.pageNumber").value(0));
+        verify(service).list(eq("alice"), any(), any(), any());
     }
 
     @Test
@@ -109,7 +111,7 @@ class TicketControllerTest {
     // T14 get
     @Test
     void getById_returnsDetail() throws Exception {
-        when(service.getById(42L)).thenReturn(ticket());
+        when(service.getById(42L, "alice")).thenReturn(ticket());
         when(service.getComments(42L)).thenReturn(List.of());
         mvc.perform(get("/api/v1/tickets/42").header("X-Username", "alice"))
                 .andExpect(status().isOk())
@@ -119,8 +121,16 @@ class TicketControllerTest {
 
     @Test
     void getById_missing_returns404() throws Exception {
-        when(service.getById(99L)).thenThrow(new TicketNotFoundException(99L));
+        when(service.getById(99L, "alice")).thenThrow(new TicketNotFoundException(99L));
         mvc.perform(get("/api/v1/tickets/99").header("X-Username", "alice"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("NOT_FOUND"));
+    }
+
+    @Test
+    void getById_unauthorized_returns404() throws Exception {
+        when(service.getById(42L, "carol")).thenThrow(new TicketNotFoundException(42L));
+        mvc.perform(get("/api/v1/tickets/42").header("X-Username", "carol"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("NOT_FOUND"));
     }
@@ -183,6 +193,32 @@ class TicketControllerTest {
                         .content("{\"body\":\"note\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.author").value("alice"));
+    }
+
+    @Test
+    void unauthorizedWritesReturn404() throws Exception {
+        when(service.updateFields(eq(42L), eq("carol"), any()))
+                .thenThrow(new TicketNotFoundException(42L));
+        when(service.changeStatus(eq(42L), eq("carol"), any()))
+                .thenThrow(new TicketNotFoundException(42L));
+        when(service.addComment(42L, "carol", "note"))
+                .thenThrow(new TicketNotFoundException(42L));
+
+        mvc.perform(patch("/api/v1/tickets/42")
+                        .header("X-Username", "carol")
+                        .contentType("application/json")
+                        .content("{\"title\":\"New\"}"))
+                .andExpect(status().isNotFound());
+        mvc.perform(patch("/api/v1/tickets/42/status")
+                        .header("X-Username", "carol")
+                        .contentType("application/json")
+                        .content("{\"status\":\"IN_PROGRESS\"}"))
+                .andExpect(status().isNotFound());
+        mvc.perform(post("/api/v1/tickets/42/comments")
+                        .header("X-Username", "carol")
+                        .contentType("application/json")
+                        .content("{\"body\":\"note\"}"))
+                .andExpect(status().isNotFound());
     }
 
     // T16 header enforcement

@@ -4523,6 +4523,4883 @@ To-do's from the plan have already been created. Do not create them again. Mark 
 
 _**Agent (auto-smart)**_
 
+<think><details><summary>Thought Process</summary>
+Let me start implementing the frontend. T17 first: scaffold Vite + React + TS, install deps, create tokens.css and base.css.
+
+Let me mark T17 in progress and scaffold.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Starting T17 — scaffold and design foundation.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "in_progress"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "pending"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "pending"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "pending"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "pending"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "pending"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "pending"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "pending"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "pending"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "pending"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-User
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular &amp;&amp; npm create vite@latest frontend -- --template react-ts 2&gt;&amp;1 | tail -5</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular && npm create vite@latest frontend -- --template react-ts 2>&1 | tail -5
+```
+
+```
+npm notice
+npm notice New major version of npm available! 10.8.3 -> 12.1.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.1.0
+npm notice To update run: npm install -g npm@12.1.0
+npm notice
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The scaffold was created. Let me check what was created and then install dependencies.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Scaffold created. Now installing dependencies.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; ls -la &amp;&amp; cat package.json</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && ls -la && cat package.json
+```
+
+```
+total 52
+drwxrwxr-x 4 deepanshu deepanshu 4096 Sep 25 21:07 .
+drwxrwxr-x 8 deepanshu deepanshu 4096 Sep 25 21:07 ..
+-rw-rw-r-- 1 deepanshu deepanshu  253 Sep 25 21:07 .gitignore
+-rw-rw-r-- 1 deepanshu deepanshu  360 Sep 25 21:07 index.html
+-rw-rw-r-- 1 deepanshu deepanshu  245 Sep 25 21:07 .oxlintrc.json
+-rw-rw-r-- 1 deepanshu deepanshu  528 Sep 25 21:07 package.json
+drwxrwxr-x 2 deepanshu deepanshu 4096 Sep 25 21:07 public
+-rw-rw-r-- 1 deepanshu deepanshu 1278 Sep 25 21:07 README.md
+drwxrwxr-x 3 deepanshu deepanshu 4096 Sep 25 21:07 src
+-rw-rw-r-- 1 deepanshu deepanshu  655 Sep 25 21:07 tsconfig.app.json
+-rw-rw-r-- 1 deepanshu deepanshu  119 Sep 25 21:07 tsconfig.json
+-rw-rw-r-- 1 deepanshu deepanshu  558 Sep 25 21:07 tsconfig.node.json
+-rw-rw-r-- 1 deepanshu deepanshu  161 Sep 25 21:07 vite.config.ts
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm install react-router-dom framer-motion @fontsource-variable/inter 2&gt;&amp;1 | tail -3</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm install react-router-dom framer-motion @fontsource-variable/inter 2>&1 | tail -3
+```
+
+```
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event 2&gt;&amp;1 | tail -3</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event 2>&1 | tail -3
+```
+
+```
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Deps installed. Now let me look at the scaffolded files to know what to delete/modify.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Deps installed. Let me inspect the scaffolded source files.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; find src public -type f &amp;&amp; cat vite.config.ts index.html src/main.tsx</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && find src public -type f && cat vite.config.ts index.html src/main.tsx
+```
+
+```
+src/main.tsx
+src/assets/react.svg
+src/assets/hero.png
+src/assets/vite.svg
+src/index.css
+src/App.css
+src/App.tsx
+public/icons.svg
+public/favicon.svg
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>frontend</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; rm -f src/assets/react.svg src/assets/hero.png src/assets/vite.svg src/index.css src/App.css &amp;&amp; mkdir -p src/api src/types src/pages src/components src/hooks src/styles src/test</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && rm -f src/assets/react.svg src/assets/hero.png src/assets/vite.svg src/index.css src/App.css && mkdir -p src/api src/types src/pages src/components src/hooks src/styles src/test
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now let me create the design foundation files: tokens.css and base.css, update vite.config.ts for vitest, create .env.example, test setup file, and update main.tsx/index.html.
+
+Let me write tokens.css first.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now creating the design foundation files.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/styles/tokens.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/styles/base.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now update vite.config.ts for vitest, create .env.example, test setup, update index.html title, and main.tsx to import Inter + base.css. Also update package.json to add test script.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/vite.config.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/test/setup.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/.env.example</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/index.html</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/main.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now I need to:
+1. Add test script to package.json
+2. Update App.tsx to a minimal themed shell (for now — will be replaced in T20)
+3. Check tsconfig to ensure vitest globals types work
+
+Let me check the tsconfig files first.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/tsconfig.app.json</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/package.json</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The tsconfig.app.json has `"types": ["vite/client"]` — I need to add vitest globals types so `describe`, `it`, `expect` work in tests. Let me add `"vitest/globals"` and `"@testing-library/jest-dom"` to types. Also add the test script to package.json.
+
+Also note `verbatimModuleSyntax: true` — this means I must use `import type` for type-only imports. Important for all files.
+
+Also `erasableSyntaxOnly: true` — no enums or namespaces with runtime semantics... Actually erasableSyntaxOnly disallows TS-only runtime features like enums, parameter properties. Union literals are fine (plan uses union literals anyway).
+
+Let me update package.json and tsconfig.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/package.json</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/tsconfig.app.json</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+Now a minimal themed App shell to verify the scaffold:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/App.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npx tsc --noEmit &amp;&amp; npm run test 2&gt;&amp;1 | tail -5</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npx tsc --noEmit && npm run test 2>&1 | tail -5
+```
+
+```
+  }
+}
+
+
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -15</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -15
+```
+
+```
+      ... 8 lines matching cause stack trace ...
+      at async CAC.run (file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/vitest/dist/chunks/cac.uFydS1Z4.js:2318:2) {
+    cause: Error: Cannot find module './rolldown-binding.wasi.cjs'
+    Require stack:
+    - /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/rolldown/dist/shared/binding-BY0qR5iS.mjs
+        at file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/rolldown/dist/shared/binding-BY0qR5iS.mjs:497:18
+        ... 8 lines matching cause stack trace ...
+        at async CAC.run (file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/vitest/dist/chunks/cac.uFydS1Z4.js:2318:2) {
+      cause: [Error]
+    }
+  }
+}
+
+
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+There's an issue with rolldown binding — Vite 8 uses rolldown and the native binding for the platform is missing. This is a common issue where optional dependencies for the platform-specific binary aren't installed. Let me check the full error and try reinstalling.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Rolldown native binding is missing (Vite 8 platform binary issue). Let me check and fix.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | head -30</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | head -30
+```
+
+```
+
+> frontend@0.0.0 test
+> vitest run
+
+
+⎯⎯⎯⎯⎯⎯⎯ Startup Error ⎯⎯⎯⎯⎯⎯⎯⎯
+Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    at file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/rolldown/dist/shared/binding-BY0qR5iS.mjs:603:34
+    at file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/rolldown/dist/shared/binding-BY0qR5iS.mjs:9:49
+    ... 4 lines matching cause stack trace ...
+    at async CAC.run (file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/vitest/dist/chunks/cac.uFydS1Z4.js:2318:2) {
+  cause: Error: Cannot find module '@rolldown/binding-wasm32-wasi'
+  Require stack:
+  - /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/rolldown/dist/shared/binding-BY0qR5iS.mjs
+      at file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/rolldown/dist/shared/binding-BY0qR5iS.mjs:497:18
+      ... 8 lines matching cause stack trace ...
+      at async CAC.run (file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/vitest/dist/chunks/cac.uFydS1Z4.js:2318:2) {
+    cause: Error: Cannot find module './rolldown-binding.wasi.cjs'
+    Require stack:
+    - /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/rolldown/dist/shared/binding-BY0qR5iS.mjs
+        at file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/rolldown/dist/shared/binding-BY0qR5iS.mjs:497:18
+        ... 8 lines matching cause stack trace ...
+        at async CAC.run (file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/vitest/dist/chunks/cac.uFydS1Z4.js:2318:2) {
+      cause: [Error]
+    }
+  }
+}
+
+
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+This is the known npm optional dependencies bug. The fix suggested: remove node_modules and package-lock.json, then `npm i` again. Let me do that.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Known npm optional-deps bug. Reinstalling cleanly:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; rm -rf node_modules package-lock.json &amp;&amp; npm install 2&gt;&amp;1 | tail -3</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && rm -rf node_modules package-lock.json && npm install 2>&1 | tail -3
+```
+
+```
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -8 &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -8 && npx tsc --noEmit && echo "TSC OK"
+```
+
+```
+        at async CAC.run (file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/vitest/dist/chunks/cac.uFydS1Z4.js:2318:2) {
+      cause: [Error]
+    }
+  }
+}
+
+
+
+TSC OK
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Still failing. The binding is still missing. Let me check what platform bindings exist in node_modules/@rolldown.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; ls node_modules/@rolldown/ 2&gt;/dev/null; uname -m; node -e &#34;console.log(process.platform, process.arch)&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && ls node_modules/@rolldown/ 2>/dev/null; uname -m; node -e "console.log(process.platform, process.arch)"
+```
+
+```
+pluginutils
+x86_64
+linux x64
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Only `pluginutils` is in `@rolldown/` — the platform binding `@rolldown/binding-linux-x64-gnu` is missing. The npm optional deps bug. Let me explicitly install the binding package.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+The platform binding wasn't installed. Installing it explicitly:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; node -e &#34;const p=require(&#39;./node_modules/rolldown/package.json&#39;); console.log(p.version)&#34; &amp;&amp; npm install -D @rolldown/binding-linux-x64-gnu 2&gt;&amp;1 | tail -2</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && node -e "const p=require('./node_modules/rolldown/package.json'); console.log(p.version)" && npm install -D @rolldown/binding-linux-x64-gnu 2>&1 | tail -2
+```
+
+```
+1.2.11
+
+found 0 vulnerabilities
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -8</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -8
+```
+
+```
+
+ RUN  v4.1.11 /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend
+
+No test files found, exiting with code 1
+
+include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+exclude:  **/node_modules/**, **/.git/**
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Vitest now runs — "No test files found" is expected since there are no tests yet. But the exit code is 1, which would fail CI. Let me add `passWithNoTests: true` to the vitest config for now, or just leave it — actually the plan says "npm run test runs (vitest configured)". Tests will come in T19. But to keep `npm run test` green at every phase, I'll add `passWithNoTests: true`.
+
+Also, I installed `@rolldown/binding-linux-x64-gnu` as an explicit devDependency to work around the npm bug — that's now pinned in package.json, which is fine (keeps installs reproducible on this machine). Actually, it might be better to remove it from package.json since it's a platform-specific package that would break installs on other platforms (macOS/Windows teammates). Hmm. But per "Dependency Discipline" rule I should justify. The issue: on this machine npm fails to install optional deps. If I remove it from package.json, the next `npm install` on this machine might break again.
+
+Options:
+1. Keep it as devDependency — breaks on other platforms? Actually no — platform-specific packages have `os`/`cpu` fields in their package.json, so npm skips them on incompatible platforms. `@rolldown/binding-linux-x64-gnu` has `"os": ["linux"], "cpu": ["x64"]` so it will be skipped on mac/win. Keeping it is safe and fixes this machine.
+2. Remove it and rely on optional deps — buggy on this npm version.
+
+I'll keep it. It's a safe, platform-guarded package.
+
+Now add `passWithNoTests: true` to vitest config. Then verify dev server briefly? The plan says verify `npm run dev` serves a themed blank shell. Let me quickly run dev server in background and curl it.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Vitest runs now. Adding `passWithNoTests` so the script stays green before tests exist, then verifying the dev server:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/vite.config.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; (npm run dev &amp;&gt;/tmp/vite-dev.log &amp;) &amp;&amp; sleep 4 &amp;&amp; curl -s http://localhost:5173/ | head -5 &amp;&amp; curl -s -o /dev/null -w &#34;%{http_code}&#34; http://localhost:5173/src/main.tsx &amp;&amp; echo &#34; main.tsx served&#34; &amp;&amp; pkill -f &#34;vite&#34; || true</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && (npm run dev &>/tmp/vite-dev.log &) && sleep 4 && curl -s http://localhost:5173/ | head -5 && curl -s -o /dev/null -w "%{http_code}" http://localhost:5173/src/main.tsx && echo " main.tsx served" && pkill -f "vite" || true
+```
+
+```
+<!doctype html>
+<html lang="en">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+200 main.tsx served
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Dev server works on 5173. T17 is complete. Let me mark it completed and move to T18 — types.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+T17 done — dev server serves on 5173, tsc clean, vitest configured. Moving to T18 (types).
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "in_progress"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "pending"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "pending"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "pending"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "pending"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "pending"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "pending"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "in_progress"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "pending"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, 
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+For T18 I need to mirror the api-contract. Let me quickly re-read the api-contract spec to make sure field names match exactly.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Let me re-check the API contract to mirror field names exactly.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/api-contract.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Contract confirmed. Now writing the types file.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/types/ticket.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npx tsc --noEmit && echo "TSC OK"
+```
+
+```
+TSC OK
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+T18 done. Now T19 — API client. Marking todos and writing client.ts + tickets.ts + tests.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+T18 done. Now T19 — the API client.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "in_progress"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "pending"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "pending"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "pending"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "pending"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "pending"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "in_progress"
+    },
+    {
+      "content": "T19: api/client.ts (ApiErr
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/api/client.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/api/tickets.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the mocked-fetch tests for the client. Per plan:
+- header attached on GET and POST
+- non-2xx → ApiError with parsed fieldErrors
+- list passes query params
+- network failure → ApiError status 0
+
+I need to mock global fetch with vi.stubGlobal or vi.fn. Let me write the test.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the mocked-fetch tests for the client:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/api/client.test.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -12 &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -12 && npx tsc --noEmit && echo "TSC OK"
+```
+
+```
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_REQUIRE_ESM' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  no tests
+      Tests  no tests
+     Errors  1 error
+   Start at  21:10:01
+   Duration  231ms (transform 0ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+TSC OK
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | grep -B5 &#34;ERR_REQUIRE_ESM&#34; | head -30</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | grep -B5 "ERR_REQUIRE_ESM" | head -30
+```
+
+```
+Instead change the require of /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/@csstools/css-calc/dist/index.mjs to a dynamic import() which is available in all CommonJS modules.
+ ❯ TracingChannel.traceSync node:diagnostics_channel:315:14
+ ❯ Object.<anonymous> node_modules/@asamuzakjp/css-color/dist/cjs/index.cjs:30:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_REQUIRE_ESM' }
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The issue is jsdom 27 pulling in `@asamuzakjp/css-color` which has an ESM/CJS interop issue with Node 22.9. This is a known issue with jsdom >= 24 and certain Node versions. Options:
+
+1. Downgrade jsdom to v26 or v25 — jsdom 27 requires Node 20+ but has this css-color issue. Actually the `@asamuzakjp/css-color` CJS requiring ESM issue — Node 22.12+ supports require(esm) natively. Node 22.9.0 doesn't have stable require(esm) (it was unflagged in 22.12). So downgrading jsdom to a version that doesn't depend on this, or upgrading Node.
+
+Let me downgrade jsdom to ^26 (which uses different css deps) or check. jsdom 26 also uses @asamuzakjp/css-color? jsdom 24.1+ switched to @asamuzakjp/css-color. Hmm.
+
+Actually the cleanest: pin jsdom to a version whose dependency tree works with Node 22.9. Let me try jsdom@25 — jsdom 25.0.1 depends on cssstyle ^4.1.0... Let me check what jsdom 25 uses. Actually, jsdom 24.1.0+ uses `@asamuzakjp/css-color`. jsdom 23.x uses `cssstyle` + `color-convert` etc. via `cssstyle`.
+
+Alternative: `happy-dom` instead of jsdom — but plan says jsdom.
+
+Another option: the error says "change the require of @csstools/css-calc/dist/index.mjs to a dynamic import()". The chain: jsdom → @asamuzakjp/css-color (cjs) → requires @csstools/css-calc (mjs). Node 22.12+ can require ESM. Node 22.9 can't.
+
+Simplest reliable fix: downgrade jsdom to ^25.0.0 and see if its dep tree differs. jsdom 25 dependencies include cssstyle@^4.2.1 which depends on @asamuzakjp/css-color? Let me check: cssstyle 4.x depends on `@asamuzakjp/css-color`? cssstyle 4.0 uses rrweb-cssom... hmm, not sure.
+
+Let me just try jsdom@24.1.3 or check quickly. Actually, easier: try installing jsdom@25 and run. If fails, try jsdom@24. Or check node version upgrade — can't easily upgrade system node.
+
+Actually, wait — Node 22.9.0... require(ESM) was backported unflagged in 22.12.0. The machine has 22.9.0. I can't upgrade node easily (system package). 
+
+Let me check which jsdom version avoids @asamuzakjp/css-color:
+- jsdom 23.2.0: uses cssstyle ^3.0.0 → no @asamuzakjp
+- jsdom 24.0.0: cssstyle ^4.0.1 → @asamuzakjp/css-color ^2.8.2? Let me check cssstyle 4.0.1 deps: it has "@asamuzakjp/css-color": "^2.8.3"? Hmm not sure.
+
+Actually the failing chain is `@asamuzakjp/css-color/dist/cjs/index.cjs` requiring `@csstools/css-calc/dist/index.mjs`. @asamuzakjp/css-color v3+ depends on @csstools/css-calc v5 (which is ESM-only?). @csstools/css-calc v2 was CJS. So pinning an older @asamuzakjp/css-color might fix: e.g. npm i -D @asamuzakjp/css-color@2.8.3 (if compatible with jsdom's range ^3.x? no).
+
+Let me just try jsdom@25 first and see what happens. Or check what versions are in the tree now.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+jsdom 27's CSS dependency chain needs Node ≥22.12 (require-ESM); this machine has 22.9. Let me check the dep tree and pin a compatible jsdom:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm ls @asamuzakjp/css-color @csstools/css-calc 2&gt;&amp;1 | head -10; npm view jsdom@25 dependencies.cssstyle; npm view cssstyle@4 dependencies 2&gt;/dev/null</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm ls @asamuzakjp/css-color @csstools/css-calc 2>&1 | head -10; npm view jsdom@25 dependencies.cssstyle; npm view cssstyle@4 dependencies 2>/dev/null
+```
+
+```
+frontend@0.0.0 /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend
+`-- jsdom@27.0.1
+  `-- cssstyle@5.3.7
+    `-- @asamuzakjp/css-color@4.1.2
+      +-- @csstools/css-calc@3.4.1
+      `-- @csstools/css-color-parser@4.2.4
+        `-- @csstools/css-calc@3.4.1 deduped
+
+jsdom@25.0.0 '^4.0.1'
+jsdom@25.0.1 '^4.1.0'
+cssstyle@4.0.0 { 'rrweb-cssom': '^0.6.0' }
+cssstyle@4.0.1 { 'rrweb-cssom': '^0.6.0' }
+cssstyle@4.1.0 { 'rrweb-cssom': '^0.7.1' }
+cssstyle@4.2.0 { 'rrweb-cssom': '^0.7.1', '@asamuzakjp/css-color': '^2.8.2' }
+cssstyle@4.2.1 { 'rrweb-cssom': '^0.8.0', '@asamuzakjp/css-color': '^2.8.2' }
+cssstyle@4.3.0 { 'rrweb-cssom': '^0.8.0', '@asamuzakjp/css-color': '^3.1.1' }
+cssstyle@4.3.1 { 'rrweb-cssom': '^0.8.0', '@asamuzakjp/css-color': '^3.1.2' }
+cssstyle@4.4.0 { 'rrweb-cssom': '^0.8.0', '@asamuzakjp/css-color': '^3.2.0' }
+cssstyle@4.5.0 { 'rrweb-cssom': '^0.8.0', '@asamuzakjp/css-color': '^3.2.0' }
+cssstyle@4.6.0 { 'rrweb-cssom': '^0.8.0', '@asamuzakjp/css-color': '^3.2.0' }
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+jsdom 25 uses cssstyle ^4.1.0 which resolves to 4.x latest (4.6+) → @asamuzakjp/css-color ^3.2.0 → @csstools/css-calc (ESM). Same problem.
+
+jsdom 24.x: `npm view jsdom@24 dependencies.cssstyle` — probably ^4.0.1, which also resolves to 4.6 latest. Same problem unless I pin cssstyle@4.1.0 via overrides.
+
+Cleaner approach: npm `overrides` to pin `@asamuzakjp/css-color` to ^2.8.3 (CJS-friendly, uses @csstools/css-calc v2 which is CJS). Let me check @asamuzakjp/css-color@2.8.3 deps.
+
+Actually cssstyle@5.3.7 (jsdom 27) requires @asamuzakjp/css-color@^4.1.2 — overriding to 2.8.3 would violate the range, npm overrides can force it anyway but that might break API compat.
+
+Alternative: check @csstools/css-calc@3.4.1 — is it dual CJS/ESM? The error says the .cjs file requires the .mjs. @csstools/css-calc@3 might be ESM-only. v2.x was CJS. @asamuzakjp/css-color@2.8.3 depends on @csstools/css-calc ^2.x (CJS) — that works with Node 22.9.
+
+So the fix: override @asamuzakjp/css-color to 2.8.3. But cssstyle 5.3.7's code may use APIs only in v4. Risky.
+
+Better alternative: downgrade jsdom to a version that doesn't use @asamuzakjp at all: jsdom 23.x uses cssstyle ^3.0.0 (rrweb-cssom only, no @asamuzakjp). jsdom 23 works fine with vitest 4? Vitest 4 supports jsdom >= 24? Let me check vitest 4 peer requirements... Vitest 4.1 docs say jsdom environment requires jsdom package; I believe vitest 4 supports jsdom ^24 || ^25 || ^26 || ^27? Not sure about 23.
+
+Hmm. Another approach entirely: keep jsdom 27 but add an npm override for `@csstools/css-calc` to v2 (CJS). But @asamuzakjp/css-color@4 expects css-calc v3/v4/v5 API... risky too.
+
+Let me check what vitest 4.1 supports. Actually simplest test: install jsdom@26 and see if it works — jsdom 26 deps: cssstyle ^4.6.0 → same chain. No good.
+
+OK let me check @asamuzakjp/css-color versions: v4.1.2 requires @csstools/css-calc@^3.4.1. Is @csstools/css-calc@3 ESM-only? The error: `@asamuzakjp/css-color/dist/cjs/index.cjs` line 30 requires `@csstools/css-calc/dist/index.mjs` — so css-calc v3 ships only .mjs for main? And Node 22.9 can't require .mjs from CJS.
+
+Options ranked:
+1. Pin jsdom to 23.2.2 (cssstyle 3.x, no @asamuzakjp) if vitest 4 accepts it.
+2. npm overrides: `"@asamuzakjp/css-color": "2.8.3"` — cssstyle 5.3.7 requires ^4.1.2; forcing 2.8.3 might break cssstyle at runtime if it uses new APIs. cssstyle just does color parsing; 2.8.3 → 4.x API is probably stable-ish, but risky.
+3. Override @csstools/css-calc to a CJS version — @asamuzakjp/css-color@4.1.2 requires ^3.4.1; css-calc v2 is CJS. API differences possible.
+
+Let me check vitest 4's jsdom support. Vitest 4 release notes: "requires jsdom 24+"? Hmm. Actually I recall vitest 3 supported jsdom >= 21. Vitest 4... let me just try jsdom@23 quickly. If vitest errors about unsupported version, I'll pivot.
+
+Actually, let me check vitest's peer/dep on jsdom: vitest doesn't have jsdom as dependency — it's a peer-optional. The environment loader just does `import('jsdom')`. Version checks? There might be a check `populateGlobal` works with any recent jsdom. jsdom 23 should be fine API-wise (JSDOM constructor, ResourceLoader, etc.).
+
+Let me try jsdom@23.2.2.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+jsdom 25/26/27 all pull the same ESM-only CSS chain. Trying jsdom 23 (uses `rrweb-cssom`, no ESM-only deps):
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm install -D jsdom@^23.2.2 2&gt;&amp;1 | tail -2 &amp;&amp; npm run test 2&gt;&amp;1 | tail -8</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm install -D jsdom@^23.2.2 2>&1 | tail -2 && npm run test 2>&1 | tail -8
+```
+
+```
+npm error notarget a package version that doesn't exist.
+npm error A complete log of this run can be found in: /tmp/cursor-sandbox-cache/39eb17f49d7aec7caaded12255d096ff/npm/_logs/2026-09-25T15_40_31_931Z-debug-0.log
+
+
+ Test Files  no tests
+      Tests  no tests
+     Errors  1 error
+   Start at  21:10:33
+   Duration  233ms (transform 0ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+"a package version that doesn't exist" — jsdom@^23.2.2 doesn't exist? Let me check available jsdom versions. Maybe jsdom 23 was skipped (jsdom went 22 → 23? Actually jsdom versions: 22.1.0, 23.0.0, 23.0.1, 23.1.0, 23.2.0, 23.2.1, 24.0.0...). Let me check.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: npm view jsdom versions --json 2&gt;/dev/null | tail -30</summary>
+```bash
+npm view jsdom versions --json 2>/dev/null | tail -30
+```
+
+```
+  "24.1.0",
+  "24.1.1",
+  "24.1.2",
+  "24.1.3",
+  "25.0.0",
+  "25.0.1",
+  "26.0.0",
+  "26.1.0",
+  "27.0.0-beta.0",
+  "27.0.0-beta.1",
+  "27.0.0-beta.2",
+  "27.0.0-beta.3",
+  "27.0.0",
+  "27.0.1",
+  "27.1.0",
+  "27.2.0",
+  "27.3.0",
+  "27.4.0",
+  "28.0.0",
+  "28.1.0",
+  "29.0.0",
+  "29.0.1",
+  "29.0.2",
+  "29.1.0",
+  "29.1.1",
+  "30.0.0",
+  "30.0.1",
+  "30.1.0",
+  "30.1.1"
+]
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+jsdom 23 doesn't exist on this registry mirror (or at all — jsdom jumped from 23.x? Actually jsdom did have 23.x... this registry seems to start at 24.1.0 in the tail. Let me see the full list — the tail shows 24.1.0 as the oldest in the last 30. jsdom 23.2.1 did exist on npm. Maybe this mirror only has newer. Let me check the head of the versions list.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: npm view jsdom versions --json 2&gt;/dev/null | head -40</summary>
+```bash
+npm view jsdom versions --json 2>/dev/null | head -40
+```
+
+```
+[
+  "0.0.1",
+  "0.1.2",
+  "0.1.4",
+  "0.1.5",
+  "0.1.6",
+  "0.1.7",
+  "0.1.8",
+  "0.1.9",
+  "0.1.10",
+  "0.1.11",
+  "0.1.12",
+  "0.1.13",
+  "0.1.15",
+  "0.1.16",
+  "0.1.17",
+  "0.1.18",
+  "0.1.19",
+  "0.1.20",
+  "0.1.21",
+  "0.1.22",
+  "0.1.23",
+  "0.2.0",
+  "0.2.1",
+  "0.2.2",
+  "0.2.3",
+  "0.2.4",
+  "0.2.5",
+  "0.2.6",
+  "0.2.7",
+  "0.2.8",
+  "0.2.9",
+  "0.2.10",
+  "0.2.11",
+  "0.2.12",
+  "0.2.13",
+  "0.2.14",
+  "0.2.15",
+  "0.2.16",
+  "0.2.17",
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: npm view jsdom versions --json 2&gt;/dev/null | grep -E &#39;&#34;2[0-3]\.&#39; | head -20</summary>
+```bash
+npm view jsdom versions --json 2>/dev/null | grep -E '"2[0-3]\.' | head -20
+```
+
+```
+  "20.0.0",
+  "20.0.1",
+  "20.0.2",
+  "20.0.3",
+  "21.0.0",
+  "21.1.0",
+  "21.1.1",
+  "21.1.2",
+  "22.0.0",
+  "22.1.0",
+  "23.0.0",
+  "23.0.1",
+  "23.1.0",
+  "23.2.0",
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+jsdom 23.2.0 exists (but not 23.2.2 — that's why ^23.2.2 failed). Install jsdom@^23.2.0.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm install -D jsdom@^23.2.0 2&gt;&amp;1 | tail -2 &amp;&amp; npm run test 2&gt;&amp;1 | tail -8</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm install -D jsdom@^23.2.0 2>&1 | tail -2 && npm run test 2>&1 | tail -8
+```
+
+```
+
+found 0 vulnerabilities
+ RUN  v4.1.11 /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  21:10:51
+   Duration  5.60s (transform 80ms, setup 209ms, import 128ms, tests 29ms, environment 4.91s)
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+All 7 client tests pass. T19 done. Now T20 — the app shell. This is the biggest phase. Files:
+
+- `frontend/src/App.tsx` — router + shell layout
+- `src/components/NavRail.tsx` (+ NavRail.module.css)
+- `UserSwitcher.tsx`
+- `CommandPalette.tsx`
+- `Banner.tsx`
+- `src/hooks/useCurrentUser.tsx` (context + localStorage)
+- `src/components/Badge.tsx` (StatusBadge, PriorityBadge)
+- `EmptyState.tsx`
+- `Skeleton.tsx`
+- Route transitions via AnimatePresence
+
+CSS Modules only. Let me plan the structure:
+
+App.tsx:
+```tsx
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+...
+```
+
+Since pages don't exist yet (T21-T24), I'll create placeholder pages or wire routes as I build. Better approach per plan phasing: build shell with placeholder pages, then fill in pages. But the plan says T24 wires routes in App.tsx. I'll structure App.tsx now with the shell + routes pointing to pages, creating minimal placeholder pages that T21–T24 replace. Actually to keep each phase verifiable, let me create simple placeholder page components now in pages/ and flesh them out in their phases.
+
+Let me think about the shell layout:
+
+```
++--------+-------------------------------------------+
+| NavRail| Header (wordmark, CmdK trigger, UserSwitcher)
+|        +-------------------------------------------+
+|        | <Outlet /> (page content)                 |
++--------+-------------------------------------------+
+```
+
+Components:
+
+1. `useCurrentUser.tsx` — context provider with `username`, `setUsername`; persists localStorage["sf-user"], default alice; registers getUsername with API client on mount/change. USERS = ['alice','bob','carol'].
+
+2. `NavRail.tsx` — left rail, 56px collapsed / 200px expanded, collapsible toggle. Items: Tickets (icon) → /, New ticket (+) → /tickets/new, search icon → opens CommandPalette. Active item: accent-tinted bg + left glow bar. Needs to communicate with CommandPalette open state — I'll lift palette state to App/shell level, pass `onOpenSearch` callback.
+
+3. `UserSwitcher.tsx` — three segmented pills alice/bob/carol, active pill accent glow.
+
+4. `CommandPalette.tsx` — glass overlay, keyword input, Enter navigates to `/?keyword=...`. Ctrl/Cmd+K global listener. framer-motion scale/fade. Props: open, onClose.
+
+5. `Banner.tsx` — fixed bottom glass toast. How do errors reach the banner? FR11: network (status 0) or ≥500 errors show banner. I need a global error reporting channel. Simple approach: a small event emitter / context `useBanner()` with `showBanner(message)`. Pages catch ApiError and call `reportError(err)` from a helper that decides: status 0 or >=500 → banner; else inline. Let me create `src/hooks/useBanner.tsx` context + `reportError` util in api or hooks.
+
+Design decision: create `BannerContext` with `show(message)`; Banner component reads context. Pages: catch err → if ApiError && (status===0 || status>=500) → show("Can't reach the server" or err.message) → else set local error state for inline display. To avoid duplicating this logic, a helper `useErrorHandler` or plain function `isServerError(err)`.
+
+6. `Badge.tsx` — StatusBadge (status-hued), PriorityBadge. CSS module with per-status classes.
+
+7. `EmptyState.tsx` — gradient artwork + title + optional CTA children.
+
+8. `Skeleton.tsx` — shimmer block, variants (row, text).
+
+9. Route transitions: AnimatePresence around Routes with location key. A `PageTransition` wrapper component (motion.div fade+8px rise).
+
+Testing for T20: RTL: default user alice; switching persists to localStorage; tsc clean.
+
+Let me now write all these files. I need to be careful with:
+- `verbatimModuleSyntax: true` → `import type` for types
+- `erasableSyntaxOnly: true` → no enums (fine)
+- framer-motion v13 — import { motion, AnimatePresence } from 'framer-motion'
+- React 19
+
+CSS Modules: Vite supports `*.module.css` out of the box. TypeScript needs declaration — Vite's client types include CSS module declarations? `vite/client` types include `*.module.css` declarations. Yes, vite/client declares modules for CSS. Good.
+
+Let me write the files now. I'll write them in batches.
+
+First: hooks/useCurrentUser.tsx, hooks/useBanner.tsx, components/Badge.tsx + css, Skeleton.tsx + css, EmptyState.tsx + css.
+
+For the banner context — plan says "Banner: fixed bottom glass toast for status === 0 or ≥500 errors". I'll make:
+
+```tsx
+// hooks/useBanner.tsx
+interface BannerState { message: string | null; show: (msg: string) => void; dismiss: () => void }
+```
+
+Auto-dismiss? Keep it simple: manual dismiss button + auto after 6s? Plan doesn't specify. I'll add dismiss button, no auto-dismiss (network errors should persist until retry... actually a toast that stays until dismissed is safer). Let me add dismiss on click.
+
+Helper: `src/api/errors.ts`:
+```ts
+export function isConnectivityError(err: unknown): err is ApiError {
+  return err instanceof ApiError && (err.status === 0 || err.status >= 500)
+}
+```
+
+Pages will use: catch (e) { if (isConnectivityError(e)) banner.show(...); else setInlineError(...) }.
+
+Actually to make this DRY I'll write a hook `useErrorReporter()` returning `(err, fallback?) => string | null` — returns inline message or null if sent to banner. Hmm, simpler: `reportError(err): 'banner' | 'inline'`... Let me keep it simple with a small function in each page:
+
+```ts
+const { showBanner } = useBanner()
+...
+catch (e) {
+  if (e instanceof ApiError && (e.status === 0 || e.status >= 500)) showBanner(e.message)
+  else setError(e instanceof ApiError ? e.message : 'Something went wrong')
+}
+```
+
+I'll wrap that in a hook `useErrorHandler` in hooks/useErrorHandler.ts returning a `handleError(err, setInline)` — actually simplest: `useErrorHandler(): (err: unknown) => string | null` returning inline message or null (banner shown). Let me do that.
+
+Now the relative time util: "2h ago" — needed in T21. I'll add `src/utils/time.ts` with `formatRelativeTime(iso)` and absolute title. Put it in T21 phase.
+
+Let me write shell files now.
+
+NavRail collapse state: local useState in App shell, persisted? Not required. Keep in state.
+
+CommandPalette: needs navigate — must be inside Router. Structure:
+
+```tsx
+export default function App() {
+  return (
+    <CurrentUserProvider>
+      <BannerProvider>
+        <BrowserRouter>
+          <Shell />
+        </BrowserRouter>
+      </BannerProvider>
+    </CurrentUserProvider>
+  )
+}
+
+function Shell() {
+  const [paletteOpen, setPaletteOpen] = useState(false)
+  const location = useLocation()
+  // Ctrl+K listener
+  return (
+    <div className={layout}>
+      <NavRail onOpenSearch={() => setPaletteOpen(true)} />
+      <div>
+        <Header onOpenSearch={...} />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>...</Routes>
+        </AnimatePresence>
+      </div>
+      <CommandPalette open={paletteOpen} onClose={...} />
+      <Banner />
+    </div>
+  )
+}
+```
+
+Ctrl+K listener: put in Shell useEffect.
+
+For routes in T20, pages don't exist yet. I'll create minimal placeholder pages now (TicketListPage etc. as stubs) and replace in later phases. Or... to avoid throwaway work, I could do T20 shell with routes wired to stubs, then implement pages T21–T24 replacing stubs. That's the natural flow.
+
+Actually — since App.tsx wiring is T24's job, maybe I keep App minimal in T20 with just the shell + a placeholder home, and wire all routes in T24. But then T21–T23 pages can't be manually verified easily... RTL tests will cover them individually. I'll wire routes incrementally as pages are built (pragmatic), and T24 adds NotFound + finalizes.
+
+Let me write:
+
+1. `src/hooks/useCurrentUser.tsx`
+2. `src/hooks/useBanner.tsx`
+3. `src/hooks/useErrorHandler.ts`
+4. `src/components/Badge.tsx` + `Badge.module.css`
+5. `src/components/Skeleton.tsx` + css
+6. `src/components/EmptyState.tsx` + css
+7. `src/components/NavRail.tsx` + css
+8. `src/components/UserSwitcher.tsx` + css
+9. `src/components/CommandPalette.tsx` + css
+10. `src/components/Banner.tsx` + css
+11. `src/components/PageTransition.tsx`
+12. `src/App.tsx` + `App.module.css`
+13. Placeholder pages
+14. Test: `src/hooks/useCurrentUser.test.tsx` — default alice, switching persists.
+
+Icons: no icon library allowed (deps discipline). Use inline SVGs — I'll write tiny inline SVG components in NavRail.
+
+Let me write the files.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+All 7 client tests pass. T19 done — moving to T20, the app shell.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "completed"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "in_progress"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "pending"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "pending"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "pending"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "pending"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiErr
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+Writing the shell hooks first:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useCurrentUser.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useBanner.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useErrorHandler.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the presentational components: Badge, Skeleton, EmptyState with their CSS modules.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now badges, skeleton, and empty state with their CSS modules:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/Badge.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/Badge.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/Skeleton.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/Skeleton.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/EmptyState.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/EmptyState.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now NavRail, UserSwitcher, CommandPalette, Banner, PageTransition.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the NavRail and UserSwitcher:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/NavRail.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/NavRail.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/UserSwitcher.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/UserSwitcher.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+Now the CommandPalette, Banner, and PageTransition:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/CommandPalette.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/CommandPalette.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/Banner.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/Banner.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/PageTransition.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now App.tsx with the shell layout, header, Ctrl+K listener, and routes. Pages don't exist yet — I'll create minimal placeholders that get replaced in T21–T24. Actually, let me create the placeholder pages inline in App for now... no, better to create actual stub page files so route wiring is final. Let me create stub pages:
+
+- `src/pages/TicketListPage.tsx` — stub (T21 replaces)
+- `src/pages/CreateTicketPage.tsx` — stub (T22)
+- `src/pages/TicketDetailPage.tsx` — stub (T23)
+- `src/pages/NotFoundPage.tsx` — real simple one (T24 will finalize, but I can write it fully now since it's trivial)
+
+Actually NotFoundPage is trivial — write it fully now (part of T24 but fine to do early).
+
+App.tsx structure with layout CSS.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the App shell with routes. Creating stub pages first (filled in during T21–T23), plus the full NotFoundPage:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketListPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/CreateTicketPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/NotFoundPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/NotFoundPage.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/App.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/App.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the T20 verification test: RTL test for default user alice; switching persists to localStorage. Let me write a test for UserSwitcher within the provider.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the T20 verification test — default user and localStorage persistence:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/UserSwitcher.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -8 &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -8 && npx tsc --noEmit && echo "TSC OK"
+```
+
+```
+ RUN  v4.1.11 /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  11 passed (11)
+   Start at  21:12:32
+   Duration  1.96s (transform 249ms, setup 500ms, import 572ms, tests 385ms, environment 1.49s)
+
+TSC OK
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+11 tests pass, tsc clean. T20 done. Now T21 — the ticket list page. Files:
+
+- `src/pages/TicketListPage.tsx` (replace stub)
+- `src/components/TicketRow.tsx` + css
+- `src/components/FilterBar.tsx` + css
+- `src/components/Pager.tsx` + css
+- `src/hooks/useTickets.ts`
+- `src/utils/time.ts` for relative time
+
+Requirements:
+- Editorial header: "Tickets" large title + count metadata
+- FilterBar: keyword input (debounced 300ms), status chips (All + 5, active chip accent), page-size select 10/50/100
+- Any change resets page to 0; state synced to URL search params (deep-linkable, works with CommandPalette)
+- Rows: sharp cards, surface-1 → hover lift + border brighten; title, status + priority badges, assignee, relative updatedAt with absolute title attr. Stagger fade-in.
+- States: skeleton rows while loading; EmptyState with gradient artwork + "Create your first ticket" CTA (also for no-matches with "Clear filters"); error shows backend message
+- Pager: prev/next + "Page x of y"
+
+URL params: keyword, status, page, size. Use useSearchParams.
+
+useTickets hook: takes {status, keyword, page, size}, returns {data, loading, error, refetch}.
+
+Debounce: keyword input local state, debounce 300ms before writing to URL params.
+
+Let me write time util first, then hook, then components.
+
+For relative time: 
+```ts
+export function formatRelativeTime(iso: string): string {
+  const then = new Date(iso).getTime()
+  const diffSec = Math.max(0, Math.floor((Date.now() - then) / 1000))
+  if (diffSec < 60) return 'just now'
+  const mins = Math.floor(diffSec / 60)
+  if (mins < 60) return `${mins}m ago`
+  const hours = Math.floor(mins / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  if (days < 30) return `${days}d ago`
+  ...
+}
+```
+
+And `formatAbsolute(iso)` for title attr — use `new Date(iso).toLocaleString()` or ISO. I'll use toLocaleString with UTC note... keep simple: `new Date(iso).toLocaleString()`.
+
+useTickets hook:
+
+```ts
+export function useTickets(params: ListTicketsParams) {
+  const [data, setData] = useState<PageResponse<TicketListItem> | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const handleError = useErrorHandler()
+  
+  const { status, keyword, page, size } = params
+  
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    setError(null)
+    listTickets({ status, keyword, page, size })
+      .then(res => { if (!cancelled) setData(res) })
+      .catch(e => { if (!cancelled) setError(handleError(e)) })  // hmm, banner case returns null
+      .finally(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
+  }, [status, keyword, page, size])
+  
+  return { data, loading, error }
+}
+```
+
+Wait — if handleError returns null (banner shown), error state set to null, and data stays null → page would show... loading false, data null, error null. Need to handle: show error state with generic message? If banner shows, the list area could show empty error block "Couldn't load tickets". Let me set error to the message regardless but ALSO show banner? Plan says banner for network/5xx. If error is null and data null and not loading → render a muted error box. Hmm.
+
+Simpler: in catch, `const msg = handleError(e); setError(msg ?? 'unavailable')`. Actually let me make the page render: if error → error panel; if banner case, error panel shows nothing? I'll set error to the ApiError message in all cases for the inline panel, and additionally trigger the banner for connectivity errors. Wait no — plan FR11: banner for network/5xx INSTEAD of inline? "Banner: fixed bottom glass toast for status === 0 or ≥500 errors — copy 'Can't reach the server' vs validation errors which render inline". 
+
+For the list page, a network error should show the banner. But the list area also needs a state (not infinite skeleton). I'll show the error panel with the message too — that's reasonable UX: banner toast + inline retry area. Let me make useErrorHandler return the message always but flag whether banner was shown... 
+
+Actually simpler and cleaner: handleError(err) returns inline message for inline display OR null if it went to banner. In the list page catch: `setError(handleError(e) ?? "Can't reach the server")` — hmm that duplicates.
+
+Let me reconsider: I'll keep useErrorHandler as-is (returns null when banner shown), and in pages:
+- List page: `setError(handleError(e))` and render: `error !== null ? <error panel> : (banner handles it → show a minimal "Unable to load" panel)`. If error is null and data is null and not loading, show error panel with generic copy. That works: after a network failure, loading=false, data=null, error=null → render generic connectivity panel. Fine.
+
+Actually cleanest: track `failed` boolean + `error` string. Meh. Let me just do: error state is `string | null`; on catch: `const msg = handleError(e); setError(msg ?? 'CONNECTIVITY')`. Then in render, if error === 'CONNECTIVITY' show "Can't reach the server" panel... 
+
+You know what, simplest robust approach: have handleError return the message to display inline ALWAYS, and separately show banner for connectivity/5xx. Both banner and inline panel showing "Can't reach the server" is fine UX (banner is transient toast, panel is persistent state). But plan says "vs validation errors which render inline" implying network errors render in banner. Both is not wrong.
+
+Hmm, let me re-read: "Banner: fixed bottom glass toast for `status === 0` or ≥500 errors — copy 'Can't reach the server' vs validation errors which render inline (FR11)."
+
+I'll implement: connectivity/5xx → banner + page shows its error panel with same message (so retry is possible). Validation errors (400 on list = bad params) → inline only. This satisfies both. So useErrorHandler returns the message in all cases, and internally shows banner when appropriate. Let me update useErrorHandler:
+
+```ts
+export function useErrorHandler(): (err: unknown) => string {
+  const { showBanner } = useBanner()
+  return useCallback((err: unknown): string => {
+    if (err instanceof ApiError) {
+      if (err.status === 0 || err.status >= 500) showBanner(err.message)
+      return err.message
+    }
+    return 'Something went wrong'
+  }, [showBanner])
+}
+```
+
+That's cleaner. Update the file.
+
+Now components.
+
+FilterBar:
+```tsx
+interface FilterBarProps {
+  keyword: string
+  onKeywordChange: (kw: string) => void  // debounced by parent? or internal
+  status: TicketStatus | null
+  onStatusChange: (s: TicketStatus | null) => void
+  size: number
+  onSizeChange: (n: number) => void
+}
+```
+
+Debounce inside FilterBar: local input state synced from prop, useEffect with 300ms timer calling onKeywordChange.
+
+TicketListPage:
+- searchParams: keyword (string ''), status (TicketStatus | null, validate against TICKET_STATUSES), page (int ≥0), size (10 default, one of 10/50/100)
+- setParams helper that resets page to 0 on filter change
+- header: "Tickets" + totalElements count
+- loading → 5 SkeletonRows
+- error → error panel with message + retry
+- data empty → EmptyState: if filters active → "No tickets match" + Clear filters; else "No tickets yet" + Create your first ticket CTA (Link to /tickets/new)
+- data → rows with motion stagger + Pager
+
+TicketRow: Link to /tickets/{id}, title, badges, assignee, relative time.
+
+Pager: prev/next buttons, "Page x of y", disabled states.
+
+Stagger: motion.div per row with custom delay index * 0.03. Use variants.
+
+Let me write all files.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+T20 done (11 tests green). Refining the error handler contract slightly before T21 — pages need the inline message even when the banner fires:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useErrorHandler.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "completed"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "completed"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "in_progress"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "pending"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "pending"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "pending"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiE
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+Now T21 — time util, `useTickets` hook, FilterBar, TicketRow, Pager:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/utils/time.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useTickets.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/FilterBar.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/statusLabels.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/FilterBar.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/TicketRow.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/TicketRow.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/Pager.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/Pager.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the TicketListPage itself, replacing the stub. URL search params state management:
+
+- keyword: string (default '')
+- status: TicketStatus | null (validate)
+- page: number ≥ 0 (default 0)
+- size: 10/50/100 (default 10)
+
+Any filter change resets page to 0. Uses useSearchParams.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the list page itself:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketListPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketListPage.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the T21 RTL tests: loading skeleton, empty state, populated row, error message, size select shows 10/50/100. I'll mock the api/tickets module with vi.mock.
+
+Test file: `src/pages/TicketListPage.test.tsx`. Need to wrap in MemoryRouter (uses useSearchParams + Link) and BannerProvider (useErrorHandler uses useBanner).
+
+Let me write a test helper for rendering with providers. I'll create `src/test/render.tsx` with a helper that wraps in MemoryRouter + CurrentUserProvider + BannerProvider.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now a shared test render helper and the list page tests:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/test/render.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketListPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -10 &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -10 && npx tsc --noEmit && echo "TSC OK"
+```
+
+```
+
+
+ RUN  v4.1.11 /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend
+
+
+ Test Files  3 passed (3)
+      Tests  18 passed (18)
+   Start at  21:13:42
+   Duration  3.00s (transform 399ms, setup 639ms, import 1.51s, tests 1.27s, environment 2.34s)
+
+TSC OK
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+18 tests pass. T21 done. Now T22 — Create ticket page.
+
+Requirements:
+- Centered editorial panel (max-width 720px)
+- Title input (large), description textarea (generous line-height), priority segmented control (default MEDIUM), assignee select with blank "Assign to me" option that omits the field
+- Helper text: "New tickets start as OPEN"
+- Client validation mirrors lengths (200/5000) for fast feedback
+- On 400, map fieldErrors next to fields
+- On 201 navigate to /tickets/{id}
+- Cancel → /
+- Submit button: press micro-interaction, disabled while submitting
+
+Verify: RTL: blank assignee omitted from POST body; 400 fieldErrors render under fields; no status key sent.
+
+I'll build a shared TicketForm component since T23 edit panel reuses pieces. Plan says "(+ shared TicketForm pieces in components if reused by detail edit)". The detail edit panel has: same fields, assignee select = 3 users only (no blank). So a shared form with a prop `allowBlankAssignee` makes sense.
+
+Let me design TicketForm:
+
+```tsx
+interface TicketFormValues {
+  title: string
+  description: string
+  priority: Priority
+  assignee: string  // '' means blank (only when allowBlankAssignee)
+}
+
+interface TicketFormProps {
+  initial?: Partial<TicketFormValues>
+  allowBlankAssignee?: boolean
+  submitLabel: string
+  submitting: boolean
+  fieldErrors?: FieldError[]
+  onSubmit: (values: TicketFormValues) => void
+  onCancel: () => void
+}
+```
+
+Client validation: title 1–200 after trim, description 1–5000 after trim. Show inline errors before submit.
+
+Field errors from server: map by field name under inputs.
+
+Priority segmented control: 4 pills.
+
+Assignee select: blank option "Assign to me" (create) or just 3 users (edit).
+
+Then CreateTicketPage uses it:
+- onSubmit: build CreateTicketRequest — omit assignee if blank
+- createTicket → navigate(`/tickets/${id}`)
+- catch: ApiError 400 with fieldErrors → pass to form; else inline message via handleError
+
+Let me write TicketForm + css, then CreateTicketPage + css, then test.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+18 green. T21 done — now T22, create ticket page with a shared form (reused by T23's edit panel).
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "completed"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "completed"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "completed"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "in_progress"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "pending"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "pending"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (Ap
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/TicketForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/TicketForm.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/CreateTicketPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/CreateTicketPage.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the T22 test: blank assignee omitted from POST body; 400 fieldErrors render under fields; no status key sent. I'll mock ../api/tickets createTicket and check the body passed. Also test navigation on success — I can assert createTicket called and use a Routes with a detail stub to check navigation. Simpler: render with Routes including a path /tickets/:id that renders a marker.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the create page tests:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/CreateTicketPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -10 &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -10 && npx tsc --noEmit && echo "TSC OK"
+```
+
+```
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/node.js:19998:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  18 passed (18)
+   Start at  21:14:26
+   Duration  2.90s (transform 626ms, setup 735ms, import 1.69s, tests 1.01s, environment 3.40s)
+
+TSC OK
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | grep -B20 &#34;1/1&#34; | head -40</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | grep -B20 "1/1" | head -40
+```
+
+```
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/pages/CreateTicketPage.test.tsx [ src/pages/CreateTicketPage.test.tsx ]
+Error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mExpected `=>` but found `{`
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/TicketForm.tsx:55:32 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m55 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mv[0m[38;5;249ma[0m[38;5;249ml[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249m [0m[38;5;249m=[0m[38;5;249m [0m[38;5;249m([0m[38;5;249m)[0m[38;5;249m:[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mo[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249me[0m[38;5;249ma[0m[38;5;249mn[0m[38;5;249m [0m{
+ [38;5;240m   │[0m                                ┬  
+ [38;5;240m   │[0m                                ╰── `=>` expected
+[38;5;246m────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/TicketForm.tsx
+ ❯ transformWithOxc node_modules/vite/dist/node/chunks/node.js:7551:19
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/node.js:7623:26
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/node.js:8515:51
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/node.js:19998:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Parse error in TicketForm.tsx line 55: `const validate = (): boolean {` — I wrote `(): boolean {` instead of `(): boolean => {`. Let me fix.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Syntax error in `TicketForm.tsx` — missing `=>` on the validate function:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/TicketForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -8 &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -8 && npx tsc --noEmit && echo "TSC OK"
+```
+
+```
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  2 failed | 22 passed (24)
+   Start at  21:14:42
+   Duration  3.61s (transform 599ms, setup 925ms, import 2.19s, tests 2.86s, environment 3.44s)
+
+TSC OK
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | grep -A25 &#34;FAIL\|×&#34; | head -70</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | grep -A25 "FAIL\|×" | head -70
+```
+
+```
+     × omits blank assignee and never sends a status key 632ms
+     × sends a chosen assignee and priority 428ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/pages/CreateTicketPage.test.tsx > CreateTicketPage > omits blank assignee and never sends a status key
+AssertionError: expected undefined to deeply equal { title: 'Cannot login', …(2) }
+
+- Expected:
+{
+  "description": "SSO redirect loops.",
+  "priority": "MEDIUM",
+  "title": "Cannot login",
+}
+
++ Received:
+undefined
+
+ ❯ src/pages/CreateTicketPage.test.tsx:63:18
+     61|     await waitFor(() => expect(createTicketMock).toHaveBeenCalled())
+     62|     const body = createTicketMock.mock.calls[0][1]
+     63|     expect(body).toEqual({
+       |                  ^
+     64|       title: 'Cannot login',
+     65|       description: 'SSO redirect loops.',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/pages/CreateTicketPage.test.tsx > CreateTicketPage > sends a chosen assignee and priority
+AssertionError: expected undefined to match object { priority: 'URGENT', …(1) }
+
+- Expected:
+{
+  "assignee": "carol",
+  "priority": "URGENT",
+}
+
++ Received:
+undefined
+
+ ❯ src/pages/CreateTicketPage.test.tsx:94:47
+     92|
+     93|     await waitFor(() => expect(createTicketMock).toHaveBeenCalled())
+     94|     expect(createTicketMock.mock.calls[0][1]).toMatchObject({
+       |                                               ^
+     95|       priority: 'URGENT',
+     96|       assignee: 'carol',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  2 failed | 22 passed (24)
+   Start at  21:14:50
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+`createTicketMock.mock.calls[0][1]` is undefined — because `createTicket(body)` takes only ONE argument (body is the first arg, calls[0][0]). My mistake in the test — `createTicket(id, body)` is updateTicket's signature. createTicket(body) → calls[0][0]. Fix the test.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Test bug — `createTicket` takes one argument, so the body is `calls[0][0]`, not `[1]`:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/CreateTicketPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/CreateTicketPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -6</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -6
+```
+
+```
+
+ Test Files  4 passed (4)
+      Tests  24 passed (24)
+   Start at  21:15:02
+   Duration  3.59s (transform 633ms, setup 736ms, import 2.14s, tests 2.92s, environment 3.47s)
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+24 tests pass. T22 done. Now T23 — the ticket detail page. This is the most complex page.
+
+Files:
+- `src/pages/TicketDetailPage.tsx` (replace stub) + css
+- `src/components/StatusControl.tsx` + css
+- `src/components/CommentThread.tsx` + css
+- `src/components/CommentComposer.tsx` + css
+- `src/components/TicketEditPanel.tsx` (reuses TicketForm)
+- `src/hooks/useTicket.ts`
+
+Requirements:
+- Header: title, StatusBadge (status-hued glow), metadata row (id, priority, assignee, createdBy/updatedBy, timestamps)
+- StatusControl: buttons for ALLOWED_NEXT[status] only; terminal → read-only "Closed"/"Cancelled" label. 409 → backend message verbatim beside control.
+- TicketEditPanel: hidden when CLOSED/CANCELLED; fields as in create; assignee select = 3 users only (no blank); save → PATCH; 409 shows message.
+- CommentThread: timeline, oldest first, author + relative time, accent avatar dot per user.
+- CommentComposer: hidden only when CANCELLED (visible on CLOSED); "Commenting as {user}"; submit → append + refetch; 409 shows message.
+- 404 → dedicated EmptyState with link to /.
+
+useTicket hook: getTicket(id) → {ticket, loading, error, notFound, refetch, setTicket}.
+
+Let me think about state management on the detail page:
+- useTicket fetches by id
+- StatusControl calls changeStatus → on success setTicket(response)
+- EditPanel calls updateTicket → on success setTicket(response)
+- CommentComposer calls addComment → on success refetch (to get updated thread + updatedAt) or append. Plan says "submit → append + refetch". I'll refetch the ticket.
+
+Error handling per control: each control keeps its own error message state (409 verbatim beside the control). Network/5xx → banner via handleError.
+
+Structure:
+
+```tsx
+export default function TicketDetailPage() {
+  const { id } = useParams()
+  const { ticket, loading, error, notFound, refetch, setTicket } = useTicket(Number(id))
+  ...
+}
+```
+
+useTicket:
+
+```ts
+export function useTicket(id: number) {
+  const [ticket, setTicket] = useState<TicketDetail | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [notFound, setNotFound] = useState(false)
+  const handleError = useErrorHandler()
+  
+  const load = useCallback(async () => {
+    setLoading(true); setError(null); setNotFound(false)
+    try {
+      setTicket(await getTicket(id))
+    } catch (e) {
+      if (e instanceof ApiError && e.status === 404) setNotFound(true)
+      else setError(handleError(e))
+    } finally {
+      setLoading(false)
+    }
+  }, [id, handleError])
+  
+  useEffect(() => { void load() }, [load])
+  
+  return { ticket, loading, error, notFound, refetch: load, setTicket }
+}
+```
+
+Wait — handleError in deps: it's useCallback'd with [showBanner] which is stable (useCallback []). OK.
+
+StatusControl:
+
+```tsx
+interface StatusControlProps {
+  ticket: TicketDetail
+  onChanged: (t: TicketDetail) => void
+}
+
+export function StatusControl({ ticket, onChanged }: StatusControlProps) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const handleError = useErrorHandler()
+  const next = ALLOWED_NEXT[ticket.status]
+  
+  if (next.length === 0) {
+    return <span>read-only label: "Closed" / "Cancelled"</span>
+  }
+  
+  const transition = async (status: TicketStatus) => {
+    setBusy(true); setError(null)
+    try {
+      onChanged(await changeStatus(ticket.id, status))
+    } catch (e) {
+      setError(handleError(e))
+    } finally { setBusy(false) }
+  }
+  
+  return buttons + error beside
+}
+```
+
+Button labels: "Start progress" for IN_PROGRESS? Or just "Mark as In progress"? Plan doesn't specify exact copy. I'll use "Mark as {label}" — clear. Actually more natural: OPEN → buttons "Start work" / "Cancel ticket"? Keep it simple and mechanical: "Mark as In progress", "Mark as Resolved", "Mark as Closed", "Mark as Cancelled". Hmm, that's verbose. I'll use verbs: IN_PROGRESS → "Start progress", RESOLVED → "Resolve", CLOSED → "Close", CANCELLED → "Cancel". With aria-label including full action. Let me keep simple labels: the STATUS_FILTER_LABEL values as button text "In progress", "Resolved"... ambiguous. 
+
+Decision: buttons read "Mark as In progress" style — unambiguous and test-friendly. Actually for compactness I'll do: `→ In progress`, `→ Resolved`? No. "Mark as X" it is.
+
+TicketEditPanel:
+
+```tsx
+interface TicketEditPanelProps {
+  ticket: TicketDetail
+  onSaved: (t: TicketDetail) => void
+}
+```
+
+- Toggle "Edit" button shows/hides the form? Or always visible? Plan: "TicketEditPanel: hidden when CLOSED/CANCELLED; fields as in create; assignee select = 3 users only (no blank); save → PATCH; 409 shows message."
+- I'll make it a collapsible panel: an "Edit" button toggles the form pre-filled with current values. On save → PATCH with all four fields (title, description, priority, assignee). PATCH requires at least one field — sending all four is fine.
+- 400 fieldErrors → pass to TicketForm; 409 → message beside.
+
+CommentThread:
+
+```tsx
+export function CommentThread({ comments }: { comments: CommentResponse[] }) {
+  if empty → muted "No comments yet"
+  timeline: avatar dot (hue per author — hash author to a color; plan says "accent avatar dot per user" — I'll use accent dot with author initial), author name, relative time, body with line-height 1.6
+}
+```
+
+"accent avatar dot per user" — dot per user in accent color, maybe with initial letter. I'll render a dot with the author's initial, accent-tinted. Per-user hue: could hash username to hue, but plan says "accent avatar dot" — keep accent for all, with initial.
+
+CommentComposer:
+
+```tsx
+interface CommentComposerProps {
+  ticketId: number
+  onCommented: () => void  // refetch
+}
+```
+
+- textarea + submit, "Commenting as {user}" caption
+- disabled while submitting
+- 400 fieldErrors → show body error; 409 → message verbatim
+- client validation: blank → "Comment cannot be blank"; max 2000 chars
+
+TicketDetailPage layout:
+
+```
+<header>
+  <StatusBadge /> #id
+  <h1>title</h1>
+  <metadata row: priority badge, @assignee, created by X · updated by Y, created/updated timestamps>
+  <StatusControl />
+</header>
+<section description>
+<section edit panel (if not terminal)>
+<section comments: thread + composer (composer hidden if CANCELLED)>
+```
+
+Loading: skeleton. 404: EmptyState + link. Error: error panel.
+
+Let me write these files now.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+24 green. T22 done — now T23, the detail page (biggest one).
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "completed"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "completed"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "completed"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "completed"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "in_progress"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "pending"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useTicket.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/StatusControl.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/StatusControl.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+Now the comment thread and composer:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/CommentThread.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/CommentThread.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/CommentComposer.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/CommentComposer.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the TicketEditPanel (reusing TicketForm) and the detail page itself.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the edit panel and the detail page:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/TicketEditPanel.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/components/TicketEditPanel.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.module.css</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the T23 tests:
+- 404 state
+- CLOSED shows composer + hides edit
+- CANCELLED hides composer
+- OPEN offers only IN_PROGRESS/CANCELLED
+
+Mock ../api/tickets with getTicket, changeStatus, updateTicket, addComment.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the detail page tests:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -8 &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -8 && npx tsc --noEmit && echo "TSC OK"
+```
+
+```
+ RUN  v4.1.11 /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend
+
+
+ Test Files  5 passed (5)
+      Tests  32 passed (32)
+   Start at  21:16:12
+   Duration  3.84s (transform 888ms, setup 1.00s, import 3.15s, tests 3.94s, environment 4.82s)
+
+TSC OK
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+32 tests pass. T23 done. T24 — Not-found page + route wiring — is already done: NotFoundPage was written fully, and App.tsx already wires `/`, `/tickets/new`, `/tickets/:id`, `*`. Just need the router test: `/nope` renders not-found with link home.
+
+Let me write that test now. It should test App-level routing. Rendering App directly uses BrowserRouter — for tests I need MemoryRouter. App has BrowserRouter inside. For the test, I can render the Routes portion... The Shell component isn't exported. Options:
+1. Export Shell from App.tsx for tests.
+2. Test via a small Routes replication (weak).
+3. Refactor App to accept a router... 
+
+Cleanest: export `Shell` from App.tsx (named export) and render it inside MemoryRouter in the test with providers. Let me update App.tsx to export Shell.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+32 green. T23 done. For T24, routes are already wired in `App.tsx` and NotFoundPage is complete — I need the router test. Exporting `Shell` so it can be tested under a `MemoryRouter`:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/App.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "completed"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "completed"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "completed"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "completed"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "completed"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "in_progress"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/App.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -6</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -6
+```
+
+```
+
+ Test Files  6 passed (6)
+      Tests  34 passed (34)
+   Start at  21:16:33
+   Duration  4.35s (transform 1.27s, setup 1.47s, import 4.70s, tests 5.51s, environment 6.52s)
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+34 tests pass. T24 done. Now T27 — fill remaining RTL gaps:
+
+Per plan: "Fill remaining gaps: list filter/pager interaction, create happy path navigation, detail 409 on status, banner on network failure (mock fetch reject). Every screen has loading/empty/error coverage as applicable — no happy-path-only screens."
+
+Already covered:
+- List: loading skeleton, empty (both variants), populated, error, page sizes, URL params ✓
+- Create: happy path navigation ✓, fieldErrors ✓, client validation ✓, cancel ✓
+- Detail: 404, transitions offered per status, CLOSED/CANCELLED states, comments, error ✓
+- Routing: /nope ✓
+
+Gaps to fill:
+1. List filter/pager interaction — click status chip → listTickets called with status + page reset; pager next → page 1
+2. Detail 409 on status — changeStatus rejects with 409 → message shown verbatim beside control
+3. Banner on network failure — mock fetch reject (or ApiError status 0 from listTickets) → banner appears with "Can't reach the server"
+4. Comment composer submit → addComment called + refetch (append + refetch)
+5. Edit panel save → updateTicket called
+
+Let me add these tests:
+
+A. `TicketListPage.test.tsx` additions:
+   - clicking a status chip calls listTickets with that status and page 0, and updates URL
+   - pager: with totalPages 3, click Next → listTickets called with page 1
+   - banner on network failure: listTickets rejects ApiError(0, ...) → banner appears
+
+B. `TicketDetailPage.test.tsx` additions:
+   - 409 on status transition shows backend message verbatim
+   - comment composer submit calls addComment and refetches
+   - edit panel: open, save → updateTicket called with fields
+
+C. Banner test could be in App.test.tsx or list test. The Banner component is rendered by Shell, not by TicketListPage. So to test the banner on network failure, render Shell with listTickets rejecting status 0. Add to App.test.tsx.
+
+Let me write these.
+
+For the list interaction test with userEvent and debounce — the keyword debounce is 300ms; userEvent with fake timers is fiddly. For the status chip there's no debounce. For keyword, I can use vi.useFakeTimers... userEvent v14 supports `userEvent.setup({ advanceTimers: vi.advanceTimersByTime })`. Alternatively test keyword debounce by waiting ~400ms real time — acceptable (test duration is fine).
+
+Let me add to TicketListPage.test.tsx:
+
+```tsx
+it('applies a status chip filter and resets the page', async () => {
+  const user = userEvent.setup()
+  listTicketsMock.mockResolvedValue(page([ticket], { totalPages: 3, totalElements: 30 }))
+  renderWithProviders(<TicketListPage />, { initialEntries: ['/?page=2'] })
+
+  await screen.findByText('Cannot login')
+  await user.click(screen.getByRole('button', { name: 'Open' }))
+
+  await waitFor(() =>
+    expect(listTicketsMock).toHaveBeenLastCalledWith({ status: 'OPEN', keyword: '', page: 0, size: 10 }),
+  )
+})
+```
+
+Wait — the chip "Open" — there's also the StatusBadge with text "Open" on the row. getByRole('button', {name: 'Open'}) targets only buttons so it's fine (badge is a span).
+
+Pager test:
+
+```tsx
+it('navigates pages with the pager', async () => {
+  const user = userEvent.setup()
+  listTicketsMock.mockResolvedValue(page([ticket], { totalPages: 3, pageNumber: 0, totalElements: 30 }))
+  renderWithProviders(<TicketListPage />)
+
+  await screen.findByText('Page 1 of 3')
+  await user.click(screen.getByRole('button', { name: 'Next →' }))
+
+  await waitFor(() =>
+    expect(listTicketsMock).toHaveBeenLastCalledWith({ status: undefined, keyword: '', page: 1, size: 10 }),
+  )
+})
+```
+
+Hmm — listTickets is called with `{ status, keyword, page, size }` where status is null (parseStatus returns null). Let me check useTickets: passes `params` = `{ status, keyword, page, size }` from the page: status = null, keyword = ''. So toHaveBeenLastCalledWith({ status: null, keyword: '', page: 1, size: 10 }).
+
+In my earlier test 'requests the page and status from the URL' I asserted `{status: 'RESOLVED', keyword: 'login', page: 2, size: 50}` and it passed. For no-status case, status is null. OK.
+
+Banner test in App.test.tsx:
+
+```tsx
+it('shows the banner when the server cannot be reached', async () => {
+  listTickets.mockRejectedValue(new ApiError(0, 'NETWORK_ERROR', "Can't reach the server"))
+  renderWithProviders(<Shell />, { initialEntries: ['/'] })
+  expect(await screen.findByRole('alert')).toHaveTextContent("Can't reach the server")
+})
+```
+
+Careful: the list page also renders an error panel with role="alert" containing the same message. So there will be TWO alerts with the same text. findByRole('alert') fails with multiple. Use findAllByRole and check the banner specifically — the banner has the dismiss button. Or check `screen.getAllByRole('alert')` length 2. Better: query by class? No — use within() on... The banner contains a "Dismiss" button. Let me find the alert that contains a dismiss button:
+
+```tsx
+const alerts = await screen.findAllByRole('alert')
+const banner = alerts.find(a => within(a).queryByRole('button', { name: 'Dismiss' }))
+expect(banner).toHaveTextContent("Can't reach the server")
+```
+
+Detail 409 test:
+
+```tsx
+it('shows the backend 409 message verbatim beside the status control', async () => {
+  const user = userEvent.setup()
+  getTicketMock.mockResolvedValue(ticket({ status: 'OPEN' }))
+  changeStatusMock.mockRejectedValue(new ApiError(409, 'INVALID_STATE_TRANSITION', 'Cannot move ticket from CLOSED to OPEN'))
+
+  renderDetail()
+
+  await user.click(await screen.findByRole('button', { name: 'Mark as In progress' }))
+
+  const group = screen.getByRole('group', { name: 'Change status' })
+  const alert = await within(group.parentElement!).findByRole('alert')
+  expect(alert).toHaveTextContent('Cannot move ticket from CLOSED to OPEN')
+})
+```
+
+Hmm, the error <p role="alert"> is inside .control div which contains the buttons group. `within(group.parentElement)` — group is the buttons div, parent is .control. OK but fragile; simpler: `await screen.findByRole('alert')` since no other alert on the page at that point. Fine.
+
+Comment composer test:
+
+```tsx
+it('submits a comment and refetches the ticket', async () => {
+  const user = userEvent.setup()
+  getTicketMock.mockResolvedValue(ticket({}))
+  addCommentMock.mockResolvedValue({ id: 3, body: 'Repro steps', author: 'alice', createdAt: '...' })
+
+  renderDetail()
+
+  await user.type(await screen.findByLabelText('Comment'), 'Repro steps')
+  await user.click(screen.getByRole('button', { name: 'Comment' }))
+
+  await waitFor(() => expect(addCommentMock).toHaveBeenCalledWith(42, { body: 'Repro steps' }))
+  await waitFor(() => expect(getTicketMock).toHaveBeenCalledTimes(2))
+})
+```
+
+Edit panel test:
+
+```tsx
+it('saves edits via PATCH with all four fields', async () => {
+  const user = userEvent.setup()
+  const open = ticket({ status: 'OPEN' })
+  getTicketMock.mockResolvedValue(open)
+  updateTicketMock.mockResolvedValue({ ...open, title: 'Cannot login (SSO)' })
+
+  renderDetail()
+
+  await user.click(await screen.findByRole('button', { name: 'Edit ticket' }))
+  await user.clear(screen.getByLabelText('Title'))
+  await user.type(screen.getByLabelText('Title'), 'Cannot login (SSO)')
+  await user.click(screen.getByRole('button', { name: 'Save changes' }))
+
+  await waitFor(() =>
+    expect(updateTicketMock).toHaveBeenCalledWith(42, {
+      title: 'Cannot login (SSO)',
+      description: 'SSO redirect loops.',
+      priority: 'HIGH',
+      assignee: 'bob',
+    }),
+  )
+})
+```
+
+Wait — the edit panel assignee select has no blank option, initial value 'bob'. The TicketForm select: value={assignee} with options USERS. Since allowBlankAssignee is false, no blank option. Good.
+
+One issue: in the edit panel test, title input label is 'Title' — the create page test uses the same. Fine.
+
+Also 409 on edit: "409 shows message" — add test:
+
+```tsx
+it('shows the 409 message when editing a ticket that became terminal', async () => {
+  ...updateTicketMock.mockRejectedValue(new ApiError(409, 'TICKET_READ_ONLY', 'Ticket is closed and read-only'))
+  open edit, save, expect alert with message
+})
+```
+
+Let me add these tests now. Update the mock in TicketDetailPage.test.tsx to include changeStatus/updateTicket/addComment mocked imports.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+34 green. T24 done. Now T27 — filling the remaining coverage gaps: list filter/pager interactions, detail 409s, composer/edit flows, and the network-failure banner.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "completed"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "completed"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "completed"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "completed"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "completed"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "completed"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "in_progress"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketListPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketListPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+Now the detail page interaction tests (409 verbatim, composer, edit panel):
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Now the banner-on-network-failure test in App.test.tsx. The Banner is rendered by Shell. When listTickets rejects with ApiError(0), both the inline error panel and the banner show. I need to distinguish the banner — it has the Dismiss button.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Now the banner network-failure test in `App.test.tsx`:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/App.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -10</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -10
+```
+
+```
+     60|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  1 failed | 45 passed (46)
+   Start at  21:17:31
+   Duration  5.19s (transform 1.52s, setup 1.56s, import 5.23s, tests 8.48s, environment 6.44s)
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | grep -B30 &#34;1/1&#34; | head -50</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | grep -B30 "1/1" | head -50
+```
+
+```
+
+> frontend@0.0.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend
+
+ ❯ src/App.test.tsx (4 tests | 1 failed) 1316ms
+     × shows a dismissible banner when the server cannot be reached 378ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > Banner (FR11) > shows a dismissible banner when the server cannot be reached
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/App.test.tsx:58:7
+     56|         (el) => within(el).queryByRole('button', { name: 'Dismiss' }) …
+     57|       ),
+     58|     ).toBe(true)
+       |       ^
+     59|   })
+     60|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The banner found and shown correctly, but after clicking Dismiss, the assertion fails — the banner is still present. Why? The AnimatePresence exit animation — framer-motion exit animations don't run in jsdom without... Actually framer-motion animations do run in jsdom (they're JS-driven via rAF). The exit has duration 0.18s. After clicking dismiss, the element stays mounted during exit animation. My assertion runs synchronously right after the click.
+
+Fix: waitFor the banner to be removed. Let me use waitFor with queryByRole.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+The banner dismiss works but the exit animation keeps it mounted briefly — need `waitFor` after the click:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/App.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/App.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -6</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -6
+```
+
+```
+
+ Test Files  6 passed (6)
+      Tests  46 passed (46)
+   Start at  21:17:55
+   Duration  5.07s (transform 1.24s, setup 1.35s, import 5.01s, tests 8.64s, environment 6.60s)
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+All 46 tests pass. Now the final T27 verification: `npm run test` green ✓, `npx tsc --noEmit` clean, `npm run build` succeeds. Let me also run lint (oxlint) since it's configured.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+All 46 tests pass. Final T27 gates: tsc, build, lint.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npx tsc --noEmit &amp;&amp; echo &#34;TSC OK&#34; &amp;&amp; npm run build 2&gt;&amp;1 | tail -8</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npx tsc --noEmit && echo "TSC OK" && npm run build 2>&1 | tail -8
+```
+
+```
+TSC OK
+
+> frontend@0.0.0 build
+> tsc -b && vite build
+
+src/pages/TicketListPage.tsx(37,56): error TS2322: Type 'TicketStatus | null' is not assignable to type 'TicketStatus | undefined'.
+  Type 'null' is not assignable to type 'TicketStatus | undefined'.
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Interesting — `tsc --noEmit` passes but `tsc -b` fails? That's because `tsc -b` uses the project references (tsconfig.app.json + tsconfig.node.json) with stricter settings... Actually the difference: `tsc --noEmit` at the root uses tsconfig.json which is a solution-style file with references but no files — so `tsc --noEmit` checks nothing! That's why it passed all along. `tsc -b` actually builds the referenced projects.
+
+Wait, but earlier `npx tsc --noEmit` reported errors? No — it always said TSC OK. Hmm, but the vitest run uses oxc transform which doesn't typecheck. So type errors may have accumulated! Let me fix the immediate error and then run `tsc -b` properly to catch everything.
+
+The error: `ListTicketsParams.status?: TicketStatus` — optional, doesn't accept null. In TicketListPage I pass `status` which is `TicketStatus | null`. Fix: make ListTicketsParams accept `TicketStatus | null` or convert at call site. Cleanest: `status?: TicketStatus | null` in ListTicketsParams (the `if (params.status)` check handles null fine).
+
+Let me fix and run `tsc -b` to see all errors.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+`tsc -b` (project references) is stricter than my earlier `tsc --noEmit` check — real error found. `ListTicketsParams.status` must accept `null`:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/api/tickets.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run build 2&gt;&amp;1 | tail -12</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run build 2>&1 | tail -12
+```
+
+```
+dist/index.html                                              0.47 kB │ gzip:   0.31 kB
+dist/assets/inter-vietnamese-wght-normal-CBcvBZtf.woff2     10.25 kB
+dist/assets/inter-greek-ext-wght-normal-DlzME5K_.woff2      11.23 kB
+dist/assets/inter-cyrillic-wght-normal-DqGufNeO.woff2       18.74 kB
+dist/assets/inter-greek-wght-normal-CkhJZR-_.woff2          18.99 kB
+dist/assets/inter-cyrillic-ext-wght-normal-BOeWTOD4.woff2   25.96 kB
+dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2          48.25 kB
+dist/assets/inter-latin-ext-wght-normal-DO1Apj_S.woff2      85.06 kB
+dist/assets/index-CafLvN_O.css                              24.15 kB │ gzip:   4.88 kB
+dist/assets/index-BB2IgSNC.js                              415.93 kB │ gzip: 132.09 kB
+
+✓ built in 513ms
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Build succeeds. Now let me run lint (oxlint) and the full test suite one more time, plus check for any other type errors via `tsc -b` (which build already ran — it passed).
+
+Let me run lint.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Build succeeds. Running lint and the full suite once more:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run lint 2&gt;&amp;1 | tail -10 &amp;&amp; npm run test 2&gt;&amp;1 | tail -5</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run lint 2>&1 | tail -10 && npm run test 2>&1 | tail -5
+```
+
+```
+            at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:483:26)
+            at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+          cause: null
+        }
+      }
+    }
+  }
+}
+
+Node.js v22.9.0
+ Test Files  6 passed (6)
+      Tests  46 passed (46)
+   Start at  21:18:28
+   Duration  5.13s (transform 1.53s, setup 1.39s, import 5.06s, tests 8.54s, environment 6.59s)
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Lint crashed with a Node error (probably the same rolldown/ESM issue in oxlint or something else). Tests pass (46). Let me see the lint error more fully.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Tests pass; lint crashed with a Node error. Let me look:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run lint 2&gt;&amp;1 | head -30</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run lint 2>&1 | head -30
+```
+
+```
+
+> frontend@0.0.0 lint
+> oxlint
+
+file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/oxlint/dist/bindings.js:469
+		let error = /* @__PURE__ */ Error("Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.");
+		                            ^
+
+Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    at file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/oxlint/dist/bindings.js:469:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:262:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:483:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  cause: Error: Cannot find module '@oxlint/binding-wasm32-wasi'
+  Require stack:
+  - /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/oxlint/dist/bindings.js
+      at file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/oxlint/dist/bindings.js:402:15
+      ... 5 lines matching cause stack trace ...
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+    cause: Error: Cannot find module './oxlint.wasi.cjs'
+    Require stack:
+    - /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/oxlint/dist/bindings.js
+        at file:///home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_modules/oxlint/dist/bindings.js:402:15
+        ... 5 lines matching cause stack trace ...
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+      cause: Error: Cannot find module '@oxlint/binding-linux-x64-gnu'
+      Require stack:
+      - /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/node_
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Same npm optional-deps bug, this time for oxlint's platform binding. Same fix: install `@oxlint/binding-linux-x64-gnu` explicitly.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Same npm optional-deps bug, now for oxlint's binding. Same fix:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm install -D @oxlint/binding-linux-x64-gnu 2&gt;&amp;1 | tail -2 &amp;&amp; npm run lint 2&gt;&amp;1 | tail -8</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm install -D @oxlint/binding-linux-x64-gnu 2>&1 | tail -2 && npm run lint 2>&1 | tail -8
+```
+
+```
+
+found 0 vulnerabilities
+src/hooks/useCurrentUser.tsx:42:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/CommandPalette.tsx:18:7: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+src/hooks/useTicket.ts:38:10: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+src/components/FilterBar.tsx:7:14: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/FilterBar.tsx:31:5: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+src/test/render.tsx:23:17: warning react(only-export-components): Fast refresh only works when a file only exports compon
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run lint 2&gt;&amp;1 | grep -E &#34;^(Found|warning|error)&#34; | tail -3</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run lint 2>&1 | grep -E "^(Found|warning|error)" | tail -3
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npx oxlint 2&gt;&amp;1 | tail -3</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npx oxlint 2>&1 | tail -3
+```
+
+```
+src/hooks/useTicket.ts:38:10: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+src/components/FilterBar.tsx:7:14: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/FilterBar.tsx:31:5: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npx oxlint 2&gt;&amp;1 | grep -cE &#34;warning|error&#34;; npx oxlint 2&gt;&amp;1 | grep -E &#34;Found .* warnings&#34; </summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npx oxlint 2>&1 | grep -cE "warning|error"; npx oxlint 2>&1 | grep -E "Found .* warnings" 
+```
+
+```
+9
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+9 warnings, 0 errors (exit code 1 from grep not finding the summary line — oxlint exits 0 with warnings). The warnings are:
+1. `react(only-export-components)` — fast-refresh warnings for files exporting hooks/constants alongside components (useCurrentUser.tsx, useBanner.tsx, FilterBar.tsx PAGE_SIZES, test/render.tsx). These are stylistic/fast-refresh only.
+2. `react(set-state-in-effect)` — for data-fetching hooks (useTickets, useTicket) and FilterBar sync. These are legitimate patterns for data fetching (setLoading(true) in effect). The lint rule is opinionated; the React docs pattern for fetching in effects does set state.
+
+These are warnings, not errors. The plan's gate is "tsc + build green" — lint wasn't in the plan gates. I'll leave the warnings (they're idiomatic React patterns; fixing set-state-in-effect for data fetching would require a different data-fetching approach which is out of scope for the plan). Actually, let me reconsider — the workspace rules say "Ensure code would pass lint". The lint passes (exit 0, warnings only). Fine.
+
+Now let me do a final holistic check:
+1. `npm run build` ✓ (passed)
+2. `npm run test` ✓ 46 passed
+3. `tsc -b` ✓ (part of build)
+
+One more check — the plan's T27 also mentions "banner on network failure (mock fetch reject)" ✓ done in App.test.tsx.
+
+Let me also double check a few plan details I may have missed:
+
+T20:
+- NavRail 56px/200px collapsible ✓
+- Active item accent-tinted bg + left glow bar ✓
+- Header: wordmark ✓, CommandPalette trigger Ctrl+K ✓, UserSwitcher ✓
+- CommandPalette glass overlay, Enter navigates to /?keyword=... ✓
+- Banner fixed bottom glass ✓
+- Route transitions AnimatePresence ✓
+
+T21:
+- Editorial header with count ✓
+- FilterBar: debounced keyword ✓, status chips ✓, size select ✓
+- Reset page on change ✓, URL search params ✓
+- Rows: sharp cards, hover lift ✓, badges ✓, assignee ✓, relative time with absolute title ✓, stagger ✓
+- Skeleton/empty/error ✓
+- Pager ✓
+
+T22:
+- Centered panel 720px ✓, title large ✓, description ✓, priority segmented default MEDIUM ✓, assignee blank omits ✓
+- Helper text ✓, client validation 200/5000 ✓, fieldErrors ✓, 201 navigate ✓
+- Cancel → / ✓, disabled while submitting ✓
+
+T23:
+- Header with badge/metadata ✓
+- StatusControl legal next only, terminal read-only ✓, 409 verbatim ✓
+- EditPanel hidden on terminal ✓, assignee 3 users no blank ✓, PATCH ✓, 409 ✓
+- CommentThread oldest first, author + relative time, avatar dot ✓
+- Composer hidden only when CANCELLED ✓, "Commenting as {user}" ✓, append+refetch ✓, 409 ✓
+- 404 EmptyState ✓
+
+T24: routes + NotFound ✓
+
+T27: coverage ✓, tsc ✓, build ✓
+
+One thing to verify: `.env.example` exists ✓. Also should I add `.env` for local dev? The client defaults to http://localhost:8080 when VITE_API_BASE_URL is unset, so dev works without .env. Good.
+
+Also — the plan says the e2e check is manual and documented; out of scope items noted. The plan's "End-to-end check (manual, documented)" — should I run it? It says manual. The backend is stopped. I could optionally start the backend + Postgres and do a live smoke test. That would be a strong verification. Let me try it: start compose (port 5434), bootRun backend, run vite dev, curl the API through... Actually a full browser e2e isn't possible without a browser tool. I can at least verify the frontend dev server proxies/fetches to the backend correctly with curl for CORS preflight. Let me do a quick live check:
+
+1. Start Postgres compose
+2. Start backend on 8080
+3. curl CORS preflight with X-Username from origin http://localhost:5173
+4. Create a ticket via API, list it
+5. Start vite dev, curl the page
+
+This validates the manual e2e path as much as possible from CLI. Let me do it — it's high value.
+
+Actually wait — the plan says "End-to-end check (manual, documented)". The user asked to implement the plan. Running the e2e check would complete it fully. Let me do the CLI-verifiable parts.
+
+Let me first mark progress and check remaining items. Also update the plan todos... no wait, the plan file must not be edited. The TodoWrite todos are separate.
+
+Let me run the e2e smoke test.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+9 warnings (fast-refresh/data-fetch idioms), 0 errors — lint passes. All plan gates green. Now the plan's end-to-end check: let me start the backend and verify the full stack works together.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular &amp;&amp; POSTGRES_PASSWORD=localdev docker compose up -d 2&gt;&amp;1 | tail -3</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular && POSTGRES_PASSWORD=localdev docker compose up -d 2>&1 | tail -3
+```
+
+```
+ Container sturdy-fernacular-postgres-1  Running
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/backend &amp;&amp; (SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5434/tickets SPRING_DATASOURCE_PASSWORD=localdev ./gradlew bootRun --no-daemon &amp;&gt;/tmp/bootrun.log &amp;) &amp;&amp; sleep 25 &amp;&amp; curl -s -o /dev/null -w &#34;%{http_code}&#34; -H &#34;X-Username: alice&#34; http://localhost:8080/api/v1/tickets &amp;&amp; echo &#34; backend up&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/backend && (SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5434/tickets SPRING_DATASOURCE_PASSWORD=localdev ./gradlew bootRun --no-daemon &>/tmp/bootrun.log &) && sleep 25 && curl -s -o /dev/null -w "%{http_code}" -H "X-Username: alice" http://localhost:8080/api/v1/tickets && echo " backend up"
+```
+
+```
+200 backend up
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Backend is up. Now:
+1. CORS preflight check with X-Username from origin http://localhost:5173
+2. Create → list → search/filter → transition → comment on CLOSED flow via curl
+3. Start vite dev and verify it serves
+
+Let me do the CORS preflight and the full ticket flow.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Backend up. Running the e2e flow: CORS preflight, create, list, filter, transition, comment on CLOSED:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: echo &#34;=== CORS preflight ===&#34; &amp;&amp; curl -s -i -X OPTIONS http://localhost:8080/api/v1/tickets -H &#34;Origin: http://localhost:5173&#34; -H &#34;Access-Control-Request-Method: POST&#34; -H &#34;Access-Control-Request-Headers: content-type,x-username&#34; | head -12</summary>
+```bash
+echo "=== CORS preflight ===" && curl -s -i -X OPTIONS http://localhost:8080/api/v1/tickets -H "Origin: http://localhost:5173" -H "Access-Control-Request-Method: POST" -H "Access-Control-Request-Headers: content-type,x-username" | head -12
+```
+
+```
+=== CORS preflight ===
+HTTP/1.1 200 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Access-Control-Allow-Origin: http://localhost:5173
+Access-Control-Allow-Methods: GET,POST,PATCH,OPTIONS
+Access-Control-Allow-Headers: content-type, x-username
+Access-Control-Max-Age: 1800
+Allow: GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH
+Content-Length: 0
+Date: Fri, 25 Sep 2026 15:49:45 GMT
+
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: echo &#34;=== create (blank assignee → auto-assign alice) ===&#34; &amp;&amp; curl -s -X POST http://localhost:8080/api/v1/tickets -H &#34;Content-Type: application/json&#34; -H &#34;X-Username: alice&#34; -d &#39;{&#34;title&#34;:&#34;E2E login outage&#34;,&#34;description&#34;:&#34;SSO redirect loops on staging.&#34;,&#34;priority&#34;:&#34;HIGH&#34;}&#39; | head -3 &amp;&amp; echo &amp;&amp; echo &#34;=== list with keyword filter ===&#34; &amp;&amp; curl -s &#34;http://localhost:8080/api/v1/tickets?keyword=login&amp;size=10&amp;page=0&#34; -H &#34;X-Username: bob&#34; | head -3</summary>
+```bash
+echo "=== create (blank assignee → auto-assign alice) ===" && curl -s -X POST http://localhost:8080/api/v1/tickets -H "Content-Type: application/json" -H "X-Username: alice" -d '{"title":"E2E login outage","description":"SSO redirect loops on staging.","priority":"HIGH"}' | head -3 && echo && echo "=== list with keyword filter ===" && curl -s "http://localhost:8080/api/v1/tickets?keyword=login&size=10&page=0" -H "X-Username: bob" | head -3
+```
+
+```
+=== create (blank assignee → auto-assign alice) ===
+{"id":2,"title":"E2E login outage","description":"SSO redirect loops on staging.","status":"OPEN","priority":"HIGH","assignee":"alice","createdBy":"alice","updatedBy":"alice","createdAt":"2026-09-25T15:49:49.526189Z","updatedAt":"2026-09-25T15:49:49.526222Z","comments":[]}
+=== list with keyword filter ===
+{"content":[{"id":2,"title":"E2E login outage","status":"OPEN","priority":"HIGH","assignee":"alice","updatedAt":"2026-09-25T15:49:49.526222Z"},{"id":1,"title":"Login broken","status":"OPEN","priority":"HIGH","assignee":"alice","updatedAt":"2026-09-25T15:28:56.367775Z"}],"totalElements":2,"totalPages":1,"pageNumber":0}
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: echo &#34;=== transition OPEN→IN_PROGRESS→RESOLVED→CLOSED ===&#34; &amp;&amp; curl -s -X PATCH http://localhost:8080/api/v1/tickets/2/status -H &#34;Content-Type: application/json&#34; -H &#34;X-Username: alice&#34; -d &#39;{&#34;status&#34;:&#34;IN_PROGRESS&#34;}&#39; -o /dev/null -w &#34;%{http_code} &#34; &amp;&amp; curl -s -X PATCH http://localhost:8080/api/v1/tickets/2/status -H &#34;Content-Type: application/json&#34; -H &#34;X-Username: alice&#34; -d &#39;{&#34;status&#34;:&#34;RESOLVED&#34;}&#39; -o /dev/null -w &#34;%{http_code} &#34; &amp;&amp; curl -s -X PATCH http://localhost:8080/api/v1/tickets/2/status -H &#34;Content-Type: application/json&#34; -H &#34;X-Username: alice&#34; -d &#39;{&#34;status&#34;:&#34;CLOSED&#34;}&#39; -o /dev/null -w &#34;%{http_code}\n&#34; &amp;&amp; echo &#34;=== comment on CLOSED (should be 201) ===&#34; &amp;&amp; curl -s -X POST http://localhost:8080/api/v1/tickets/2/comments -H &#34;Content-Type: application/json&#34; -H &#34;X-Username: bob&#34; -d &#39;{&#34;body&#34;:&#34;Verified fixed on staging.&#34;}&#39; -w &#34;\n%{http_code}\n&#34; &amp;&amp; echo &#34;=== illegal transition CLOSED→OPEN (should be 409) ===&#34; &amp;&amp; curl -s -X PATCH http://localhost:8080/api/v1/tickets/2/status -H &#34;Content-Type: application/json&#34; -H &#34;X-Username: alice&#34; -d &#39;{&#34;status&#34;:&#34;OPEN&#34;}&#39; -w &#34;\n%{http_code}\n&#34;</summary>
+```bash
+echo "=== transition OPEN→IN_PROGRESS→RESOLVED→CLOSED ===" && curl -s -X PATCH http://localhost:8080/api/v1/tickets/2/status -H "Content-Type: application/json" -H "X-Username: alice" -d '{"status":"IN_PROGRESS"}' -o /dev/null -w "%{http_code} " && curl -s -X PATCH http://localhost:8080/api/v1/tickets/2/status -H "Content-Type: application/json" -H "X-Username: alice" -d '{"status":"RESOLVED"}' -o /dev/null -w "%{http_code} " && curl -s -X PATCH http://localhost:8080/api/v1/tickets/2/status -H "Content-Type: application/json" -H "X-Username: alice" -d '{"status":"CLOSED"}' -o /dev/null -w "%{http_code}\n" && echo "=== comment on CLOSED (should be 201) ===" && curl -s -X POST http://localhost:8080/api/v1/tickets/2/comments -H "Content-Type: application/json" -H "X-Username: bob" -d '{"body":"Verified fixed on staging."}' -w "\n%{http_code}\n" && echo "=== illegal transition CLOSED→OPEN (should be 409) ===" && curl -s -X PATCH http://localhost:8080/api/v1/tickets/2/status -H "Content-Type: application/json" -H "X-Username: alice" -d '{"status":"OPEN"}' -w "\n%{http_code}\n"
+```
+
+```
+=== transition OPEN→IN_PROGRESS→RESOLVED→CLOSED ===
+200 200 200
+=== comment on CLOSED (should be 201) ===
+{"id":1,"body":"Verified fixed on staging.","author":"bob","createdAt":"2026-09-25T15:49:55.001381Z"}
+201
+=== illegal transition CLOSED→OPEN (should be 409) ===
+{"timestamp":"2026-09-25T15:49:55.037624315Z","status":409,"error":"INVALID_STATE_TRANSITION","message":"Cannot move ticket from CLOSED to OPEN","path":"/api/v1/tickets/2/status","fieldErrors":null}
+409
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The full backend flow works. Now start the Vite dev server and verify it serves the app, then take a screenshot if possible. I don't have a browser tool readily available... Let me check if there's a way. I could use the cursor tools — no browser tool listed. I'll verify the dev server serves and the built preview works. Let me start vite dev and curl it.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Full backend flow verified. Now the Vite dev server against the live backend:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; (npm run dev &amp;&gt;/tmp/vite-dev2.log &amp;) &amp;&amp; sleep 4 &amp;&amp; curl -s -o /dev/null -w &#34;vite dev: %{http_code}\n&#34; http://localhost:5173/ &amp;&amp; curl -s -o /dev/null -w &#34;main.tsx: %{http_code}\n&#34; http://localhost:5173/src/main.tsx</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && (npm run dev &>/tmp/vite-dev2.log &) && sleep 4 && curl -s -o /dev/null -w "vite dev: %{http_code}\n" http://localhost:5173/ && curl -s -o /dev/null -w "main.tsx: %{http_code}\n" http://localhost:5173/src/main.tsx
+```
+
+```
+vite dev: 200
+main.tsx: 200
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Dev server serves. The frontend fetches directly to `http://localhost:8080` (VITE_API_BASE_URL default) with CORS — verified preflight passes with `X-Username`.
+
+Let me clean up: stop the dev server and backend, stop postgres? The user may want to try it themselves. I'll stop the dev server and backend to leave a clean state, but leave Postgres running? Earlier state was "App and container currently stopped" — I'll return to that state: stop vite, stop bootRun, stop compose. Actually, let me leave things stopped cleanly.
+
+Actually — wait. Let me reconsider: leaving the environment as found (stopped) is tidiest. Let me kill vite and gradle bootRun, and stop the compose container.
+
+Then final: mark T27 completed, summarize.
+
+One more thing to double-check: the `dist/` build output shouldn't be committed — frontend/.gitignore from the Vite scaffold includes dist. ✓ (scaffold default).
+
+Also check: plan said `.env.example` with VITE_API_BASE_URL ✓ created.
+
+Let me also quickly sanity-check the README situation — the Vite scaffold README.md is generic. Not required by plan; leave it. Actually the documentation skill says to keep docs consistent... the plan doesn't ask for README changes. Leave it — minimal changes.
+
+Cleanup processes now.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+Everything verified. Cleaning up the running processes to leave a tidy state:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: pkill -f &#34;vite&#34; 2&gt;/dev/null; pkill -f &#34;bootRun&#34; 2&gt;/dev/null; pkill -f &#34;GradleDaemon&#34; 2&gt;/dev/null; sleep 2; cd /home/deepanshu/Desktop/C2/sturdy-fernacular &amp;&amp; docker compose stop 2&gt;&amp;1 | tail -1; curl -s -o /dev/null --max-time 2 http://localhost:8080/api/v1/tickets &amp;&amp; echo &#34;backend still up&#34; || echo &#34;backend stopped&#34;; curl -s -o /dev/null --max-time 2 http://localhost:5173/ &amp;&amp; echo &#34;vite still up&#34; || echo &#34;vite stopped&#34;</summary>
+```bash
+pkill -f "vite" 2>/dev/null; pkill -f "bootRun" 2>/dev/null; pkill -f "GradleDaemon" 2>/dev/null; sleep 2; cd /home/deepanshu/Desktop/C2/sturdy-fernacular && docker compose stop 2>&1 | tail -1; curl -s -o /dev/null --max-time 2 http://localhost:8080/api/v1/tickets && echo "backend still up" || echo "backend stopped"; curl -s -o /dev/null --max-time 2 http://localhost:5173/ && echo "vite still up" || echo "vite stopped"
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: sleep 3; curl -s -o /dev/null --max-time 2 http://localhost:8080/api/v1/tickets -H &#34;X-Username: alice&#34; &amp;&amp; echo &#34;backend still up&#34; || echo &#34;backend stopped&#34;; curl -s -o /dev/null --max-time 2 http://localhost:5173/ &amp;&amp; echo &#34;vite still up&#34; || echo &#34;vite stopped&#34;; docker ps --filter name=sturdy-fernacular --format &#34;{{.Names}} {{.Status}}&#34;</summary>
+```bash
+sleep 3; curl -s -o /dev/null --max-time 2 http://localhost:8080/api/v1/tickets -H "X-Username: alice" && echo "backend still up" || echo "backend stopped"; curl -s -o /dev/null --max-time 2 http://localhost:5173/ && echo "vite still up" || echo "vite stopped"; docker ps --filter name=sturdy-fernacular --format "{{.Names}} {{.Status}}"
+```
+
+```
+backend still up
+vite stopped
+sturdy-fernacular-postgres-1 Up 22 minutes
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The backend is still up (bootRun spawns a Java process that pkill on "bootRun" didn't kill — the java process name differs). And postgres container still up (docker compose stop didn't output — maybe it failed silently or the earlier command chain broke). Let me kill the java process properly and stop the container.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: pkill -f &#34;SturdyFernacularApplication&#34; 2&gt;/dev/null; pkill -f &#34;gradle&#34; 2&gt;/dev/null; sleep 3; curl -s -o /dev/null --max-time 2 http://localhost:8080/api/v1/tickets -H &#34;X-Username: alice&#34; &amp;&amp; echo &#34;backend still up&#34; || echo &#34;backend stopped&#34;</summary>
+```bash
+pkill -f "SturdyFernacularApplication" 2>/dev/null; pkill -f "gradle" 2>/dev/null; sleep 3; curl -s -o /dev/null --max-time 2 http://localhost:8080/api/v1/tickets -H "X-Username: alice" && echo "backend still up" || echo "backend stopped"
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: sleep 2; curl -s -o /dev/null --max-time 2 http://localhost:8080/api/v1/tickets -H &#34;X-Username: alice&#34; &amp;&amp; echo &#34;backend still up&#34; || echo &#34;backend stopped&#34;; cd /home/deepanshu/Desktop/C2/sturdy-fernacular &amp;&amp; docker compose stop 2&gt;&amp;1 | tail -2</summary>
+```bash
+sleep 2; curl -s -o /dev/null --max-time 2 http://localhost:8080/api/v1/tickets -H "X-Username: alice" && echo "backend still up" || echo "backend stopped"; cd /home/deepanshu/Desktop/C2/sturdy-fernacular && docker compose stop 2>&1 | tail -2
+```
+
+```
+backend stopped
+error while interpolating services.postgres.environment.POSTGRES_PASSWORD: required variable POSTGRES_PASSWORD is missing a value: Set POSTGRES_PASSWORD in .env or environment
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular &amp;&amp; POSTGRES_PASSWORD=localdev docker compose stop 2&gt;&amp;1 | tail -2 &amp;&amp; docker ps --filter name=sturdy-fernacular --format &#34;{{.Names}} {{.Status}}&#34;</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular && POSTGRES_PASSWORD=localdev docker compose stop 2>&1 | tail -2 && docker ps --filter name=sturdy-fernacular --format "{{.Names}} {{.Status}}"
+```
+
+```
+ Container sturdy-fernacular-postgres-1  Stopping
+ Container sturdy-fernacular-postgres-1  Stopped
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+All stopped. Final verification run of the complete gate suite, then mark T27 complete and summarize.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+All clean. Final gate verification:
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend &amp;&amp; npm run test 2&gt;&amp;1 | tail -4 &amp;&amp; npm run build 2&gt;&amp;1 | tail -2</summary>
+```bash
+cd /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend && npm run test 2>&1 | tail -4 && npm run build 2>&1 | tail -2
+```
+
+```
+      Tests  46 passed (46)
+   Start at  21:20:38
+   Duration  5.13s (transform 1.47s, setup 1.31s, import 5.13s, tests 8.69s, environment 6.51s)
+
+
+✓ built in 453ms
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts (ApiError, X-Username) + api/tickets.ts + mocked-fetch tests",
+      "id": "t19-api-client",
+      "status": "completed"
+    },
+    {
+      "content": "T20: App shell — NavRail, UserSwitcher (localStorage), CommandPalette, Banner, badges, EmptyState, Skeleton, route transitions",
+      "id": "t20-shell",
+      "status": "completed"
+    },
+    {
+      "content": "T21: Ticket list page — filter bar, rows, pager, skeleton/empty/error states",
+      "id": "t21-list",
+      "status": "completed"
+    },
+    {
+      "content": "T22: Create ticket page — form, priority segmented, assignee blank omits, fieldErrors",
+      "id": "t22-create",
+      "status": "completed"
+    },
+    {
+      "content": "T23: Ticket detail — status control (legal next only), edit panel, comment thread/composer, 404",
+      "id": "t23-detail",
+      "status": "completed"
+    },
+    {
+      "content": "T24: Not-found page + route wiring",
+      "id": "t24-notfound",
+      "status": "completed"
+    },
+    {
+      "content": "T27: RTL coverage for remaining loading/empty/error states; tsc + build green",
+      "id": "t27-rtl-tests",
+      "status": "completed"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "T17: Vite+React+TS scaffold, deps (router, framer-motion, Inter, vitest/RTL), tokens.css + base.css design foundation",
+      "id": "t17-scaffold",
+      "status": "completed"
+    },
+    {
+      "content": "T18: src/types/ticket.ts mirroring api-contract + ALLOWED_NEXT map",
+      "id": "t18-types",
+      "status": "completed"
+    },
+    {
+      "content": "T19: api/client.ts
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+All 9 todos complete. The frontend is fully implemented per the plan.
+
+## Summary
+
+**What was built** — the complete `frontend/` Vite + React 19 + TypeScript app implementing T17–T24 and T27, in the dark cinematic violet-accented design language, against the backend on `:8080`.
+
+**By phase:**
+- **T17** — Scaffold, deps (`react-router-dom`, `framer-motion`, `@fontsource-variable/inter`, vitest/RTL), `src/styles/tokens.css` + `base.css`, folders, `.env.example`, vitest configured in `vite.config.ts`
+- **T18** — `src/types/ticket.ts`: all contract types + `ALLOWED_NEXT` state-machine map (single source for the status control)
+- **T19** — `src/api/client.ts` (`ApiError` with `status`/`error`/`fieldErrors`, `X-Username` injection via registered getter, `status: 0` on network failure) + `src/api/tickets.ts` (all 6 endpoints, typed)
+- **T20** — Shell: collapsible `NavRail`, `UserSwitcher` (localStorage `sf-user`, default alice), glass `CommandPalette` (Ctrl/Cmd+K → `/?keyword=…`), glass `Banner` (FR11: status 0 / ≥500), `StatusBadge`/`PriorityBadge`, `EmptyState`, `Skeleton`, `AnimatePresence` route transitions
+- **T21** — List page: URL-synced filters (debounced keyword, status chips, 10/50/100), page reset on change, staggered rows with relative time, skeleton/empty (both variants)/error states, pager
+- **T22** — Create page: shared `TicketForm`, priority segmented (default MEDIUM), blank assignee **omitted** from POST, client validation (200/5000), `fieldErrors` under fields, 201 → detail
+- **T23** — Detail page: `StatusControl` (legal-next only, terminal read-only, 409 verbatim), `TicketEditPanel` (hidden on terminal, 3-user assignee), `CommentThread` (oldest-first, avatar dots), `CommentComposer` (hidden only on CANCELLED), 404 state
+- **T24** — `NotFoundPage` + routes `/`, `/tickets/new`, `/tickets/:id`, `*`
+- **T27** — Full RTL coverage incl. filter/pager interactions, 409s on status/edit/comment, banner on network failure
+
+**Verification:** 46 tests green, `tsc -b` clean, `npm run build` succeeds, oxlint 0 errors (9 fast-refresh/data-fetch warnings, idiomatic patterns). **Live e2e passed**: CORS preflight with `X-Username`, create (auto-assign), keyword search, OPEN→IN_PROGRESS→RESOLVED→CLOSED, comment on CLOSED (201), illegal transition (409 verbatim), Vite dev on :5173. All processes stopped afterward.
+
+**Deviations to flag:**
+1. `jsdom` pinned to `^23.2.0` — jsdom 27's CSS chain requires Node ≥22.12 (require-ESM); this machine has 22.9.0
+2. `@rolldown/binding-linux-x64-gnu` and `@oxlint/binding-linux-x64-gnu` added as explicit devDeps — workaround for the npm optional-deps bug on this machine (platform-guarded, skipped on other OSes)
+
+---
+
+_**User**_
+
+start application
+
+---
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Starting the application.
+
+Checking the terminal and docker-compose configuration before starting the full stack application.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+I'll start Postgres, the Spring backend, and the Vite frontend so you can use the app locally.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/docker-compose.yml</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/.cursor/projects/home-deepanshu-Desktop-C2-sturdy-fernacular/terminals/1.txt</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **2** results in **1** directory</summary>
+
+Directory: **`/home/deepanshu/Desktop/C2/sturdy-fernacular`** (2 files)
+
+| File |
+|------|
+| `frontend/.env.example` |
+| `.env.example` |
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="get_mcp_tools"><details>
+<summary>Tool use: **get_mcp_tools**</summary>
+
+Parameters:
+
+```json
+{
+  "server": "cursor",
+  "toolName": "AwaitShell"
+}
+```
+Result:
+
+```json
+{
+  "content": "{\n  \"tool\": \"AwaitShell\",\n  \"description\": \"Check or poll a backgrounded shell job. For work that does not have a shell id, you can omit the shell_id arg to sleep for the full `block_until_ms` duration (prefer this over sleeping in the shell, because it renders nicely to the user). At the end of your turn, you will be notified about any unawaited jobs that completed. If you think a job completed (e.g. because you killed it), observe it with AwaitShell to skip the notification, because stale notifications can confuse the user.\\n\\nPrefer NOT to poll reflexively with AwaitShell. Multitask on independent work while backgrounded jobs run, or finish your turn and rely on the end-of-turn completion notification. Poll with AwaitShell only when one of the following is true:\\n- Your very next step is blocked on this specific job's result and you have no other productive work to do, OR\\n- The task requires close monitoring (see shell guidance below).\\n- Never poll a task whose tool result says it was \\\"manually backgrounded by the user\\\".\\n- NEVER USE THIS TO POLL OR WAIT VACUOUSLY FOR A SUBAGENT LAUNCHED WITH THE Task TOOL — rely on the end-of-turn completion notification instead (it is delivered as soon as the subagent finishes; guessing a wait time is inefficient).\\n- Shell: only poll with AwaitShell when the command requires close monitoring. Close monitoring means a long-running job that can silently hang, degrade, or need a course correction before it completes — e.g. training runs, eval runs, deployments, long builds, datagen pipelines, DB migrations, large data transfers. For fire-and-forget commands (tests, installs, dev servers/watchers, short scripts, etc.) the completion notification is enough — start them, keep working, and only poll with AwaitShell later if you end up blocked on the result.\\n- Shell sanity check (regardless of close monitoring): when you spawn a command directly into the background (`block_until_ms: 0`), do a 
+… (output truncated)
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Checking .env.example and application.yaml for password patterns.
+
+Starting Docker Compose first. Then the backend and frontend. Will copy the frontend .env file if it is missing.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/.env.example</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **`/home/deepanshu/Desktop/C2/sturdy-fernacular`** (0 files)
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/resources",
+  "pattern": "SPRING_DATASOURCE"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/resources",
+  "pattern": "SPRING_DATASOURCE",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/resources/application.yaml"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The database URL must point to port 5434.
+
+POSTGRES_PASSWORD will be localdev. The frontend .env will be copied from the example file. Docker Compose will start the services in the background. Both the backend and frontend will launch and await readiness.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: test -f /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/.env || cp /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/.env.example /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/.env &amp;&amp; cd /home/deepanshu/Desktop/C2/sturdy-fernacular &amp;&amp; POSTGRES_PASSWORD=localdev docker compose up -d</summary>
+```bash
+test -f /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/.env || cp /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/.env.example /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/.env && cd /home/deepanshu/Desktop/C2/sturdy-fernacular && POSTGRES_PASSWORD=localdev docker compose up -d
+```
+
+```
+ Container sturdy-fernacular-postgres-1  Starting
+ Container sturdy-fernacular-postgres-1  Started
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Starting the backend and frontend in the background.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5434/tickets SPRING_DATASOURCE_USERNAME=tickets SPRING_DATASOURCE_PASSWORD=localdev ./gradlew bootRun --no-daemon</summary>
+```bash
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5434/tickets SPRING_DATASOURCE_USERNAME=tickets SPRING_DATASOURCE_PASSWORD=localdev ./gradlew bootRun --no-daemon
+```
+
+```
+]633;CTo honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :resolveMainClassName UP-TO-DATE
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-25T21:22:25.389+05:30  INFO 63336 --- [sturdy-fernacular] [           main] c.e.s.SturdyFernacularApplication        : Starting SturdyFernacularApplication using Java 21.0.8 with PID 63336 (/home/deepanshu/Desktop/C2/sturdy-fernacular/backend/build/classes/java/main started by deepanshu in /home/deepanshu/Desktop/C2/sturdy-fernacular/backend)
+2026-09-25T21:22:25.392+05:30  INFO 63336 --- [sturdy-fernacular] [           main] c.e.s.SturdyFernacularApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-09-25T21:22:26.020+05:30  INFO 63336 --- [sturdy-fernacular] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-25T21:22:26.083+05:30  INFO 63336 --- [sturdy-fernacular] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 2 JPA repository interfaces.
+2026-09-25T21:22:26.541+05:30  INFO 63336 --- [sturdy-fernacular] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-09-25T21:22:26.564+05:30  INFO 63336 --- [sturdy-fernacular] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomc
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: npm run dev</summary>
+```bash
+npm run dev
+```
+
+```
+]633;C
+> frontend@0.0.0 dev
+> vite
+
+You are using Node.js 22.9.0. Vite requires Node.js version 20.19+ or 22.12+. Please upgrade your Node.js version.
+
+  VITE v8.3.1  ready in 383 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Waiting for Vite and Spring to finish starting.
+
+Using AwaitShell to wait for the shell process.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="await"><details>
+<summary>Tool use: **await**</summary>
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="await"><details>
+<summary>Tool use: **await**</summary>
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Both applications started. Running a quick smoke test to verify.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: curl -s -o /dev/null -w &#34;frontend %{http_code}\n&#34; http://localhost:5173/ &amp;&amp; curl -s -o /dev/null -w &#34;backend %{http_code}\n&#34; -H &#34;X-Username: alice&#34; http://localhost:8080/api/v1/tickets</summary>
+```bash
+curl -s -o /dev/null -w "frontend %{http_code}\n" http://localhost:5173/ && curl -s -o /dev/null -w "backend %{http_code}\n" -H "X-Username: alice" http://localhost:8080/api/v1/tickets
+```
+
+```
+frontend 200
+backend 200
+
+```
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+I will provide the application URLs and usage instructions.
+
+The PostgreSQL password for this session will also be mentioned.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+The stack is up.
+
+- **App:** [http://localhost:5173](http://localhost:5173)
+- **API:** [http://localhost:8080](http://localhost:8080)
+- **Postgres:** `localhost:5434` (Compose, password `localdev` for this session)
+
+Switch users in the header (alice / bob / carol). Tickets start as OPEN. Press **Ctrl+K** to search.
+
+---
+
+_**User**_
+
+need to fix a bug, when i toggle user it should show only their tickets in list tickets, only users which created the ticket or are working on the ticket should have access to it. also when i toggle the user on a ticket page, fe should call the description api again and if no data, redirect to the list with a banner - ticket not found
+
+---
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+**Planning API Inspection**
+
+I need to create a clear plan for inspecting both the backend and frontend, possibly creating around five files for this. Understanding what "working on" means for assignees is key, since we might access the "createdBy" or assignee data. I should look into the API list and details related to enforcement in the backend. The user mentioned a description API, so toggling the triggers could help ensure we refetch correctly. It seems like some elements may not need to rely on the current user. I'll also need to plan out tests for both the backend and frontend together.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.java",
+  "outputMode": "content",
+  "path": "/home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/java",
+  "pattern": "list\\(|getById|search\\(|CurrentUser|createdBy|assignee"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/java",
+  "pattern": "list\\(|getById|search\\(|CurrentUser|createdBy|assignee",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/web/UsernameFilter.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/web/CurrentUser.java"
+    },
+    {
+      "matchCount": 5,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/web/TicketController.java"
+    },
+    {
+      "matchCount": 11,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/service/TicketService.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/web/dto/TicketDetail.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/web/dto/TicketListItem.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/web/dto/UpdateTicketRequest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/web/dto/CreateTicketRequest.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/service/InvalidAssigneeException.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/repository/TicketRepository.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/epic/sturdyfernacular/domain/Ticket.java"
+    }
+  ],
+  "totalFiles": 11,
+  "totalMatches": 31
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useCurrentUser.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useTickets.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useTicket.ts</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/java/com/epic/sturdyfernacular/service/TicketService.java</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/java/com/epic/sturdyfernacular/repository/TicketRepository.java</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/java/com/epic/sturdyfernacular/web/TicketController.java</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/hooks/useBanner.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.java",
+  "outputMode": "files_with_matches",
+  "path": "/home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/test",
+  "pattern": "service\\.list|getById\\(|GET /tickets|search\\("
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "files_with_matches",
+  "path": "/home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/test",
+  "pattern": "service\\.list|getById\\(|GET /tickets|search\\(",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/epic/sturdyfernacular/service/TicketServiceIntegrationTest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/epic/sturdyfernacular/web/TicketControllerTest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/epic/sturdyfernacular/service/TicketServiceTest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/epic/sturdyfernacular/repository/TicketSearchRepositoryTest.java"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 4
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+**Clarifying access permissions**
+
+I'm grappling with critical ambiguity around write permissions. The user noted that "only users who created or are working should have access," which probably means they should have rights for all access, including list, detail, and write. I need to clarify this. I’m also considering that a user without access detail should see a 404 error. It's confusing whether the creator retains access after reassignment, as other users can't view, update, or comment. I need to ask for clarification.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ask_question"><details>
+<summary>Tool use: **ask_question**</summary>
+
+Parameters:
+
+```json
+{
+  "questions": [
+    {
+      "id": "access_scope",
+      "options": [
+        {
+          "id": "all_operations",
+          "label": "All operations (Recommended): list, detail, edit, status, and comments return 404 for unauthorized users"
+        },
+        {
+          "id": "read_only",
+          "label": "Read access only: filter list/detail, but existing write behavior remains unchanged"
+        }
+      ],
+      "prompt": "Should the creator-or-assignee rule apply only to reading tickets, or to every ticket operation?"
+    }
+  ],
+  "title": "Ticket access scope"
+}
+```
+Additional data:
+
+```json
+{
+  "completionDelivered": true,
+  "currentSelections": {
+    "access_scope": [
+      "all_operations"
+    ]
+  },
+  "freeformRichTexts": {},
+  "freeformTexts": {
+    "access_scope": ""
+  },
+  "status": "submitted"
+}
+```
+Result:
+
+```json
+{
+  "answers": [
+    {
+      "freeformText": "",
+      "questionId": "access_scope",
+      "selectedOptionIds": [
+        "all_operations"
+      ]
+    }
+  ]
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/test/java/com/epic/sturdyfernacular/repository/TicketSearchRepositoryTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/test/java/com/epic/sturdyfernacular/service/TicketServiceTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/test/java/com/epic/sturdyfernacular/web/TicketControllerTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketListPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/frontend/src/pages/TicketDetailPage.test.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+This is an authorization change, not only a frontend refresh bug: the backend currently returns every ticket and allows any prototype user to operate on any ticket. The fix should enforce creator-or-assignee access server-side and then make the frontend react to user changes.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/.cursor/skills/documentation/SKILL.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+**Considering implementation plans**
+
+I’m thinking about the current plan: in this mode, I won’t make any changes, but I know that implementation can hot reload while running. The backend tests will need Docker, which is handy. The user did request to keep going until all todos are done, but they didn’t actually mention any specific todos in this request. I’ll need to create a new plan for that. Let’s move forward with it!
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="create_plan"><details>
+<summary>Tool use: **create_plan**</summary>
+
+Parameters:
+
+```json
+{
+  "name": "Ticket access isolation",
+  "overview": "Enforce ticket visibility and operations by the acting user: only the creator or current assignee can access a ticket. Make user switching refetch list/detail data, and redirect from a detail page with a “Ticket not found” banner when the new user lacks access.",
+  "plan": "# Ticket access isolation\n\n## Backend authorization\n- Update [`backend/src/main/java/com/epic/sturdyfernacular/repository/TicketRepository.java`](backend/src/main/java/com/epic/sturdyfernacular/repository/TicketRepository.java) so list/search queries include `created_by = :username OR assignee = :username`, including the count query, and add an access-scoped lookup by ticket ID.\n- Thread `actingUser()` through list/detail calls in [`backend/src/main/java/com/epic/sturdyfernacular/web/TicketController.java`](backend/src/main/java/com/epic/sturdyfernacular/backend/src/main/java/com/epic/sturdyfernacular/web/TicketController.java) and use access-aware service methods in [`backend/src/main/java/com/epic/sturdyfernacular/service/TicketService.java`](backend/src/main/java/com/epic/sturdyfernacular/service/TicketService.java).\n- Apply the same creator-or-assignee check to detail, edit, status, and comment operations. Return the existing 404 `NOT_FOUND` response for both nonexistent and unauthorized tickets so ticket existence is not disclosed.\n\n## Frontend user switching\n- Update [`frontend/src/hooks/useCurrentUser.tsx`](frontend/src/hooks/useCurrentUser.tsx) so the API username getter changes synchronously when the switcher changes users, preventing the first refetch from using the previous header.\n- Make [`frontend/src/hooks/useTickets.ts`](frontend/src/hooks/useTickets.ts) depend on the current username so the list immediately reloads with only that user’s tickets.\n- Make [`frontend/src/hooks/useTicket.ts`](frontend/src/hooks/useTicket.ts) refetch detail data when the username changes and distinguish an initial 404 from access lost after a successful load.\n- In [`frontend/src/pages/TicketDetailPage.tsx`](frontend/src/pages/TicketDetailPage.tsx), preserve the existing dedicated 404 state for a directly opened missing ticket; when a user toggle causes 404, clear stale detail data, show the global banner `Ticket not found`, and replace-navigate to `/`.\n\n## Tests and contract\n- Extend repository, service, and controller tests to cover creator access, assignee access, unrelated-user exclusion, filtered page counts, and 404 responses for every unauthorized operation.\n- Extend RTL tests to prove user switching refetches the list, refetches ticket detail with the new `X-Username`, keeps the page for an authorized creator/assignee, and redirects with the banner for an unauthorized user.\n- Update the relevant access and 404 behavior in [`spec/requirements.md`](spec/requirements.md), [`spec/api-contract.md`](spec/api-contract.md), and [`spec/ui-flow.md`](spec/ui-flow.md) without modifying the attached execution plan.\n- Run backend tests, frontend tests, TypeScript checks, lint, and production build; then smoke-test alice/bob/carol isolation against the running stack.",
+  "todos": [
+    {
+      "content": "Enforce creator-or-assignee access in repository, service, controller, and backend tests",
+      "id": "backend-access",
+      "status": "pending"
+    },
+    {
+      "content": "Refetch list/detail on user changes and redirect unauthorized detail views with a banner",
+      "id": "frontend-refresh",
+      "status": "pending"
+    },
+    {
+      "content": "Add RTL coverage and update access-control contract documentation",
+      "id": "access-tests-docs",
+      "status": "pending"
+    },
+    {
+      "content": "Run all test/build gates and smoke-test user isolation",
+      "id": "verify-access",
+      "status": "pending"
+    }
+  ]
+}
+```
+Additional data:
+
+```json
+{
+  "hasOpenedEditor": true,
+  "planId": "ticket_access_isolation_67d3e95a",
+  "planUri": "file:///home/deepanshu/.cursor/plans/ticket_access_isolation_67d3e95a.plan.md",
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "none",
+    "status": "Requested"
+  }
+}
+```
+Result:
+
+```json
+{
+  "rejected": {}
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+---
+
+_**User**_
+
+Implement the plan as specified, it is attached for your reference. Do NOT edit the plan file itself.
+
+To-do's from the plan have already been created. Do not create them again. Mark them as in_progress as you work, starting with the first one. Don't stop until you have completed all the to-dos.
+
+---
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="get_mcp_tools"><details>
+<summary>Tool use: **get_mcp_tools**</summary>
+Invalid arguments
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
 <tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
 <summary>Tool use: **todo_write**</summary>
 
@@ -4535,13 +9412,4 @@ Parameters:
 ```
 Status: **loading**
 
-</details></tool-use>
-
-_**Agent (auto-smart)**_
-
-<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
-<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/deepanshu/Desktop/C2/sturdy-fernacular &amp;&amp; npm create vite@latest frontend -- --template react-ts 2&gt;&amp;1 | tail -5</summary>
-```bash
-cd /home/deepanshu/Desktop/C2/sturdy-fernacular && npm create vite@latest frontend -- --template react-ts 2>&1 | tail -5
-```
 </details></tool-use>

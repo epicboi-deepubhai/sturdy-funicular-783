@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { PriorityBadge, StatusBadge } from '../components/Badge'
 import { CommentComposer } from '../components/CommentComposer'
 import { CommentThread } from '../components/CommentThread'
@@ -6,6 +7,7 @@ import { EmptyState } from '../components/EmptyState'
 import { Skeleton } from '../components/Skeleton'
 import { StatusControl } from '../components/StatusControl'
 import { TicketEditPanel } from '../components/TicketEditPanel'
+import { useBanner } from '../hooks/useBanner'
 import { useTicket } from '../hooks/useTicket'
 import { isTerminal } from '../types/ticket'
 import { formatAbsoluteTime, formatRelativeTime } from '../utils/time'
@@ -13,7 +15,18 @@ import styles from './TicketDetailPage.module.css'
 
 export default function TicketDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { ticket, loading, error, notFound, refetch, setTicket } = useTicket(Number(id))
+  const navigate = useNavigate()
+  const { showBanner } = useBanner()
+  const { ticket, loading, error, notFound, accessLost, refetch, setTicket } =
+    useTicket(Number(id))
+
+  useEffect(() => {
+    if (!accessLost) return
+    showBanner('Ticket not found')
+    navigate('/', { replace: true })
+  }, [accessLost, navigate, showBanner])
+
+  if (accessLost) return null
 
   if (loading) {
     return (

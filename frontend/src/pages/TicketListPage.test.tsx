@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { PageResponse, TicketListItem } from '../types/ticket'
+import { UserSwitcher } from '../components/UserSwitcher'
 import TicketListPage from './TicketListPage'
 import { renderWithProviders } from '../test/render'
 
@@ -196,5 +197,27 @@ describe('TicketListPage', () => {
         size: 100,
       }),
     )
+  })
+
+  it('refetches and replaces the list when the current user changes', async () => {
+    const user = userEvent.setup()
+    const bobTicket = { ...ticket, id: 43, title: 'Bob assigned ticket' }
+    listTicketsMock
+      .mockResolvedValueOnce(page([ticket]))
+      .mockResolvedValueOnce(page([bobTicket]))
+
+    renderWithProviders(
+      <>
+        <UserSwitcher />
+        <TicketListPage />
+      </>,
+    )
+
+    expect(await screen.findByText('Cannot login')).toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: 'bob' }))
+
+    expect(await screen.findByText('Bob assigned ticket')).toBeInTheDocument()
+    expect(screen.queryByText('Cannot login')).not.toBeInTheDocument()
+    expect(listTicketsMock).toHaveBeenCalledTimes(2)
   })
 })
