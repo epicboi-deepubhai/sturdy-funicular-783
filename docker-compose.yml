@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: tickets
+      POSTGRES_USER: tickets
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env or environment}
+    ports:
+      - "5432:5432"
+    volumes:
+      - tickets-pgdata:/var/lib/postgresql/data
+
+volumes:
+  tickets-pgdata:

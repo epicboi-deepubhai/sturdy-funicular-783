@@ -1497,35 +1497,608 @@ add missing areas in requirements and designs. add respective tasks as well
 
 _**Agent (auto-smart)**_
 
+<think><details><summary>Thought Process</summary>
+Missing areas from the spec review will be added to the requirements and design documents. Corresponding tasks will be created as well.
+
+The review found implementation gaps rather than specification issues. Some underspecified areas include T0 infrastructure, datasource startup requirements, and testcontainer configuration.
+
+Hibernate ddl-auto settings may be missing from the architecture document. The review also flagged a validation starter, CORS, and the contextLoads test as missing pieces.
+
+The requirements NFR likely lacks Docker Compose and local run details. Strengthening these incomplete areas and adding corresponding tasks appears to be the intended scope.
+
+Specific gaps identified include CORS origin requirements, testcontainer usage in NFRs, Gradle versus Maven alignment, Spring Boot version, and health endpoint coverage. Environment variable names for datasource configuration are also missing from the architecture document.
+
+Docker Compose is treated as a future artifact rather than a required deliverable. Gitignore and secrets handling are absent. The Vite port for CORS is unspecified. Local development runbooks and package structure are missing. Logging and application.yaml layout are also thin. A thorough review of all spec files and tasks.md will identify remaining gaps.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+I'll compare `spec/` and `spec/tasks.md` to the review gaps, then fill requirements, design docs, and matching tasks.
+
+_**Agent (auto-smart)**_
+
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
 
 </details></tool-use>
 
 _**Agent (auto-smart)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/architecture.md</summary>
 
 </details></tool-use>
 
 _**Agent (auto-smart)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/api-contract.md</summary>
 
 </details></tool-use>
 
 _**Agent (auto-smart)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
 
 </details></tool-use>
 
 _**Agent (auto-smart)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
-<summary>Tool use: **read_file_v2** • Read file: </summary>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/data-model.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/.gitignore</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/build.gradle</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The review found that everything is missing from implementation.
+
+Several gaps need to be added to requirements and designs:
+
+- Local run and Docker Compose should be a first-class NFR and design item.
+- Datasource configuration needs YAML and environment variable names.
+- Hibernate ddl-auto belongs in architecture, not just tasks.
+- Bean Validation starter must be a required dependency.
+- Testcontainers must be required for JPA tests.
+- CORS origin URL must be specified.
+
+Gradle locking must be specified in architecture. The application must start successfully. The frontend Vite project is an in-scope deliverable. Backend package structure needs definition. OPTIONS CORS preflight and X-Username headers must be included. Invalid ticket IDs return 400. Jackson timezone must be UTC. Illegal JSON returns 400. Trailing slashes and PATCH empty bodies need handling.
+
+MethodArgumentTypeMismatch exceptions must be handled globally. Enums should serialize as string names. The Java package layout needs explicit subpackages under com.epic.sturdyfernacular. Frontend architecture must choose between proxy and CORS; CORS is already selected.
+
+Keyword LIKE escaping needs clearer specification in the functional requirements. The interceptor must skip OPTIONS requests to prevent CORS preflight failures. Actuator and logging requirements will be omitted.
+
+FR13 and FR14 will formalize the runnable local stack and CORS headers. NFRs will cover Testcontainers, validation starter, Gradle-only, ddl-auto, and UTC Jackson. Architecture will specify environment variable names, compose ports, package layout, and OPTIONS exclusion from the username filter. API contracts will clarify CORS, OPTIONS, and error codes. UI-flow will define VITE_API_BASE_URL and the Vite port 5173. Tasks will expand T0, add T16 for OPTIONS skipping, and revise T29 for Testcontainers or context exclusion.
+
+A new functional requirement will forbid H2 usage even for tests. The repository root must ignore application-local.properties. A shared Testcontainers configuration task is being added. The tasks document contains a typo to correct: T16 should read T17. API contracts will map malformed JSON to 400 VALIDATION_ERROR and invalid path IDs to 400.
+
+Allowed CORS methods are GET, POST, PATCH, and OPTIONS. The username header is excluded from OPTIONS preflight. Environment variables will use SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME, and SPRING_DATASOURCE_PASSWORD. Docker Compose will run postgres:16 on port 5432 with a persistent volume. The backend package layout is domain, repository, service, and web. Jackson timezone is UTC and Hibernate ddl-auto is update.
+
+OpenAPI generation and actuator are out of scope. Acceptance criteria will require a local Postgres Docker Compose stack, CORS allowing the frontend origin and X-Username header, JPA and repository tests using Testcontainers instead of H2, and OPTIONS requests skipping the X-Username requirement. Task T0 will add the Testcontainers BOM early so task T2 succeeds. Task T29 will define a shared Testcontainers configuration for Spring Boot tests.
+
+A dedicated `spec/local-run.md` file will be created to turn the local run from a future placeholder into an actual design artifact. CSS Modules will be selected in the architecture to eliminate the earlier ambiguity about frontend styling.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+The review showed the stack, CORS/`X-Username` preflight, local Postgres, and testability were underspecified. I'll lock those into requirements, design docs, and `spec/tasks.md`.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/api-contract.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/ui-flow.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Comprehensive updates will be made across the files.
+
+Jackson enums will be set to STRING in the architecture. T29 and T30 will be added after T28. T16 will be expanded and its frontend numbering comment fixed. Updates will run in parallel where possible.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+I noticed the markdown requirement uses an HTML entity (`&lt;`) that could render literally. I should replace it with a backtick-enclosed less-than sign or the word "less than".
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/requirements.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/architecture.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/api-contract.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/api-contract.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/api-contract.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/data-model.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/data-model.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/ui-flow.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+The state-machine.md file may be updated to version 3.
+
+Tasks.md will be bumped to version 2. T0 will include Docker Compose details, environment variables, Jackson, gitignore, and early Testcontainers setup. T16 will skip OPTIONS requests and fix a frontend typo. T17 will specify CSS Modules instead of "pick one." New tasks T29 and T30 will cover Spring Boot context loading with Testcontainers and CORS plus malformed JSON advice tests. Coverage tables and sequence diagrams will also be added.
+
+T13 already covers page size per FR15. T16 will map HttpMessageNotReadable and ArgumentTypeMismatch advice errors. Tasks.md will be updated via several search_replace blocks.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/state-machine.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<think><details><summary>Thought Process</summary>
+Task T6 depends on T1, which depends on T0. T0b is an extra dependency.
+
+FR15 is verified complete after the size fix. T16's "Done when" was applied correctly. T0b can run in parallel after T0 without blocking T1.
+</details></think>
+
+_**Agent (auto-smart)**_
+
+The review gaps were **spec holes** (local stack, CORS vs `X-Username`, tests without H2, 400 vs 500), not extra product features. Those are now in requirements, design, and tasks. No application code was added.
+
+**Requirements** (`spec/requirements.md` v3)
+- **FR13** — Compose Postgres, env datasource, validation starter, `ddl-auto=update`, UTC JSON, `contextLoads` must use a container
+- **FR14** — CORS for `http://localhost:5173`; **OPTIONS must not require** `X-Username`
+- **FR15** — malformed JSON and non-numeric `{id}` → 400, not 500
+- NFRs: no H2 in tests, Testcontainers, CSS Modules, env var names
+- New §7 checkboxes and decisions 9–10
+
+**Design**
+- `spec/architecture.md` — Gradle-only, packages, Compose/yaml, CORS, Jackson, Testcontainers
+- `spec/api-contract.md` — OPTIONS/CORS, FR15 status mapping
+- `spec/data-model.md` — `EnumType.STRING`
+- `spec/ui-flow.md` — port 5173, `VITE_API_BASE_URL`
+
+**Tasks** (`spec/tasks.md`)
+- **T0** expanded to match architecture
+- **T0b** — `@SpringBootTest` + Testcontainers (fixes empty `application.yaml` / failing `contextLoads`)
+- **T16 / T25** — OPTIONS skip, malformed JSON, non-numeric id
+- **T17** — CSS Modules locked (no Tailwind choice)
+- **T29** — restart-survival check on the named volume
+
+Implement from **T0**, not the whole stack at once.
+
+---
+
+_**User**_
+
+Plan implementation for @spec/tasks.md backend tasks
+
+---
+
+_**Agent (auto-smart)**_
+
+I'll read the current spec and backend so the plan matches the latest decisions.
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/tasks.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/api-contract.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/spec/architecture.md</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/build.gradle</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/main/resources/application.yaml</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/deepanshu/Desktop/C2/sturdy-fernacular/backend/src/test/java/com/epic/sturdyfernacular/SturdyFernacularApplicationTests.java</summary>
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="create_plan"><details>
+<summary>Tool use: **create_plan**</summary>
+
+Parameters:
+
+```json
+{
+  "name": "Backend tasks implementation",
+  "overview": "Implement backend tasks T0 through T16 and T25/T26 from [spec/tasks.md](spec/tasks.md) in order, one layer at a time. Frontend (T17–T24) and T27–T29 are out of scope for this plan.",
+  "plan": "# Backend implementation: T0–T16, T25, T26\n\nImplement in the order below. Each task must pass its own **Done when** before starting the next. Do not merge layers (e.g. entities + repositories + service in one edit).\n\n## Phase 1 — T0 Scaffolding\n\n**Files:** [docker-compose.yml](docker-compose.yml) (new), [backend/src/main/resources/application.yaml](backend/src/main/resources/application.yaml), [backend/build.gradle](backend/build.gradle), [.gitignore](.gitignore) (root or backend), [.env.example](.env.example) (new)\n\n- Compose: `postgres:16`, db `tickets`, user `tickets`, port `5432`, named volume, `POSTGRES_PASSWORD` from env.\n- `application.yaml`: datasource from `SPRING_DATASOURCE_URL` / `USERNAME` / `PASSWORD` (empty password default); `spring.jpa.hibernate.ddl-auto=update`; `open-in-view: false`; Jackson UTC, `write-dates-as-timestamps: false`.\n- CORS: bean allowing `http://localhost:5173`, methods GET/POST/PATCH/OPTIONS, headers `Content-Type`, `X-Username`.\n- Gradle: add `implementation 'org.springframework.boot:spring-boot-starter-validation'`; test: Testcontainers PostgreSQL (`org.testcontainers:postgresql`, `org.testcontainers:junit-jupiter`, and Spring Boot Testcontainers support if needed).\n- Gitignore `application-local.properties`, `.env`, `frontend/.env`.\n\n**Verify:** `docker compose up -d`; `./gradlew bootRun` with env password set starts without error.\n\n## Phase 2 — T0b Context test\n\n**File:** [backend/src/test/java/com/epic/sturdyfernacular/SturdyFernacularApplicationTests.java](backend/src/test/java/com/epic/sturdyfernacular/SturdyFernacularApplicationTests.java)\n\n- Use Testcontainers Postgres (e.g. `@ServiceConnection` or `@DynamicPropertySource`). No H2.\n\n**Verify:** `./gradlew test --tests SturdyFernacularApplicationTests` passes.\n\n## Phase 3 — T1 Enums and prototype users\n\n**New:** `com.epic.sturdyfernacular.domain.TicketStatus`, `Priority`, `PrototypeUsers`\n\n- `TicketStatus`: OPEN, IN_PROGRESS, RESOLVED, CLOSED, CANCELLED.\n- `Priority`: LOW, MEDIUM, HIGH, URGENT.\n- `PrototypeUsers`: allowlist `alice`, `bob`, `carol`; `isAllowed(String)` case-sensitive.\n\n**Verify:** Unit test (no Spring): enum names; `isAllowed(\"alice\")` true; `\"Alice\"` and `\"dave\"` false.\n\n## Phase 4 — T2 Ticket entity\n\n**New:** `com.epic.sturdyfernacular.domain.Ticket`\n\n- JPA entity per [spec/data-model.md](spec/data-model.md): `Long id`; `title` VARCHAR(200); `description` VARCHAR(5000); `status`, `priority` `@Enumerated(EnumType.STRING)`; `assignee` VARCHAR(64) NOT NULL; `createdBy`, `updatedBy` VARCHAR(64); `createdAt`, `updatedAt` via `@CreationTimestamp` / `@UpdateTimestamp`.\n- Lombok: `@Getter`/`@Setter` only (no `@Data`).\n\n**Verify:** `@DataJpaTest` with Testcontainers Postgres: persist and reload; `createdAt`/`updatedAt` non-null.\n\n## Phase 5 — T3 Comment entity\n\n**New:** `com.epic.sturdyfernacular.domain.Comment`; update `Ticket` with `@OneToMany(mappedBy = \"ticket\")` lazy list.\n\n- `Comment`: `id`, `ticket` `@ManyToOne(fetch = LAZY)` + `@JoinColumn(name = \"ticket_id\")`, `body` VARCHAR(2000), `author` VARCHAR(64), `createdAt` via `@CreationTimestamp`.\n\n**Verify:** Testcontainers test: save ticket + comment, reload comment, `ticket_id` set.\n\n## Phase 6 — T4 Repositories\n\n**New:** `com.epic.sturdyfernacular.repository.TicketRepository`, `CommentRepository`\n\n- `TicketRepository extends JpaRepository\u003cTicket, Long\u003e`.\n- `CommentRepository extends JpaRepository\u003cComment, Long\u003e` + `List\u003cComment\u003e findByTicketIdOrderByCreatedAtAscIdAsc(Long ticketId)`.\n\n**Verify:** Testcontainers: save + findById; comments oldest-first.\n\n## Phase 7 — T5 Search and list query\n\n**Modify:** `TicketRepository` (add method or `@Query`)\n\n- Optional `status` equality; optional keyword `ILIKE` on `title` or `description`; escape `%` and `_` in keyword; blank/whitespace keyword = no text predicate.\n- `Pageable`; sort `updatedAt DESC, id DESC`.\n\n**Verify:** Testcontainers: match on title; match on description; case-insensitive; status+keyword; blank keyword returns all (for that status); tied `updatedAt` → higher `id` first.\n\n## Phase 8 — T6 TicketStateMachine\n\n**New:** `com.epic.sturdyfernacular.service.TicketStateMachine`\n\n- No Spring annotations. Method: `isAllowed(TicketStatus current, TicketStatus target)` or `validate` returning allow/reject.\n- Rules exactly as [spec/state-machine.md](spec/state-machine.md); same-status = reject.\n\n**Verify:** 25 named unit tests (5×5 matrix), no Spring context.\n\n## Phase 9 — T7 Create ticket (service)\n\n**New:** `com.epic.sturdyfernacular.service.TicketService` (create method only)\n\n- `create(String actingUsername, CreateTicketRequest request)` (request type may be a simple record/DTO; full DTO set in T13).\n- `status = OPEN`; `createdBy` = `updatedBy` = actingUsername; assignee: if null/blank/omitted → actingUsername; else must be in `PrototypeUsers`.\n\n**Verify:** Unit tests with mocked `TicketRepository`: omit assignee → current user; explicit `bob` when actor `alice` → `bob`; invalid assignee → exception; status always `OPEN`.\n\n## Phase 10 — T8 Get ticket by id\n\n**Modify:** `TicketService`\n\n- `getById(Long id)` → entity with comments (oldest first). Missing → throw `TicketNotFoundException` (new exception type; HTTP mapping in T16).\n\n**Verify:** Unit tests: found vs missing.\n\n## Phase 11 — T9 List / search\n\n**Modify:** `TicketService`\n\n- `list(TicketStatus status, String keyword, Pageable pageable)`; treat blank keyword as absent; delegate to repository.\n\n**Verify:** Unit tests with mocked repo: blank keyword → no text filter; status and pageable forwarded.\n\n## Phase 12 — T10 Update ticket fields\n\n**Modify:** `TicketService`\n\n- `updateFields(Long id, String actingUsername, UpdateTicketRequest request)`: apply title, description, priority, assignee only if present; never change status.\n- If status is `CLOSED` or `CANCELLED` → throw `TicketReadOnlyException`.\n- Assignee present and null/blank → throw validation/business exception; present and valid → allow change.\n- Set `updatedBy` = actingUsername.\n\n**Verify:** Unit tests: partial patch; terminal → read-only exception; assignee cannot be cleared; status not changed.\n\n## Phase 13 — T11 Change status\n\n**Modify:** `TicketService`\n\n- `changeStatus(Long id, String actingUsername, TicketStatus target)`: load ticket; call `TicketStateMachine`; if reject → `InvalidStateTransitionException` with message including current and target; if allow → set status, `updatedBy` = actingUsername, save.\n\n**Verify:** Unit tests: each allowed edge succeeds; terminal and same-status reject; no persist on reject.\n\n## Phase 14 — T12 Add comment\n\n**Modify:** `TicketService`\n\n- `addComment(Long ticketId, String actingUsername, String body)`: load ticket; if `CANCELLED` → `CommentsNotAllowedException`; else create `Comment` with `author` = actingUsername, `ticket` set; save; update ticket `updatedAt`/`updatedBy`.\n\n**Verify:** Unit tests: comment on `CLOSED` succeeds; on `CANCELLED` fails; author not from input.\n\n## Phase 15 — T13 DTOs and validation\n\n**New:** `com.epic.sturdyfernacular.web.dto` (or similar): `CreateTicketRequest`, `UpdateTicketRequest`, `ChangeStatusRequest`, `AddCommentRequest`, `TicketListItem`, `TicketDetail`, `CommentResponse`; mapper entity→DTO.\n\n- Bean Validation: title ≤ 200, description ≤ 5000, body ≤ 2000; `@NotBlank` where required.\n- `UpdateTicketRequest`: all fields optional; if `status` present → validation error (400); at least one of title/description/priority/assignee required.\n- Page query: `page` default 0 (≥ 0), `size` default 10 (1–100).\n\n**Verify:** Unit tests (validator factory): blank title fails; oversize fails; valid create passes; patch with only `status` fails.\n\n## Phase 16 — T14 Create, list, get (controller)\n\n**New:** `com.epic.sturdyfernacular.web.TicketController` (create, list, get only)\n\n- `POST /api/v1/tickets` → 201 + `Location: /api/v1/tickets/{id}`.\n- `GET /api/v1/tickets` with `status`, `keyword`, `page`, `size`; response `content`, `totalElements`, `totalPages`, `pageNumber`.\n- `GET /api/v1/tickets/{id}` → 200 `TicketDetail`.\n\n**Verify:** `@WebMvcTest` with mocked service: 201 + Location; 200 list shape; 200 detail.\n\n## Phase 17 — T15 Patch fields, patch status, add comment (controller)\n\n**Modify:** `TicketController`\n\n- `PATCH /api/v1/tickets/{id}`\n- `PATCH /api/v1/tickets/{id}/status`\n- `POST /api/v1/tickets/{id}/comments` → 201\n\n**Verify:** `@WebMvcTest` mocked service: each mapping calls the correct service method with parsed body.\n\n## Phase 18 — T16 Advice, exceptions, username filter\n\n**New:** `com.epic.sturdyfernacular.web.GlobalExceptionHandler` (`@RestControllerAdvice`), exceptions (`TicketNotFoundException`, `InvalidStateTransitionException`, `TicketReadOnlyException`, `CommentsNotAllowedException`), `UsernameFilter` or interceptor, `WebConfig` for CORS if not in T0.\n\n- Error JSON: `timestamp`, `status`, `error`, `message`, `path`; 400 includes `fieldErrors`.\n- Map: not-found → 404 `NOT_FOUND`; invalid transition → 409 `INVALID_STATE_TRANSITION`; read-only → 409 `TICKET_READ_ONLY`; comments-not-allowed → 409 `COMMENTS_NOT_ALLOWED`; Bean Validation → 400 `VALIDATION_ERROR`; `HttpMessageNotReadableException` and `MethodArgumentTypeMismatchException` → 400 `VALIDATION_ERROR`; 500 → `INTERNAL_ERROR`.\n- Filter: for non-OPTIONS `/api/v1/**`, require `X-Username` in allowlist; else 400 `VALIDATION_ERROR` with `fieldErrors` on `X-Username`.\n- Provide acting username to controllers (e.g. request attribute or `HandlerMethodArgumentResolver`).\n\n**Verify:** `@WebMvcTest`: missing header 400; `X-Username: dave` 400; valid header reaches controller; not-found → 404 shape; transition reject → 409 with from/to in message; `OPTIONS /api/v1/tickets` without header not 400; `GET /api/v1/tickets/abc` → 400.\n\n## Phase 19 — T25 Controller WebMvcTest (full contract)\n\n**Modify/add:** controller tests\n\n- Every endpoint: success codes; error JSON shape; `X-Username` required; 409 bodies for transition / read-only / comments-not-allowed (mock service to throw).\n- Invalid enum query `status` → 400; malformed JSON POST → 400; `OPTIONS` without `X-Username` succeeds.\n\n**Verify:** All controller tests pass; note which FRs each test covers.\n\n## Phase 20 — T26 PostgreSQL integration (search / persistence)\n\n**Modify/add:** repository or service integration tests\n\n- Testcontainers: keyword `ILIKE` behavior; optional: comment on closed vs cancelled through service + real DB.\n\n**Verify:** `ILIKE` tests run on Postgres image, not H2.\n\n---\n\n**Out of scope for this plan:** T17–T24 (frontend), T27–T29 (frontend RTL, acceptance traceability, restart-survival doc).\n",
+  "todos": [
+    {
+      "content": "T0: Compose, application.yaml, CORS, validation + Testcontainers deps, gitignore, .env.example",
+      "id": "t0-scaffolding",
+      "status": "pending"
+    },
+    {
+      "content": "T0b: SturdyFernacularApplicationTests with Testcontainers Postgres",
+      "id": "t0b-context-test",
+      "status": "pending"
+    },
+    {
+      "content": "T1: TicketStatus, Priority, PrototypeUsers + unit test",
+      "id": "t1-enums-users",
+      "status": "pending"
+    },
+    {
+      "content": "T2: Ticket JPA entity + Testcontainers persist test",
+      "id": "t2-ticket-entity",
+      "status": "pending"
+    },
+    {
+      "content": "T3: Comment entity + ticket OneToMany + Testcontainers test",
+      "id": "t3-comment-entity",
+      "status": "pending"
+    },
+    {
+      "content": "T4: TicketRepository, CommentRepository + findByTicketIdOrderByCreatedAtAscIdAsc",
+      "id": "t4-repositories",
+      "status": "pending"
+    },
+    {
+      "content": "T5: ILIKE search + status + pageable sort in repository",
+      "id": "t5-search-query",
+      "status": "pending"
+    },
+    {
+      "content": "T6: TicketStateMachine (no Spring) + 25 named unit tests",
+      "id": "t6-state-machine",
+      "status": "pending"
+    },
+    {
+      "content": "T7: TicketService.create (OPEN, auto-assign, createdBy/updatedBy)",
+      "id": "t7-create-service",
+      "status": "pending"
+    },
+    {
+      "content": "T8: TicketService.getById + TicketNotFoundException",
+      "id": "t8-get-service",
+      "status": "pending"
+    },
+    {
+      "content": "T9: TicketService.list (blank keyword, status, pageable)",
+      "id": "t9-list-service",
+      "status": "pending"
+    },
+    {
+      "content": "T10: TicketService.updateFields (read-only terminal, no status, assignee rules)",
+      "id": "t10-update-service",
+      "status": "pending"
+    },
+    {
+      "content": "T11: TicketService.changeStatus via TicketStateMachine",
+      "id": "t11-status-service",
+      "status": "pending"
+    },
+    {
+      "content": "T12: TicketService.addComment (CANCELLED forbidden, author from actor)",
+      "id": "t12-comment-service",
+      "status": "pending"
+    },
+    {
+      "content": "T13: Request/response DTOs, validation, mapper",
+      "id": "t13-dtos",
+      "status": "pending"
+    },
+    {
+      "content": "T14: TicketController POST/GET list/GET by id",
+      "id": "t14-controller-read",
+      "status": "pending"
+    },
+    {
+      "content": "T15: TicketController PATCH fields, PATCH status, POST comments",
+      "id": "t15-controller-write",
+      "status": "pending"
+    },
+    {
+      "content": "T16: GlobalExceptionHandler, exceptions, X-Username filter, CORS",
+      "id": "t16-advice-filter",
+      "status": "pending"
+    },
+    {
+      "content": "T25: Full @WebMvcTest contract (headers, errors, OPTIONS, malformed JSON)",
+      "id": "t25-webmvc-full",
+      "status": "pending"
+    },
+    {
+      "content": "T26: Testcontainers ILIKE / persistence integration tests",
+      "id": "t26-pg-integration",
+      "status": "pending"
+    }
+  ]
+}
+```
+Additional data:
+
+```json
+{
+  "hasOpenedEditor": true,
+  "planId": "backend_tasks_implementation_03818cba",
+  "planUri": "file:///home/deepanshu/.cursor/plans/backend_tasks_implementation_03818cba.plan.md",
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "none",
+    "status": "Requested"
+  }
+}
+```
+Result:
+
+```json
+{
+  "rejected": {}
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+---
+
+_**User**_
+
+Implement the plan as specified, it is attached for your reference. Do NOT edit the plan file itself.
+
+To-do's from the plan have already been created. Do not create them again. Mark them as in_progress as you work, starting with the first one. Don't stop until you have completed all the to-dos.
+
+---
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Status: **loading**
+
+</details></tool-use>
+
+_**Agent (auto-smart)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+Status: **loading**
 
 </details></tool-use>
