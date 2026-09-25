@@ -1,6 +1,6 @@
 # State machine
 
-Status: Draft v2
+Status: Draft v3
 Last updated: 2026-09-25
 
 Product source of truth if this file disagrees: `spec/requirements.md` FR9.

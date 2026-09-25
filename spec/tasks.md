@@ -1,13 +1,13 @@
 # Implementation tasks
 
-Status: Draft v1
+Status: Draft v2
 Last updated: 2026-09-25
 
 Ordered backlog for the support ticket system. Implement **one task ID at a time**. Do not implement later layers in the same pass.
 
 **Sources:** [requirements.md](requirements.md), [data-model.md](data-model.md), [state-machine.md](state-machine.md), [api-contract.md](api-contract.md), [ui-flow.md](ui-flow.md), [architecture.md](architecture.md).
 
-**Code homes:** backend is Gradle under `backend/` (`com.epic.sturdyfernacular`). Do not add Maven. Frontend does not exist yet (T16).
+**Code homes:** backend is Gradle under `backend/` (`com.epic.sturdyfernacular`). Do not add Maven. Frontend does not exist yet (T17). CSS Modules only.
 
 **Rules:** Controller → Service → Repository → Entity. No `@Data` on JPA entities. Entities never returned from controllers. State machine has zero Spring annotations. No H2. No JWT, User CRUD, `DELETE`, attachments, or extra status edges.
 
@@ -22,14 +22,26 @@ Each task is independently implementable. **Done when** must pass without needin
 **Depends on:** none
 
 **Do**
-- Add Docker Compose PostgreSQL 16 for local use ([architecture.md](architecture.md)).
-- Wire `backend/src/main/resources/application.yaml` datasource from env vars (and/or gitignored `application-local.properties`). Do not commit secrets.
-- Schema strategy for the prototype: Hibernate `spring.jpa.hibernate.ddl-auto=update`. Do not add Flyway/Liquibase unless a later task explicitly asks.
-- Explicit CORS origin for the Vite dev server (not `*` with credentials).
+- Add Docker Compose PostgreSQL 16: db `tickets`, user `tickets`, host port `5432`, named volume; password via `${POSTGRES_PASSWORD}` / `.env` ([architecture.md](architecture.md), FR13).
+- Wire `backend/src/main/resources/application.yaml`: `SPRING_DATASOURCE_URL` / `USERNAME` / `PASSWORD` with localhost defaults for url/user; **empty default password**; `ddl-auto=update`; `open-in-view: false`; Jackson UTC, dates not as timestamps.
+- Gitignore `application-local.properties`, `.env`, `frontend/.env`. Add `.env.example` (Compose + Spring + `VITE_API_BASE_URL`) with fake values only.
+- CORS bean: origin `http://localhost:5173`, methods GET/POST/PATCH/OPTIONS, headers `Content-Type`, `X-Username` (FR14).
 - Add `spring-boot-starter-validation` to [backend/build.gradle](../backend/build.gradle).
-- Confirm `.gitignore` covers local properties and `.env`.
+- Add Testcontainers PostgreSQL **test** dependencies now so T2/`contextLoads` never introduce H2 (FR13, NFR).
+- Do not add Flyway/Liquibase, Actuator, or Maven.
 
-**Done when:** `docker compose up -d` starts Postgres; the Spring app starts against it (empty schema ok); validation starter is on the compile classpath. No domain types required.
+**Done when:** `docker compose up -d` starts Postgres; `./gradlew bootRun` starts with env password set (empty schema ok); validation + Testcontainers are on the test/compile classpath as specified. No domain types required.
+
+---
+
+## T0b — Spring context test against Postgres
+
+**Depends on:** T0
+
+**Do**
+- Replace/fix [SturdyFernacularApplicationTests](../backend/src/test/java/com/epic/sturdyfernacular/SturdyFernacularApplicationTests.java) so `@SpringBootTest` uses Testcontainers Postgres (or `@ServiceConnection`). It must not fail for lack of a developer-installed database.
+
+**Done when:** `./gradlew test --tests SturdyFernacularApplicationTests` passes with Docker available. No H2.
 
 ---
 
@@ -51,11 +63,11 @@ Each task is independently implementable. **Done when** must pass without needin
 **Depends on:** T1
 
 **Do**
-- JPA `Ticket` per [data-model.md](data-model.md): `Long id`; `title` VARCHAR(200); `description` VARCHAR(5000); `status`; `priority`; `assignee` VARCHAR(64) NOT NULL; `createdBy`; `updatedBy`; `createdAt` / `updatedAt` via `@CreationTimestamp` / `@UpdateTimestamp` (UTC).
+- JPA `Ticket` per [data-model.md](data-model.md): `Long id`; `title` VARCHAR(200); `description` VARCHAR(5000); `status` `@Enumerated(STRING)`; `priority` `@Enumerated(STRING)`; `assignee` VARCHAR(64) NOT NULL; `createdBy`; `updatedBy`; `createdAt` / `updatedAt` via `@CreationTimestamp` / `@UpdateTimestamp` (UTC).
 - No `@Data`. Constructor injection / Lombok getters-setters only as in project rules.
 - Do not add Comment yet (T3).
 
-**Done when:** `@DataJpaTest` (or equivalent) against **Testcontainers PostgreSQL** persists a ticket and reloads `createdAt`/`updatedAt`. Do not use H2. If Testcontainers is not on the classpath yet, add it here for this test only.
+**Done when:** `@DataJpaTest` (or equivalent) against **Testcontainers PostgreSQL** persists a ticket and reloads `createdAt`/`updatedAt`. Do not use H2. Testcontainers was added in T0.
 
 ### T3 — Comment entity
 
@@ -239,11 +251,11 @@ Use mocked repositories + **real** `TicketStateMachine`. No controllers. Acting 
 
 **Do**
 - One `@RestControllerAdvice`. Error JSON: `timestamp`, `status`, `error`, `message`, `path`; 400 includes `fieldErrors` ([api-contract.md](api-contract.md), [api-standards](../.cursor/rules/api-standards.md)).
-- Map: not-found → 404 `NOT_FOUND`; illegal transition → 409 `INVALID_STATE_TRANSITION`; terminal field update → 409 `TICKET_READ_ONLY`; comment on cancelled → 409 `COMMENTS_NOT_ALLOWED`; Bean Validation → 400 `VALIDATION_ERROR`. No stack traces in body. 500 only for unexpected (`INTERNAL_ERROR`).
-- Interceptor/filter: every `/api/v1/**` request requires `X-Username` in `{alice, bob, carol}`. Missing/blank/unknown → 400 `VALIDATION_ERROR` with `fieldErrors` field `X-Username`.
+- Map: not-found → 404 `NOT_FOUND`; illegal transition → 409 `INVALID_STATE_TRANSITION`; terminal field update → 409 `TICKET_READ_ONLY`; comment on cancelled → 409 `COMMENTS_NOT_ALLOWED`; Bean Validation → 400 `VALIDATION_ERROR`; **malformed JSON** (`HttpMessageNotReadableException`) and **non-numeric path id** (`MethodArgumentTypeMismatchException`) → 400 `VALIDATION_ERROR` (FR15). No stack traces in body. 500 only for unexpected (`INTERNAL_ERROR`).
+- Interceptor/filter: every `/api/v1/**` request **except OPTIONS** requires `X-Username` in `{alice, bob, carol}`. Missing/blank/unknown → 400 `VALIDATION_ERROR` with `fieldErrors` field `X-Username` (FR14).
 - Resolve acting user for controllers (argument resolver or request attribute).
 
-**Done when:** `@WebMvcTest`: missing header 400; `X-Username: dave` 400; valid header reaches controller; mocked not-found → 404 shape; mocked transition reject → 409 message contains from/to statuses.
+**Done when:** `@WebMvcTest`: missing header 400; `X-Username: dave` 400; valid header reaches controller; mocked not-found → 404 shape; mocked transition reject → 409 message contains from/to statuses; `OPTIONS /api/v1/tickets` without header is **not** 400; `GET /api/v1/tickets/abc` → 400 (FR15).
 
 ---
 
@@ -255,9 +267,10 @@ Use mocked repositories + **real** `TicketStateMachine`. No controllers. Acting 
 
 **Do**
 - Create `frontend/` Vite + React + TypeScript.
-- Pick **one** of CSS Modules or Tailwind and stay with it ([vite-react](../.cursor/rules/vite-react.md), [architecture.md](architecture.md)).
-- `.env.example` with `VITE_API_BASE_URL` only. No real secrets.
+- **CSS Modules only** (not Tailwind) ([architecture.md](architecture.md)).
+- `.env.example` with `VITE_API_BASE_URL=http://localhost:8080`. No real secrets.
 - Folders: `src/api/`, `src/types/`, `src/pages/`, `src/components/`, `src/hooks/`.
+- Dev server port 5173.
 
 **Done when:** `npm run dev` (or equivalent) serves a blank app; TypeScript build succeeds.
 
@@ -359,6 +372,8 @@ Layer tests above stay the source of truth for that slice. This section is remai
 **Do**
 - `@WebMvcTest` for every endpoint: success codes; error JSON shape; `X-Username` required; 409 bodies for transition / read-only / comments-not-allowed (service mocked to throw).
 - Invalid enum query `status` → 400.
+- Malformed JSON POST → 400 envelope (FR15).
+- CORS preflight: `OPTIONS` without `X-Username` succeeds (not 400).
 
 **Done when:** Tests named per endpoint + outcome. Map files to FR1–FR11 in the PR/task notes ([generate-tests](../.cursor/commands/generate-tests.md)).
 
@@ -388,7 +403,18 @@ Layer tests above stay the source of truth for that slice. This section is remai
 **Do**
 - List which test files cover which §7 checkboxes in [requirements.md](requirements.md). Do not mark checkboxes in requirements unless the user asks.
 
-**Done when:** A short table exists (in this file’s “Coverage” subsection below, or `spec/test-coverage.md` if the table is long). Prefer appending a **Coverage** section here.
+**Done when:** A short table exists (in this file’s “Coverage” subsection below, or `spec/test-coverage.md` if the table is long). Prefer appending a **Coverage** section here. Include FR13–FR15 rows.
+
+---
+
+### T29 — Restart-survival check (documented)
+
+**Depends on:** T0, T7 (or any persist path)
+
+**Do**
+- Document in README or architecture local-run: start Compose + app, create a ticket, stop app, start app, `GET` still returns it (named volume). No new product behavior.
+
+**Done when:** Steps exist and have been executed once; §7 “Data survives application restart” can be checked off by a human. Optional automated Testcontainers persist/find already counts toward T26, not a substitute for the volume check.
 
 ---
 
@@ -411,7 +437,12 @@ Fill during T28.
 | Valid / invalid transitions (FR9) | T6, T11, T25 |
 | Terminal field updates rejected (FR4) | T10, T25 |
 | Username required (FR10, FR12) | T16 |
-| Persistence / no H2 (NFR) | T0, T2, T26 |
+| OPTIONS without username (FR14) | T16, T25 |
+| Local stack / datasource (FR13) | T0, T0b |
+| Malformed JSON / non-numeric id (FR15) | T16, T25 |
+| Persistence / no H2 (NFR) | T0, T0b, T2, T26 |
+| Restart survival (NFR) | T29 |
+| CORS Vite origin (FR14) | T0, T25 |
 | Validation if UI bypassed (FR10) | T13, T25 |
 | UI-specific errors (FR11) | T20–T23, T27 |
 | State-machine every cell | T6 |
@@ -422,11 +453,11 @@ Fill during T28.
 ## Suggested sequence
 
 ```
-T0 → T1 → T2 → T3 → T4 → T5
-         ↘ T6
+T0 → T0b → T1 → T2 → T3 → T4 → T5
+              ↘ T6
 T5+T6 → T7 → T8 → T9 → T10 → T11 → T12 → T13 → T14 → T15 → T16
 T17 → T18 → T19 → T20 → T21 → T22 → T23 → T24
-T16+T5 → T25 → T26 → T27 → T28
+T16+T5 → T25 → T26 → T27 → T28 → T29
 ```
 
 T17–T20 may overlap T1–T13 if the API contract is treated as stable.

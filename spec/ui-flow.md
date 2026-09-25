@@ -1,9 +1,9 @@
 # UI flow
 
-Status: Draft v2
+Status: Draft v3
 Last updated: 2026-09-25
 
-Stack: Vite + React + TypeScript. Typed client in `src/api/`. Types mirror `spec/api-contract.md`.
+Stack: Vite + React + TypeScript in `frontend/`. CSS Modules. Typed client in `src/api/`. Types mirror `spec/api-contract.md`. Dev server port **5173**. `VITE_API_BASE_URL` default `http://localhost:8080`.
 
 ## Shell (all screens)
 

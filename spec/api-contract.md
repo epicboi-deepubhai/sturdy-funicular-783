@@ -1,8 +1,9 @@
 # API Contract
 
-Status: Draft v2
+Status: Draft v3
 Last updated: 2026-09-25
 Base path: `/api/v1`
+Default server port: `8080`
 
 All JSON field names are camelCase. Timestamps are ISO-8601 UTC (`2026-09-25T10:15:30Z`).
 
@@ -26,6 +27,8 @@ Allowed values (case-sensitive): `alice`, `bob`, `carol`.
 `fieldErrors` should include `{ "field": "X-Username", "message": "..." }`.
 
 The header is the acting user. It is not read from the body. Comment `author`, ticket `createdBy` / `updatedBy` are copied from it on write.
+
+**CORS / OPTIONS:** `OPTIONS` requests to `/api/v1/**` are not required to send `X-Username`. A missing header on `OPTIONS` must not produce 400. Browser CORS: allow origin `http://localhost:5173`; methods GET, POST, PATCH, OPTIONS; headers `Content-Type`, `X-Username`.
 
 ## Error response
 
@@ -51,12 +54,14 @@ Validation (400) also includes:
 
 | HTTP | When | Typical `error` |
 |---|---|---|
-| 400 | Validation, unknown enum, bad page/size, bad header | `VALIDATION_ERROR` |
-| 404 | Ticket id does not exist | `NOT_FOUND` |
+| 400 | Validation, unknown enum, bad page/size, bad header, malformed JSON, non-numeric `{id}` | `VALIDATION_ERROR` |
+| 404 | Ticket id does not exist (well-formed id, no row) | `NOT_FOUND` |
 | 409 | Illegal status transition; field update on terminal ticket; comment on `CANCELLED` | `INVALID_STATE_TRANSITION`, `TICKET_READ_ONLY`, `COMMENTS_NOT_ALLOWED` |
 | 500 | Unexpected only | `INTERNAL_ERROR` |
 
-Do not put stack traces in the body.
+Do not put stack traces in the body. Enums in JSON are names (`"OPEN"`), not ordinals.
+
+Malformed JSON and type mismatches (`/tickets/abc`) use the same error envelope as validation (400), not 500.
 
 ## Shared shapes
 

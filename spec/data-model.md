@@ -1,6 +1,6 @@
 # Data model
 
-Status: Draft v2
+Status: Draft v3
 Last updated: 2026-09-25
 
 No `User` table. Prototype identities are the allowlist `alice`, `bob`, `carol`. Columns below that store identity persist that string as `VARCHAR`.
@@ -9,7 +9,7 @@ No `User` table. Prototype identities are the allowlist `alice`, `bob`, `carol`.
 
 **TicketStatus**: `OPEN`, `IN_PROGRESS`, `RESOLVED`, `CLOSED`, `CANCELLED`
 
-**Priority**: `LOW`, `MEDIUM`, `HIGH`, `URGENT`
+Persist enums as strings (JPA `EnumType.STRING`), not ordinals.
 
 ## Ticket
 

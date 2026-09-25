@@ -1,18 +1,28 @@
 # Architecture
 
-Status: Draft v2
+Status: Draft v3
 Last updated: 2026-09-25
 
 ## Stack
 
-- Backend: Java 21, Spring Boot, Spring Data JPA, PostgreSQL. Maven or Gradle — match the first build file added; do not add a second.
-- Frontend: Vite + React + TypeScript. One styling approach (CSS Modules or Tailwind), chosen at implementation start.
-- Persistence: PostgreSQL in **all** environments (local via Docker Compose). No H2.
+- Backend: Java 21, **Spring Boot 4.x** (repo already uses 4.1.1), Spring Data JPA, PostgreSQL. **Gradle only** (`backend/`). Do not add Maven.
+- Dependencies required beyond the Initializr skeleton: `spring-boot-starter-validation`; test: Testcontainers PostgreSQL (`org.springframework.boot` Testcontainers support or `org.testcontainers:postgresql` + JUnit).
+- Frontend: Vite + React + TypeScript in `frontend/`. **CSS Modules only.**
+- Persistence: PostgreSQL in **all** environments including tests. No H2.
 
 ## Layout
 
 ```
 Controller → Service → Repository → Entity
+```
+
+Backend packages under `com.epic.sturdyfernacular`:
+
+```
+domain/          # Ticket, Comment, TicketStatus, Priority, PrototypeUsers
+repository/
+service/         # TicketService, TicketStateMachine (no Spring on the machine)
+web/             # controllers, DTOs, advice, username filter, CORS config
 ```
 
 - Controllers: mapping, `@Valid`, one service call. No business rules.
@@ -29,46 +39,78 @@ flowchart LR
   Repo --> PG[(PostgreSQL)]
 ```
 
+## Local Postgres (Compose)
+
+Root or `backend/` `docker-compose.yml`:
+
+- Image `postgres:16`
+- Database `tickets`, user `tickets`
+- Host port `5432`
+- Named volume (required for restart-survival NFR)
+- Password only via Compose env / `.env` (gitignored); committed compose uses `${POSTGRES_PASSWORD}`
+
+Backend `application.yaml` (committed, no secrets):
+
+```yaml
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/tickets}
+    username: ${SPRING_DATASOURCE_USERNAME:tickets}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  jackson:
+    time-zone: UTC
+    serialization:
+      write-dates-as-timestamps: false
+```
+
+Gitignore: `application-local.properties`, `.env`, `frontend/.env`. Document copies in `.env.example`.
+
+**Alternative considered:** H2 file mode for local. Rejected: dialect drift vs `ILIKE` and assignment NFR.
+
 ## Prototype identity
 
 - Allowlist constant on the server: `alice`, `bob`, `carol`.
-- Filter/interceptor rejects missing/unknown `X-Username` with the standard 400 body before controllers that need a ticket.
-- Not authentication: anyone who can reach the API can impersonate a prototype user. Acceptable for this prototype; do not add JWT “to be safe.”
-- **Alternative considered:** `User` entity + `GET /users`. Rejected: no login, three fixed names, extra surface for no benefit.
+- Filter/interceptor rejects missing/unknown `X-Username` with the standard 400 body for **non-OPTIONS** `/api/v1/**` requests.
+- Skip `OPTIONS` so CORS preflight succeeds (FR14).
+- Not authentication: anyone who can reach the API can impersonate a prototype user. Do not add JWT.
+- **Alternative considered:** `User` entity + `GET /users`. Rejected: no login, three fixed names.
 
 ## State machine
 
 - Class with zero Spring annotations (e.g. `TicketStateMachine`).
 - Input: current status, target status. Output: allow or reject. Unit-tested for every matrix cell in `spec/state-machine.md`.
 - Invoked only from the service method behind `PATCH /tickets/{id}/status`.
-- **Alternative considered:** JPA entity setters that change status. Rejected: easy to bypass from a generic update.
 
 ## Search
 
 - PostgreSQL `ILIKE` on `title` and `description`, OR’d, combined with optional `status` equality and pagination.
 - Escape `%` and `_` in the keyword so user input is literal.
-- **Alternative considered:** `tsvector`. Rejected for prototype size; revisit if ranking is needed.
 
 ## Pagination
 
-- Spring `Pageable`: `page` default 0, `size` default 10, max 100 (`Pageable` resolver / custom resolver that clamps or rejects > 100 with 400).
+- Spring `Pageable`: `page` default 0, `size` default 10, max 100. Values outside range → 400, not silent clamp.
 - UI only sends 10, 50, or 100.
 
-## Time and ids
+## Time, ids, enums
 
-- `@CreationTimestamp` / `@UpdateTimestamp` (UTC). Do not scatter `LocalDateTime.now()`.
+- `@CreationTimestamp` / `@UpdateTimestamp` (UTC).
 - Surrogate `Long` ids.
+- Persist and JSON-serialize enums as names (`OPEN`, not ordinal).
 
 ## HTTP and CORS
 
-- Base path `/api/v1`.
-- CORS: explicit frontend origin (Vite dev server), not `*` with credentials. Prototype may omit cookies; still list explicit origins.
-- Structured errors via one `@RestControllerAdvice`.
+- Base path `/api/v1`. Server port default `8080`.
+- CORS: origin `http://localhost:5173` (Vite default). Methods GET, POST, PATCH, OPTIONS. Headers `Content-Type`, `X-Username`.
+- Structured errors via one `@RestControllerAdvice`, including `HttpMessageNotReadableException` and `MethodArgumentTypeMismatchException` → 400 `VALIDATION_ERROR`.
 
 ## Secrets
 
-- Datasource URL/user/password: env or gitignored `application-local.properties`.
-- Frontend: `.env.example` with `VITE_API_BASE_URL` only; no real secrets.
+- Datasource password never committed.
+- Frontend: `.env.example` with `VITE_API_BASE_URL=http://localhost:8080`.
 
 ## Frontend structure
 
@@ -83,11 +125,14 @@ src/hooks/
 ## Testing (architectural)
 
 - State machine: plain unit tests, full 5×5 matrix.
-- Controllers: `@WebMvcTest`, include `X-Username`.
-- Search/list: Testcontainers PostgreSQL when SQL `ILIKE` behavior matters.
+- Controllers: `@WebMvcTest`, include `X-Username`; one test without header; one `OPTIONS` without header expecting CORS success (not 400).
+- Persistence / search: Testcontainers PostgreSQL. Shared test compose/container config so `@SpringBootTest` / `@DataJpaTest` do not hit a missing local DB.
+- Do not add H2 “just for tests.”
 - Frontend: loading / empty / error / terminal vs comment-on-closed.
 
-## Local run (documentation when implemented)
+## Local run
 
-- Docker Compose: PostgreSQL 16.
-- Backend + Vite; CORS origin matches Vite port.
+1. `docker compose up -d` (Postgres).
+2. Export datasource env or copy `.env.example`.
+3. `backend`: `./gradlew bootRun`.
+4. `frontend`: `npm run dev` on port 5173; API base `http://localhost:8080`.

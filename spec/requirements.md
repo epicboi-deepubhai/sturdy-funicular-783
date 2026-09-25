@@ -1,6 +1,6 @@
 # Requirements — Support Ticket Management System
 
-Status: Draft v2 (decisions closed)
+Status: Draft v3 (decisions closed)
 Owner: <your name>
 Last updated: 2026-09-25
 
@@ -13,8 +13,9 @@ A system for a support team to log, track, and resolve customer/internal support
 **In scope**
 - Single ticket entity with comments, no multi-tenant/organization concept.
 - Three prototype agents (`alice`, `bob`, `carol`). No login, sessions, passwords, or JWT. The UI exposes a header switcher; every API request sends the selected username; the server requires and validates it.
-- REST API backend + a web frontend.
-- Persistent storage across restarts (PostgreSQL only).
+- REST API backend (Gradle, existing `backend/`) + a Vite React TypeScript frontend (`frontend/`).
+- Persistent storage across restarts (PostgreSQL only, including tests — no H2).
+- A documented local run: Docker Compose Postgres + backend + frontend, with no secrets in git.
 
 **Out of scope (explicitly, to prevent AI scope creep during implementation)**
 - Authentication / authorization / multi-user permissions (beyond the prototype username header).
@@ -27,6 +28,8 @@ A system for a support team to log, track, and resolve customer/internal support
 - Ticket deletion.
 - Audit trail / history of who changed what (beyond `createdBy` / `updatedBy` / `author` plus `createdAt` / `updatedAt`).
 - Reopening terminal tickets or extra status edges not listed in FR9.
+- OpenAPI/Swagger UI, Spring Actuator, a Maven build (Gradle already exists).
+- H2 or any in-memory database in main or test runtime.
 
 If any of the above turns out to be needed, it must be added to this document and re-approved before implementation — not improvised mid-build.
 
@@ -129,6 +132,23 @@ If `spec/state-machine.md` and this section ever disagree, **this section is the
 - The frontend header lists the three usernames; changing the selection applies to all subsequent API calls.
 - No endpoint exists to create users. The allowlist is specified here and duplicated as a server constant.
 
+### FR13 — Local stack and configuration
+- Repository includes Docker Compose for PostgreSQL 16 and a backend datasource configuration that reads URL/username/password from the environment (or a gitignored local file). Committed `application.yaml` must not contain real passwords.
+- `spring-boot-starter-validation` is a required backend dependency so FR10 can be enforced.
+- Hibernate schema for the prototype: `ddl-auto=update`. No Flyway/Liquibase unless this document is updated.
+- JSON timestamps serialize as ISO-8601 UTC. Java 21, Spring Boot 4.x, Gradle only.
+- The Spring application must start against Compose Postgres (empty schema is fine). `contextLoads` (or equivalent) must use Testcontainers Postgres or an explicit Compose-backed profile — it must not assume an unconfigured datasource.
+
+### FR14 — CORS for the prototype UI
+- Browser calls from the Vite origin (`http://localhost:5173`) must succeed. Allowed methods: GET, POST, PATCH, OPTIONS. Allowed headers must include `Content-Type` and `X-Username`.
+- CORS `OPTIONS` preflight must **not** require `X-Username` (browsers do not send it on preflight). All other `/api/v1/**` requests still follow FR10.
+- Do not use `Access-Control-Allow-Origin: *` if credentials are enabled; list the explicit origin even if credentials are unused.
+
+### FR15 — Malformed HTTP input
+- Malformed JSON body: 400 `VALIDATION_ERROR`.
+- Path `{id}` that is not a number: 400 `VALIDATION_ERROR` (not 500).
+- `size` outside 1–100, or `page` less than 0: 400 `VALIDATION_ERROR`.
+
 ## 5. Data Model (summary — full detail in `spec/data-model.md`)
 
 **Ticket**: id, title, description, status, priority, assignee (username, never null after persist), createdBy (username), updatedBy (username), createdAt, updatedAt, comments (one-to-many).
@@ -140,10 +160,12 @@ No `User` entity. User-attributed columns store the raw username string.
 
 ## 6. Non-Functional Requirements
 
-- **Persistence**: PostgreSQL in all environments (local and otherwise). Do not use H2.
-- **No secrets committed**: DB credentials via environment variables or a gitignored local properties file only.
-- **Testability**: state machine logic must be unit-testable in isolation, without a Spring context or database.
+- **Persistence**: PostgreSQL in all environments (local and otherwise). Do not use H2 in main or test.
+- **Local Postgres**: Docker Compose service named `postgres`, database `tickets`, host port `5432`, named volume so data survives container and application restarts (FR + §7).
+- **No secrets committed**: DB credentials via environment variables (`SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`) or gitignored `application-local.properties` / `.env`. Example values only in `.env.example`.
+- **Testability**: state machine unit-testable without Spring. JPA/`ILIKE` tests use Testcontainers PostgreSQL. `@WebMvcTest` for HTTP mapping and error shape.
 - **API errors are structured** (see `spec/api-contract.md`) so the frontend can reliably parse and display them.
+- **Styling**: frontend uses CSS Modules only (no Tailwind unless this document changes).
 
 ## 7. Acceptance Criteria (traceable to the assignment)
 
@@ -166,6 +188,10 @@ No `User` entity. User-attributed columns store the raw username string.
 - [ ] UI shows meaningful, specific errors (FR11)
 - [ ] State-machine tests pass, covering every transition — valid and invalid — in FR9 / `spec/state-machine.md`
 - [ ] No secrets committed to the repository
+- [ ] Local Compose Postgres + configured datasource; backend starts (FR13)
+- [ ] CORS allows the Vite origin and `X-Username`; OPTIONS does not require the header (FR14)
+- [ ] Malformed JSON and non-numeric ids return 400, not 500 (FR15)
+- [ ] JPA and search tests use Testcontainers Postgres, not H2 (NFR)
 
 ## 8. Decisions (closed)
 
@@ -177,3 +203,5 @@ No `User` entity. User-attributed columns store the raw username string.
 6. PostgreSQL only. Page size default 10; UI sizes 10 / 50 / 100; server max 100.
 7. Create with missing/`null` assignee: backend assigns `X-Username`. Assignee is never null after persist and cannot be cleared. FR2 list fields stay the documented minimum.
 8. Same-status PATCH is 409. No extra transitions beyond FR9. Blank keyword = no text filter. Search is `ILIKE` on title and description. No `DELETE` for tickets or comments. Field updates are `PATCH`.
+9. Gradle only (existing `backend/`). Hibernate `ddl-auto=update`. CSS Modules. Vite origin `http://localhost:5173`.
+10. Username filter skips `OPTIONS`. Env-based datasource; Testcontainers for persistence tests; `contextLoads` must not require a developer’s uncommitted DB without a container.
