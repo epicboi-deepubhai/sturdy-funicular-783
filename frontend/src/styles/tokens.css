@@ -1,0 +1,57 @@
+:root {
+  /* Surfaces */
+  --bg-0: #08080c;
+  --bg-0-gradient: #0d0d14;
+  --surface-1: #101017;
+  --surface-2: #16161f;
+  --surface-3: #1d1d28;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+
+  /* Accent (violet) */
+  --accent: #8b5cf6;
+  --accent-bright: #a78bfa;
+  --accent-glow: rgba(139, 92, 246, 0.35);
+  --accent-dim: rgba(139, 92, 246, 0.12);
+
+  /* Text */
+  --text-1: #f4f4f6;
+  --text-2: #a6a6b3;
+  --text-3: #6b6b78;
+
+  /* Status hues (muted, not neon) */
+  --status-open: #22d3ee;
+  --status-in-progress: #8b5cf6;
+  --status-resolved: #34d399;
+  --status-closed: #9ca3af;
+  --status-cancelled: #f87171;
+
+  /* Priority hues */
+  --priority-low: #6b6b78;
+  --priority-medium: #a6a6b3;
+  --priority-high: #fbbf24;
+  --priority-urgent: #f87171;
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 10px;
+
+  /* Motion */
+  --dur-fast: 120ms;
+  --dur-med: 220ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Glow / shadow */
+  --shadow-elev: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --glow-accent: 0 0 0 1px var(--accent-dim), 0 0 24px var(--accent-glow);
+
+  /* Glass (overlays only) */
+  --glass-bg: rgba(16, 16, 23, 0.72);
+  --glass-blur: blur(16px);
+
+  /* Layout */
+  --nav-rail-collapsed: 56px;
+  --nav-rail-expanded: 200px;
+}
